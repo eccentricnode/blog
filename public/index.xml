@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Home on Austin Johnson</title>
-    <link>http://localhost:1313/</link>
+    <link>https://theaustinjohnson.com/</link>
     <description>Recent content in Home on Austin Johnson</description>
     <generator>Hugo -- 0.144.1</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 23 Feb 2025 15:08:39 -0700</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://theaustinjohnson.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Learn to pay down the cost of action</title>
-      <link>http://localhost:1313/posts/pay-cost-of-action/</link>
+      <link>https://theaustinjohnson.com/posts/pay-cost-of-action/</link>
       <pubDate>Sun, 23 Feb 2025 15:08:39 -0700</pubDate>
-      <guid>http://localhost:1313/posts/pay-cost-of-action/</guid>
+      <guid>https://theaustinjohnson.com/posts/pay-cost-of-action/</guid>
       <description>&lt;h3 id=&#34;this-leads-to-exponential-growth-in-a-short-time-frame&#34;&gt;This leads to exponential growth, in a short time frame.&lt;/h3&gt;
 &lt;p&gt;Very simply put, Alex Hormozi talks about how long it takes to learn a skill, and the fact that it usually doesn&amp;rsquo;t take that long. perhaps 20 hours to master most skillsets.&lt;/p&gt;
 &lt;p&gt;The issue is, as Hormozi highlights, it takes years to begin the first hour.&lt;/p&gt;
@@ -20,17 +20,17 @@
     </item>
     <item>
       <title>Hesition Is Defeat</title>
-      <link>http://localhost:1313/posts/hesition-is-defeat/</link>
+      <link>https://theaustinjohnson.com/posts/hesition-is-defeat/</link>
       <pubDate>Sat, 22 Feb 2025 19:22:48 -0700</pubDate>
-      <guid>http://localhost:1313/posts/hesition-is-defeat/</guid>
+      <guid>https://theaustinjohnson.com/posts/hesition-is-defeat/</guid>
       <description>&lt;p&gt;people operate because of a perceived optionality, due to social media. the internet makes people think they have more options than they actually do. But this causes them to hesitate, because there may be something better out there in the future.&lt;/p&gt;
 &lt;p&gt;better jobs, better relationships, better opportunities … we are constantly searching for something better. funnily enough we are not necessarily built for having many options, it causes us to freeze. it causes us to hesitate.&lt;/p&gt;</description>
     </item>
     <item>
       <title>AI reduces cycle time, with auto didactic learning</title>
-      <link>http://localhost:1313/posts/ai-helps-with-learning/</link>
+      <link>https://theaustinjohnson.com/posts/ai-helps-with-learning/</link>
       <pubDate>Sat, 22 Feb 2025 19:03:50 -0700</pubDate>
-      <guid>http://localhost:1313/posts/ai-helps-with-learning/</guid>
+      <guid>https://theaustinjohnson.com/posts/ai-helps-with-learning/</guid>
       <description>&lt;p&gt;It reduces cycle time, if you can ask, &amp;ldquo;how long will this take&amp;rdquo; or &amp;ldquo;is this really hard to do&amp;rdquo;. The ai has much more context on the world than we do, because it&amp;rsquo;s basically indexed every book, web page, and video on youtube. Your time to iteration on learning drops significantly, because you can essentially guess, baed on the AI&amp;rsquo;s feedback, how long something will take to accomplish&lt;/p&gt;
 &lt;p&gt;E.g. One I ran into when trying to install Hyperland on PopOS. A cursory serach of all the major AI providers would show you, it&amp;rsquo;s going to require 10+ hours in setup time. That&amp;rsquo;s assuming your good at linux, and understand all the problems in setting it up. Grok AI saved me a bunch of time, by just pointing me to Sway instead.&lt;/p&gt;</description>
     </item>

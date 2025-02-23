@@ -4,7 +4,7 @@ title: Austin Johnson
 theme: ["PaperMod"]
 params:
 
-  ShowReadingTime: false
+  ShowReadingTime: true
   ShowPostNavLinks: true
   ShowBreadCrumbs: false
   ShowCodeCopyButtons: true
@@ -16,32 +16,32 @@ params:
   showtoc: false
   tocopen: false
 
-menu:
-  main:
-    - identifier: About
-      name: "About"
-      url: /aboutme/
-      weight: 10
+# menu:
+#   main:
+    # - identifier: About
+    #   name: "About"
+    #   url: /aboutme/
+    #   weight: 10
     # - identifier: Services
     #   name: "Services"
     #   url: /services/
     #   weight: 13
-    - identifier: Contact
-      name: "Contact"
-      url: /contact/
-      weight: 17
-    - identifier: Tags
-      name: Tags
-      url: /tags/
-      weight: 20
-    - identifier: "Index"
-      name: "Index"
-      url: /archives/
-      weight: 30
-    - identifier: Search
-      name: 🔍
-      url: /search/
-      weight: 50
+    # - identifier: Contact
+    #   name: "Contact"
+    #   url: /contact/
+    #   weight: 17
+    # - identifier: Tags
+    #   name: Tags
+    #   url: /tags/
+    #   weight: 20
+    # - identifier: "Index"
+    #   name: "Index"
+    #   url: /archives/
+    #   weight: 30
+    # - identifier: Search
+    #   name: 🔍
+    #   url: /search/
+    #   weight: 50
 
 outputs:
   home:
