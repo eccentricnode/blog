@@ -1,12 +1,12 @@
 ---
 title: Home
 ---
-# Hey!
+# Welcome!
 
-Some of this still under construction; however if you're here, thanks for stopping by!
+I am Full-Stack Software Engineer, with an interest in self-development. Here, I post about everything, Software, Tech, Philosophy, maybe some religion at points.
 
-This blog is also available for your preferred RSS reader. Use
-[this link.](https://theaustinjohnson.com/index.xml)
+### I also work as Physical Trainer! 
+If you are interested in being trained check this [link](/training), for more about what I can offer you!
 
 # Socials
 
@@ -15,4 +15,5 @@ This blog is also available for your preferred RSS reader. Use
 
 # Most Recent Posts
 
-
+_This blog is also available for your preferred RSS reader. Use
+[this link.](https://theaustinjohnson.com/index.xml)_

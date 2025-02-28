@@ -16,16 +16,16 @@ params:
   showtoc: false
   tocopen: false
 
-# menu:
-#   main:
+menu:
+  main:
     # - identifier: About
     #   name: "About"
     #   url: /aboutme/
     #   weight: 10
-    # - identifier: Services
-    #   name: "Services"
-    #   url: /services/
-    #   weight: 13
+    - identifier: Training
+      name: "Personal Training"
+      url: /training/
+      weight: 13
     # - identifier: Contact
     #   name: "Contact"
     #   url: /contact/
