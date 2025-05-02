@@ -1,9 +1,9 @@
 ---
 date: '2025-05-02T01:45:43-07:00'
 draft: false
-title: 'Learning AI Engineering: My PDF Q&A Bot JourneyPdf Chatbot'
+title: 'Learning AI Engineering: My PDF Q&A Bot Journey'
 ---
-I've been diving into AI engineering concepts and recently I've been working with an AI model from huggingface, and using LocalAI, qrant,and python to develop a simple Q and A chatbot, that can return information from any pdf file! I got started by following Zen Van Riel's excellent course in the Skool community. If you're interested in learning AI engineering, I highly recommend checking out his community: [AI Engineer on Skool](https://www.skool.com/ai-engineer/about?ref=8b5f8176d7084f05b196670907dcd919).
+I've been diving into AI engineering concepts and recently I've been working with an AI model from huggingface, and using LocalAI, qdrant, and python to develop a simple Q and A chatbot, that can return information from any pdf file! I got started by following Zen Van Riel's excellent course in the Skool community. If you're interested in learning AI engineering, I highly recommend checking out his community: [AI Engineer on Skool](https://www.skool.com/ai-engineer/about?ref=8b5f8176d7084f05b196670907dcd919).
 
 ## Key Components
 
