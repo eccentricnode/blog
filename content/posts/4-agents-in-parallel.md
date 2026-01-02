@@ -1,5 +1,5 @@
 ---
-date: '2026-01-02T02:00:00-07:00'
+date: '2026-01-01T22:00:00-07:00'
 draft: false
 title: 'I Ran 4 AI Agents in Parallel Tonight'
 tags: ['ai', 'content-engine', 'automation', 'claude', 'pai']
