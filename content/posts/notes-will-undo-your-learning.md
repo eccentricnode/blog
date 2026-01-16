@@ -1,5 +1,5 @@
 ---
-date: '2026-01-15T18:30:00-08:00'
+date: '2026-01-15T12:00:00-08:00'
 title: 'If You Are Not Careful, Your Notes Will Undo Your Learning'
 ---
 
@@ -75,7 +75,7 @@ I had transformed a writing system into a consumption system. Same avoidance of 
 
 **The system wasn't the problem. My mindset was.**
 
-(I wrote about this mistake in detail in [I Spent a Year Using Zettelkasten Wrong](/posts/zettelkasten-revelation) - how I destroyed a writing system by treating it like a note-taking system.)
+(I wrote about this mistake in detail in [I Spent a Year Using Zettelkasten Wrong](/posts/zettelkasten-year-long-mistake/) - how I destroyed a writing system by treating it like a note-taking system.)
 
 Without a fundamental mindset shift, your note-taking system becomes the very crammy approach it was designed to prevent. The cramming mindset will infect any tool you use.
 
