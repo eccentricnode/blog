@@ -1,5 +1,4 @@
 ---
-date: '2026-01-16T02:30:00-08:00'
 draft: false
 title: 'Agile is Dead. AI Killed It.'
 tags: ['ai', 'agile', 'engineering', 'leadership', 'execution']
