@@ -104,7 +104,9 @@ The traditional model's implicit assumption was that the cost of not knowing som
 
 ### The Swedish Researcher Example
 
-A 19-20 year old went from "some startup programming" to OpenAI video model researcher in a couple years. Impossible under the traditional model that says it takes a decade of prerequisites.
+[Gabriel Petersson](https://www.businessinsider.com/high-school-dropout-openai-chatgpt-learn-ai-gabriel-petersson-2025-11), a high school dropout from Sweden, went from basic startup programming to OpenAI video model researcher in a couple years. He used ChatGPT as his primary learning tool—not for answers, but for challenge and feedback.
+
+Impossible under the traditional model that says it takes a decade of prerequisites.
 
 But if you can think clearly and articulate problems precisely, you can learn whatever you need on-demand. The traditional gate—accumulate years of prerequisites—becomes irrelevant.
 
