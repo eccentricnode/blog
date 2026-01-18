@@ -3,7 +3,16 @@ title: Home
 ---
 # Welcome!
 
-I am Full-Stack Software Engineer, with an interest in self-development. Here, I post about everything, Software, Tech, Philosophy, maybe some religion at points.
+I'm Austin Johnson — AI Engineer, Software Engineer, and systems thinker.
+
+I build AI systems that act as force multipliers. Not just tools that answer questions, but systems that extend my capabilities and automate entire workflows.
+
+Here I write about:
+- **AI Engineering** — Multi-agent systems, semantic blueprints, RAG architecture
+- **Building in Public** — ContentEngine, Sales RPG, and other projects
+- **Systems Thinking** — Patterns, principles, and contrarian takes on AI development
+
+My approach: architect the intent, let AI handle execution, validate the output. Build systems that build systems.
 
 # Socials
 
