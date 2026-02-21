@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { overflow-x: hidden; }
 
         :root {
             --blue-600: #2563EB;
@@ -1353,18 +1354,21 @@
 
             .client-info h1 { font-size: 18px; }
             .client-meta-row { font-size: 12px; gap: 8px; }
-            .stat-pills { gap: 6px; }
+            .stat-pills { gap: 6px; flex-wrap: wrap; width: 100%; }
             .stat-pill { font-size: 12px; padding: 4px 10px; }
 
             .tab-nav {
                 gap: 0;
-                overflow-x: auto;
+                overflow-x: scroll;
+                overflow-y: visible;
                 padding-bottom: 0;
                 scrollbar-width: none;
                 -ms-overflow-style: none;
+                width: 100%;
+                max-width: 100%;
             }
             .tab-nav::-webkit-scrollbar { display: none; }
-            .tab-btn { padding: 10px 14px; font-size: 13px; }
+            .tab-btn { padding: 10px 14px; font-size: 13px; white-space: nowrap; flex-shrink: 0; }
 
             /* Pipeline table to cards */
             .table-wrap { border: none; background: transparent; overflow: visible; }
@@ -1407,8 +1411,8 @@
 
         /* Extra small: < 480px */
         @media (max-width: 480px) {
-            .stat-pills { flex-direction: column; gap: 4px; }
-            .stat-pill { justify-content: center; }
+            .stat-pills { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+            .stat-pill { justify-content: center; flex: 1 1 calc(50% - 6px); min-width: 0; }
         }
     </style>
 </head>
