@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecruitAgent - My Job Search</title>
+    <title>RecruitAgent - Austin Johnson</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,48 +32,56 @@
             --orange-50: #FFF7ED;
             --orange-100: #FFEDD5;
             --orange-700: #C2410C;
+            --yellow-500: #EAB308;
+            --yellow-50: #FEFCE8;
+            --yellow-100: #FEF9C3;
+            --yellow-700: #A16207;
             --purple-50: #FAF5FF;
             --purple-100: #F3E8FF;
             --purple-600: #9333EA;
             --purple-700: #7E22CE;
+            --red-500: #EF4444;
+            --red-50: #FEF2F2;
+            --red-100: #FEE2E2;
+            --red-700: #B91C1C;
             --white: #FFFFFF;
+            --sidebar-bg: #0F172A;
+            --sidebar-hover: #1E293B;
+            --sidebar-active: #1E293B;
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--slate-50);
             color: var(--slate-900);
+            display: flex;
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Top Navigation */
-        .top-nav {
-            background: var(--white);
-            border-bottom: 1px solid var(--slate-200);
-            padding: 0 40px;
-            height: 64px;
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: var(--sidebar-bg);
+            color: var(--white);
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
+            flex-direction: column;
+            position: fixed;
             top: 0;
+            left: 0;
+            bottom: 0;
             z-index: 100;
         }
 
-        .top-nav-left {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-        }
-
-        .top-nav-logo {
+        .sidebar-logo {
+            padding: 24px 24px 32px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .top-nav-logo .logo-icon {
+        .sidebar-logo .logo-icon {
             width: 32px;
             height: 32px;
             background: var(--blue-600);
@@ -83,444 +91,377 @@
             justify-content: center;
             font-weight: 700;
             font-size: 14px;
-            color: var(--white);
         }
 
-        .top-nav-logo .logo-text {
+        .sidebar-logo .logo-text {
             font-size: 18px;
             font-weight: 700;
-            color: var(--slate-900);
             letter-spacing: -0.3px;
         }
 
-        .top-nav-link {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--blue-600);
-            text-decoration: none;
-            padding: 6px 0;
-            border-bottom: 2px solid var(--blue-600);
+        .sidebar-nav {
+            flex: 1;
+            padding: 0 12px;
         }
 
-        .top-nav-right {
+        .sidebar-nav a {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 12px;
+            padding: 10px 12px;
+            color: var(--slate-400);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.15s ease;
+            margin-bottom: 2px;
         }
 
-        .notification-bell {
-            position: relative;
-            width: 40px;
-            height: 40px;
+        .sidebar-nav a:hover {
+            background: var(--sidebar-hover);
+            color: var(--slate-200);
+        }
+
+        .sidebar-nav a.active {
+            background: var(--sidebar-active);
+            color: var(--white);
+        }
+
+        .sidebar-nav a .nav-icon {
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 8px;
-            cursor: pointer;
-            color: var(--slate-500);
-            transition: all 0.15s ease;
+            opacity: 0.7;
         }
 
-        .notification-bell:hover {
-            background: var(--slate-100);
-            color: var(--slate-700);
+        .sidebar-nav a.active .nav-icon {
+            opacity: 1;
         }
 
-        .notification-dot {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 8px;
-            height: 8px;
-            background: var(--blue-600);
-            border-radius: 50%;
-            border: 2px solid var(--white);
+        .nav-badge {
+            margin-left: auto;
+            background: var(--orange-500);
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 10px;
         }
 
-        .user-chip {
+        .sidebar-user {
+            padding: 16px 20px;
+            border-top: 1px solid var(--slate-700);
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 4px 12px 4px 4px;
-            border-radius: 24px;
-            background: var(--slate-50);
-            cursor: pointer;
-            transition: background 0.15s ease;
+            gap: 12px;
         }
 
-        .user-chip:hover {
-            background: var(--slate-100);
+        .sidebar-user .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--white);
+            flex-shrink: 0;
         }
 
-        .user-chip .avatar {
-            width: 32px;
-            height: 32px;
+        .sidebar-user .user-info {
+            overflow: hidden;
+        }
+
+        .sidebar-user .user-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate-200);
+        }
+
+        .sidebar-user .user-role {
+            font-size: 12px;
+            color: var(--slate-500);
+        }
+
+        /* ========== TOOLTIP COMPONENT ========== */
+        .tooltip-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--slate-200);
+            color: var(--slate-500);
+            font-size: 10px;
+            font-weight: 700;
+            cursor: help;
+            position: relative;
+            vertical-align: middle;
+            margin-left: 4px;
+            line-height: 1;
+        }
+
+        .tooltip-icon::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1.5;
+            padding: 8px 12px;
+            border-radius: 6px;
+            white-space: normal;
+            max-width: 260px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.15s ease, visibility 0.15s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .tooltip-icon::before {
+            content: '';
+            position: absolute;
+            bottom: calc(100% + 2px);
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #1e293b;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.15s ease, visibility 0.15s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .tooltip-icon:hover::after,
+        .tooltip-icon:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Inline tooltip for table cells */
+        .tooltip-inline {
+            position: relative;
+            cursor: help;
+            border-bottom: 1px dotted var(--slate-300);
+        }
+
+        .tooltip-inline::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1.5;
+            padding: 8px 12px;
+            border-radius: 6px;
+            white-space: normal;
+            max-width: 260px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.15s ease, visibility 0.15s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .tooltip-inline::before {
+            content: '';
+            position: absolute;
+            bottom: calc(100% + 2px);
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #1e293b;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.15s ease, visibility 0.15s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .tooltip-inline:hover::after,
+        .tooltip-inline:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main {
+            margin-left: 260px;
+            flex: 1;
+            padding: 28px 40px;
+            max-width: 1260px;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb a {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--blue-600);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* ========== CLIENT HEADER ========== */
+        .client-header {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        .client-avatar-lg {
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             background: linear-gradient(135deg, #3B82F6, #2563EB);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
-            font-size: 12px;
+            font-weight: 700;
+            font-size: 22px;
             color: var(--white);
-        }
-
-        .user-chip .name {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--slate-700);
-        }
-
-        /* Content */
-        .content {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 32px 40px;
-        }
-
-        /* Welcome Banner */
-        .welcome-banner {
-            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
-            border-radius: 16px;
-            padding: 28px 32px;
-            color: var(--white);
-            margin-bottom: 28px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .welcome-banner::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .welcome-banner h1 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            letter-spacing: -0.3px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .welcome-banner p {
-            font-size: 14px;
-            color: var(--slate-400);
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Stat Cards */
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 36px;
-        }
-
-        .stat-card {
-            background: var(--white);
-            border: 1px solid var(--slate-200);
-            border-radius: 12px;
-            padding: 20px 24px;
-            transition: box-shadow 0.15s ease;
-        }
-
-        .stat-card:hover {
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
-        }
-
-        .stat-card .stat-label {
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--slate-500);
-            margin-bottom: 8px;
-        }
-
-        .stat-card .stat-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--slate-900);
-            letter-spacing: -1px;
-        }
-
-        /* Section headers */
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-
-        .section-header h2 {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--slate-900);
-            letter-spacing: -0.2px;
-        }
-
-        /* Kanban Pipeline */
-        .kanban {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
-            margin-bottom: 36px;
-        }
-
-        .kanban-col {
-            background: var(--white);
-            border: 1px solid var(--slate-200);
-            border-radius: 12px;
-            padding: 16px;
-            min-height: 100px;
-        }
-
-        .kanban-col.highlighted {
-            border-color: var(--blue-600);
-            background: var(--blue-50);
-        }
-
-        .kanban-col.highlighted-green {
-            border-color: var(--green-500);
-            background: var(--green-50);
-        }
-
-        .kanban-col-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
-        .kanban-col-title {
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--slate-500);
-        }
-
-        .kanban-col.highlighted .kanban-col-title {
-            color: var(--blue-600);
-        }
-
-        .kanban-col.highlighted-green .kanban-col-title {
-            color: var(--green-600);
-        }
-
-        .kanban-count {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--slate-900);
-            letter-spacing: -0.5px;
-        }
-
-        .kanban-col.highlighted .kanban-count {
-            color: var(--blue-600);
-        }
-
-        .kanban-col.highlighted-green .kanban-count {
-            color: var(--green-600);
-        }
-
-        .kanban-bar {
-            height: 4px;
-            border-radius: 2px;
-            background: var(--slate-100);
-            margin-top: 8px;
-        }
-
-        .kanban-bar-fill {
-            height: 100%;
-            border-radius: 2px;
-            background: var(--slate-300);
-        }
-
-        .kanban-col.highlighted .kanban-bar-fill {
-            background: var(--blue-600);
-        }
-
-        .kanban-col.highlighted-green .kanban-bar-fill {
-            background: var(--green-500);
-        }
-
-        /* Activity Timeline */
-        .activity-section {
-            margin-bottom: 36px;
-        }
-
-        .timeline {
-            background: var(--white);
-            border: 1px solid var(--slate-200);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .timeline-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--slate-100);
-            transition: background 0.1s ease;
-        }
-
-        .timeline-item:last-child {
-            border-bottom: none;
-        }
-
-        .timeline-item:hover {
-            background: var(--slate-50);
-        }
-
-        .timeline-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             flex-shrink: 0;
-            font-size: 16px;
         }
 
-        .timeline-icon.search { background: var(--purple-50); color: var(--purple-600); }
-        .timeline-icon.email { background: var(--blue-50); color: var(--blue-600); }
-        .timeline-icon.sent { background: var(--orange-50); color: var(--orange-500); }
-        .timeline-icon.applied { background: var(--green-50); color: var(--green-600); }
-        .timeline-icon.interview { background: var(--green-50); color: var(--green-600); }
-
-        .timeline-content {
+        .client-info {
             flex: 1;
+            min-width: 0;
         }
 
-        .timeline-text {
-            font-size: 14px;
-            color: var(--slate-700);
-            line-height: 1.5;
-        }
-
-        .timeline-text strong {
-            font-weight: 600;
-            color: var(--slate-900);
-        }
-
-        .timeline-time {
-            font-size: 12px;
-            color: var(--slate-400);
-            margin-top: 2px;
-        }
-
-        .timeline-badge {
-            font-size: 11px;
-            font-weight: 600;
-            padding: 2px 8px;
-            border-radius: 5px;
-            margin-left: 8px;
-        }
-
-        .timeline-badge.fit {
-            background: var(--green-50);
-            color: var(--green-700);
-            border: 1px solid var(--green-100);
-        }
-
-        /* Job Cards */
-        .job-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-
-        .job-card {
-            background: var(--white);
-            border: 1px solid var(--slate-200);
-            border-radius: 12px;
-            padding: 24px;
-            transition: all 0.15s ease;
-        }
-
-        .job-card:hover {
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
-            border-color: var(--blue-600);
-        }
-
-        .job-card-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
-        .job-company-logo {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .client-info h1 {
+            font-size: 22px;
             font-weight: 700;
-            font-size: 14px;
-            color: var(--white);
-            flex-shrink: 0;
-        }
-
-        .job-fit-badge {
-            font-size: 12px;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 6px;
-            background: var(--green-50);
-            color: var(--green-700);
-            border: 1px solid var(--green-100);
-        }
-
-        .job-company-name {
-            font-size: 14px;
-            font-weight: 600;
             color: var(--slate-900);
+            letter-spacing: -0.4px;
             margin-bottom: 2px;
         }
 
-        .job-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--slate-900);
+        .client-subtitle {
+            font-size: 14px;
+            color: var(--slate-500);
             margin-bottom: 8px;
-            letter-spacing: -0.2px;
         }
 
-        .job-meta {
+        .client-meta-row {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--slate-500);
+            margin-bottom: 16px;
+            flex-wrap: wrap;
         }
 
-        .job-meta-item {
+        .client-meta-row span {
             display: flex;
             align-items: center;
             gap: 4px;
-            font-size: 13px;
-            color: var(--slate-500);
         }
 
-        .job-actions {
+        .client-meta-row .separator {
+            color: var(--slate-300);
+        }
+
+        .stat-pills {
             display: flex;
-            gap: 8px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
+        .stat-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: var(--slate-50);
+            border: 1px solid var(--slate-200);
+            color: var(--slate-700);
+        }
+
+        .stat-pill .pill-value {
+            font-weight: 700;
+            color: var(--slate-900);
+        }
+
+        .stat-pill.highlight-blue {
+            background: var(--blue-50);
+            border-color: var(--blue-100);
+            color: var(--blue-700);
+        }
+
+        .stat-pill.highlight-blue .pill-value {
+            color: var(--blue-700);
+        }
+
+        .stat-pill.highlight-green {
+            background: var(--green-50);
+            border-color: var(--green-100);
+            color: var(--green-700);
+        }
+
+        .stat-pill.highlight-green .pill-value {
+            color: var(--green-700);
+        }
+
+        .stat-pill.highlight-orange {
+            background: var(--orange-50);
+            border-color: var(--orange-100);
+            color: var(--orange-700);
+        }
+
+        .stat-pill.highlight-orange .pill-value {
+            color: var(--orange-700);
+        }
+
+        .client-header-actions {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        /* ========== BUTTONS ========== */
         .btn {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 14px;
+            padding: 8px 16px;
             border: 1px solid var(--slate-200);
             border-radius: 8px;
             font-family: 'Inter', sans-serif;
@@ -530,6 +471,7 @@
             transition: all 0.15s ease;
             background: var(--white);
             color: var(--slate-700);
+            text-decoration: none;
         }
 
         .btn:hover {
@@ -549,319 +491,2074 @@
         }
 
         .btn-sm {
-            padding: 6px 12px;
+            padding: 5px 10px;
             font-size: 12px;
         }
 
-        .new-badge {
-            display: inline-block;
-            font-size: 10px;
-            font-weight: 700;
+        /* ========== TAB NAVIGATION ========== */
+        .tab-nav {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid var(--slate-200);
+            margin-bottom: 24px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--slate-500);
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--slate-700);
+        }
+
+        .tab-btn.active {
+            color: var(--blue-600);
+            border-bottom-color: var(--blue-600);
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ========== TABLE STYLES ========== */
+        .table-wrap {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .table-wrap.overflow-x {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--slate-500);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            background: var(--blue-600);
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--slate-200);
+            background: var(--slate-50);
+            white-space: nowrap;
+        }
+
+        tbody td {
+            padding: 12px 14px;
+            font-size: 13px;
+            color: var(--slate-700);
+            border-bottom: 1px solid var(--slate-100);
+            vertical-align: middle;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr {
+            transition: background 0.1s ease;
+        }
+
+        tbody tr:hover {
+            background: var(--slate-50);
+        }
+
+        tbody tr.clickable-row {
+            cursor: pointer;
+        }
+
+        /* Company cell with logo */
+        .company-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .company-logo {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
             color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .company-name {
+            font-weight: 600;
+            color: var(--slate-900);
+        }
+
+        /* Status badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 3px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+
+        .status-badge.applied {
+            background: var(--blue-50);
+            color: var(--blue-600);
+        }
+
+        .status-badge.screening {
+            background: var(--purple-50);
+            color: var(--purple-600);
+        }
+
+        .status-badge.interviewing {
+            background: var(--green-50);
+            color: var(--green-700);
+        }
+
+        .status-badge.rejected {
+            background: var(--red-50);
+            color: var(--red-700);
+        }
+
+        .status-badge.ghosted {
+            background: var(--slate-100);
+            color: var(--slate-500);
+        }
+
+        .status-badge.offer {
+            background: var(--yellow-50);
+            color: var(--yellow-700);
+            border: 1px solid var(--yellow-100);
+        }
+
+        .status-badge.researching {
+            background: var(--orange-50);
+            color: var(--orange-700);
+        }
+
+        .status-badge.active {
+            background: var(--green-50);
+            color: var(--green-700);
+        }
+
+        .status-badge.pending {
+            background: var(--orange-50);
+            color: var(--orange-700);
+        }
+
+        .status-badge.no-response {
+            background: var(--slate-100);
+            color: var(--slate-500);
+        }
+
+        .status-badge.contacted {
+            background: var(--green-50);
+            color: var(--green-700);
+        }
+
+        .status-badge.replied {
+            background: var(--green-50);
+            color: var(--green-700);
+        }
+
+        .status-badge.sent {
+            background: var(--blue-50);
+            color: var(--blue-600);
+        }
+
+        .status-badge.completed {
+            background: var(--green-50);
+            color: var(--green-700);
+        }
+
+        .status-badge.scheduled {
+            background: var(--purple-50);
+            color: var(--purple-600);
+        }
+
+        .status-badge.accepted {
+            background: var(--green-50);
+            color: var(--green-700);
+        }
+
+        /* Outreach/LinkedIn cell icons */
+        .cell-ok { color: var(--green-600); }
+        .cell-pending { color: var(--orange-500); }
+        .cell-fail { color: var(--red-500); }
+        .cell-dim { color: var(--slate-400); font-style: italic; font-size: 12px; }
+        .cell-no-contact { color: var(--red-500); font-size: 12px; opacity: 0.8; }
+
+        .notes-cell {
+            font-style: italic;
+            color: var(--slate-400);
+            font-size: 12px;
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Expandable detail row */
+        .detail-row {
+            display: none;
+        }
+
+        .detail-row.open {
+            display: table-row;
+        }
+
+        .detail-row td {
+            padding: 16px 20px;
+            background: var(--slate-50);
+            border-bottom: 1px solid var(--slate-200);
+        }
+
+        .detail-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            font-size: 13px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .detail-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--slate-400);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .detail-value {
+            color: var(--slate-700);
+        }
+
+        /* ========== RESUME CARDS ========== */
+        .resume-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 12px;
+            letter-spacing: -0.2px;
+        }
+
+        .master-resume-card {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .master-resume-info h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 4px;
+        }
+
+        .master-resume-meta {
+            font-size: 13px;
+            color: var(--slate-500);
+            margin-bottom: 10px;
+        }
+
+        .skill-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .skill-tag {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 3px 10px;
+            border-radius: 5px;
+            background: var(--blue-50);
+            color: var(--blue-600);
+            border: 1px solid var(--blue-100);
+        }
+
+        .master-resume-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .tailored-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .tailored-card {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.15s ease;
+        }
+
+        .tailored-card:hover {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+            border-color: var(--blue-600);
+        }
+
+        .tailored-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
             margin-bottom: 8px;
         }
 
+        .tailored-company {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--slate-900);
+        }
+
+        .match-score {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--green-600);
+        }
+
+        .match-score.medium {
+            color: var(--orange-500);
+        }
+
+        .tailored-role {
+            font-size: 13px;
+            color: var(--slate-500);
+            margin-bottom: 10px;
+        }
+
+        .tailored-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--slate-400);
+            margin-bottom: 12px;
+        }
+
+        .tailored-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ai-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--purple-600);
+            background: var(--purple-50);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* ========== CONTACT CARDS ========== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .contact-card {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.15s ease;
+        }
+
+        .contact-card:hover {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .contact-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .contact-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .contact-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--slate-900);
+        }
+
+        .contact-company {
+            font-size: 13px;
+            color: var(--slate-500);
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--slate-600);
+            margin-bottom: 14px;
+        }
+
+        .contact-details .label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--slate-400);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-row .icon-sm {
+            width: 16px;
+            color: var(--slate-400);
+            flex-shrink: 0;
+        }
+
+        .contact-status-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .contact-last {
+            font-size: 12px;
+            color: var(--slate-400);
+            margin-top: 10px;
+        }
+
+        /* ========== OUTREACH TIMELINE ========== */
+        .pending-actions {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+        }
+
+        .pending-actions h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 12px;
+        }
+
+        .pending-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 13px;
+            color: var(--slate-700);
+            border-bottom: 1px solid var(--slate-100);
+        }
+
+        .pending-item:last-child {
+            border-bottom: none;
+        }
+
+        .pending-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .pending-dot.red { background: var(--red-500); }
+        .pending-dot.yellow { background: var(--yellow-500); }
+        .pending-dot.green { background: var(--green-500); }
+
+        .outreach-timeline {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .outreach-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--slate-100);
+            transition: background 0.1s ease;
+        }
+
+        .outreach-item:last-child {
+            border-bottom: none;
+        }
+
+        .outreach-item:hover {
+            background: var(--slate-50);
+        }
+
+        .outreach-date {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--slate-400);
+            min-width: 52px;
+            flex-shrink: 0;
+            padding-top: 2px;
+        }
+
+        .outreach-type {
+            font-size: 18px;
+            flex-shrink: 0;
+            width: 28px;
+            text-align: center;
+        }
+
+        .outreach-direction {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--slate-400);
+            flex-shrink: 0;
+            padding-top: 2px;
+        }
+
+        .outreach-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .outreach-summary {
+            font-size: 13px;
+            color: var(--slate-700);
+            line-height: 1.5;
+        }
+
+        .outreach-summary strong {
+            color: var(--slate-900);
+            font-weight: 600;
+        }
+
+        /* ========== ACTIVITY TAB ========== */
+        .chart-section {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .chart-section h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 20px;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .chart-row {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .chart-row-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--slate-500);
+        }
+
+        .chart-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .chart-bar-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-bar-label {
+            font-size: 11px;
+            color: var(--slate-400);
+            min-width: 64px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .chart-bar-track {
+            flex: 1;
+            height: 16px;
+            background: var(--slate-100);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chart-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .chart-bar-fill.added { background: var(--blue-600); }
+        .chart-bar-fill.applied { background: var(--green-500); }
+        .chart-bar-fill.linkedin { background: var(--purple-600); }
+        .chart-bar-fill.emails { background: var(--orange-500); }
+
+        .chart-bar-value {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--slate-500);
+            min-width: 20px;
+            flex-shrink: 0;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--slate-500);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+        }
+
+        .legend-dot.added { background: var(--blue-600); }
+        .legend-dot.applied { background: var(--green-500); }
+        .legend-dot.linkedin { background: var(--purple-600); }
+        .legend-dot.emails { background: var(--orange-500); }
+
+        .activity-log {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .activity-log-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--slate-200);
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--slate-900);
+        }
+
+        .log-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--slate-100);
+            font-size: 13px;
+            color: var(--slate-700);
+            line-height: 1.5;
+        }
+
+        .log-item:last-child {
+            border-bottom: none;
+        }
+
+        .log-date {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--slate-400);
+            min-width: 52px;
+            flex-shrink: 0;
+            padding-top: 1px;
+        }
+
+        .log-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 14px;
+            background: var(--blue-50);
+            color: var(--blue-600);
+        }
+
+        /* ========== SECTION HEADER ========== */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .section-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--slate-900);
+            letter-spacing: -0.2px;
+        }
+
+        /* ========== HAMBURGER ========== */
+        .hamburger {
+            display: none;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 8px;
+            cursor: pointer;
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 200;
+        }
+        .hamburger span, .hamburger span::before, .hamburger span::after {
+            display: block;
+            width: 18px;
+            height: 2px;
+            background: var(--slate-700);
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .hamburger span::before, .hamburger span::after {
+            content: '';
+            position: absolute;
+            left: 0;
+        }
+        .hamburger span::before { top: -6px; }
+        .hamburger span::after { top: 6px; }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 90;
+        }
+
+        /* Mobile labels for card view */
+        .mobile-label {
+            display: none;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--slate-400);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        /* ========== RESPONSIVE ========== */
+
         /* Tablet: 768-1024 */
         @media (max-width: 1024px) {
-            .stat-grid { grid-template-columns: repeat(2, 1fr); }
-            .kanban {
-                grid-template-columns: repeat(3, 1fr);
+            .client-header { flex-direction: column; }
+            .client-header-actions {
+                flex-direction: row;
+                align-items: flex-start;
             }
-            .job-grid { grid-template-columns: repeat(2, 1fr); }
+            .contact-grid { grid-template-columns: repeat(2, 1fr); }
+            .tailored-grid { grid-template-columns: repeat(2, 1fr); }
+            .detail-content { grid-template-columns: repeat(2, 1fr); }
         }
 
         /* Mobile: < 768px */
         @media (max-width: 768px) {
-            .top-nav {
-                padding: 0 16px;
-                height: 56px;
-            }
-            .top-nav-left { gap: 16px; }
-            .top-nav-logo .logo-text { display: none; }
-            .top-nav-link { font-size: 13px; }
-            .user-chip .name { display: none; }
-            .top-nav-right { gap: 12px; }
+            .hamburger { display: flex; }
+            .sidebar { transform: translateX(-100%); transition: transform 0.25s ease; }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-overlay.open { display: block; }
+            .main { margin-left: 0; padding: 68px 16px 24px; }
 
-            .content { padding: 20px 16px; }
-
-            .welcome-banner {
+            .client-header {
                 padding: 20px;
-                border-radius: 12px;
+                flex-direction: column;
             }
-            .welcome-banner h1 { font-size: 17px; }
-            .welcome-banner p { font-size: 13px; }
 
-            .stat-grid { grid-template-columns: 1fr; }
-            .stat-card .stat-value { font-size: 26px; }
+            .client-avatar-lg {
+                width: 48px;
+                height: 48px;
+                font-size: 18px;
+            }
 
-            .kanban {
-                grid-template-columns: none;
-                display: flex;
+            .client-info h1 { font-size: 18px; }
+            .client-meta-row { font-size: 12px; gap: 8px; }
+            .stat-pills { gap: 6px; }
+            .stat-pill { font-size: 12px; padding: 4px 10px; }
+
+            .tab-nav {
+                gap: 0;
                 overflow-x: auto;
-                gap: 10px;
-                padding-bottom: 8px;
-                -webkit-overflow-scrolling: touch;
-                scroll-snap-type: x mandatory;
+                padding-bottom: 0;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
             }
-            .kanban-col {
-                min-width: 140px;
-                flex-shrink: 0;
-                scroll-snap-align: start;
+            .tab-nav::-webkit-scrollbar { display: none; }
+            .tab-btn { padding: 10px 14px; font-size: 13px; }
+
+            /* Pipeline table to cards */
+            .table-wrap { border: none; background: transparent; overflow: visible; }
+            .table-wrap.overflow-x { overflow-x: visible; }
+            table, thead, tbody, th, td, tr { display: block; }
+            thead { display: none; }
+            tbody tr {
+                background: var(--white);
+                border: 1px solid var(--slate-200);
+                border-radius: 12px;
+                padding: 16px;
+                margin-bottom: 12px;
+            }
+            tbody td {
+                padding: 4px 0;
+                border-bottom: none;
+                display: flex;
+                flex-direction: column;
+            }
+            .mobile-label { display: block; }
+            .notes-cell { max-width: none; white-space: normal; }
+
+            .detail-row.open td {
+                padding: 12px;
+            }
+            .detail-content {
+                grid-template-columns: 1fr;
             }
 
-            .timeline-item { padding: 12px 16px; gap: 12px; }
-            .timeline-icon { width: 32px; height: 32px; font-size: 14px; }
-            .timeline-text { font-size: 13px; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .tailored-grid { grid-template-columns: 1fr; }
 
-            .job-grid { grid-template-columns: 1fr; }
-            .job-card { padding: 20px; }
-            .job-meta { flex-wrap: wrap; gap: 8px; }
-            .job-actions { flex-wrap: wrap; }
+            .master-resume-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .chart-bar-label { min-width: 50px; font-size: 10px; }
         }
 
         /* Extra small: < 480px */
         @media (max-width: 480px) {
-            .stat-grid { gap: 10px; }
-            .stat-card { padding: 16px; }
-            .kanban-col { min-width: 120px; padding: 12px; }
+            .stat-pills { flex-direction: column; gap: 4px; }
+            .stat-pill { justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Top Navigation -->
-    <nav class="top-nav">
-        <div class="top-nav-left">
-            <div class="top-nav-logo">
-                <div class="logo-icon">R</div>
-                <span class="logo-text">RecruitAgent</span>
-            </div>
-            <a href="#" class="top-nav-link">My Job Search</a>
-        </div>
-        <div class="top-nav-right">
-            <div class="notification-bell">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                <span class="notification-dot"></span>
-            </div>
-            <div class="user-chip">
-                <div class="avatar">MW</div>
-                <span class="name">Marcus Webb</span>
-            </div>
-        </div>
-    </nav>
+    <!-- Hamburger toggle -->
+    <button class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.sidebar-overlay').classList.toggle('open');" aria-label="Toggle menu">
+        <span></span>
+    </button>
+    <div class="sidebar-overlay" onclick="document.querySelector('.sidebar').classList.remove('open');this.classList.remove('open');"></div>
 
-    <!-- Content -->
-    <div class="content">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">R</div>
+            <span class="logo-text">RecruitAI</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="recruiter-dashboard.html">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                </span>
+                Dashboard
+            </a>
+            <a href="client-view.html" class="active">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </span>
+                Clients
+            </a>
+            <a href="draft-queue.html">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </span>
+                Draft Queue
+                <span class="nav-badge">7</span>
+            </a>
+            <a href="#">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </span>
+                Activity
+            </a>
+            <a href="#">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                </span>
+                Settings
+            </a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="user-avatar">MM</div>
+            <div class="user-info">
+                <div class="user-name">Mira Malak</div>
+                <div class="user-role">Senior Recruiter</div>
+            </div>
+        </div>
+    </aside>
 
-        <!-- Welcome Banner -->
-        <div class="welcome-banner">
-            <h1>Your agent found 3 new high-fit roles today.</h1>
-            <p>2 emails are awaiting approval from your recruiter, Mira Malak.</p>
+    <!-- Main Content -->
+    <main class="main">
+
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="recruiter-dashboard.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                Back to Dashboard
+            </a>
         </div>
 
-        <!-- Stat Cards -->
-        <div class="stat-grid">
-            <div class="stat-card">
-                <div class="stat-label">Jobs Discovered</div>
-                <div class="stat-value">32</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Applications Sent</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Responses Received</div>
-                <div class="stat-value">3</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Interviews Scheduled</div>
-                <div class="stat-value">1</div>
-            </div>
-        </div>
-
-        <!-- Pipeline Kanban -->
-        <div class="section-header">
-            <h2>Your Pipeline</h2>
-        </div>
-        <div class="kanban">
-            <div class="kanban-col">
-                <div class="kanban-col-header">
-                    <span class="kanban-col-title">Discovered</span>
+        <!-- Client Header -->
+        <div class="client-header">
+            <div class="client-avatar-lg">AJ</div>
+            <div class="client-info">
+                <h1>Austin Johnson</h1>
+                <div class="client-subtitle">Senior AI Engineer Candidate</div>
+                <div class="client-meta-row">
+                    <span>Phoenix, AZ</span>
+                    <span class="separator">|</span>
+                    <span>Target: $145K -- $175K</span>
+                    <span class="separator">|</span>
+                    <span>Active since Jan 18, 2026</span>
                 </div>
-                <div class="kanban-count">8</div>
-                <div class="kanban-bar"><div class="kanban-bar-fill" style="width: 25%;"></div></div>
-            </div>
-            <div class="kanban-col">
-                <div class="kanban-col-header">
-                    <span class="kanban-col-title">Applied</span>
+                <div class="stat-pills">
+                    <span class="stat-pill"><span class="pill-value">23</span> Jobs Tracked</span>
+                    <span class="stat-pill highlight-blue"><span class="pill-value">14</span> Applied</span>
+                    <span class="stat-pill highlight-green"><span class="pill-value">3</span> Interviews</span>
+                    <span class="stat-pill highlight-orange"><span class="pill-value">1</span> Offer Pending</span>
                 </div>
-                <div class="kanban-count">11</div>
-                <div class="kanban-bar"><div class="kanban-bar-fill" style="width: 34%;"></div></div>
             </div>
-            <div class="kanban-col highlighted">
-                <div class="kanban-col-header">
-                    <span class="kanban-col-title">Response Received</span>
-                </div>
-                <div class="kanban-count">3</div>
-                <div class="kanban-bar"><div class="kanban-bar-fill" style="width: 9%;"></div></div>
-            </div>
-            <div class="kanban-col highlighted-green">
-                <div class="kanban-col-header">
-                    <span class="kanban-col-title">Interview</span>
-                </div>
-                <div class="kanban-count">1</div>
-                <div class="kanban-bar"><div class="kanban-bar-fill" style="width: 3%;"></div></div>
-            </div>
-            <div class="kanban-col">
-                <div class="kanban-col-header">
-                    <span class="kanban-col-title">Offer</span>
-                </div>
-                <div class="kanban-count">0</div>
-                <div class="kanban-bar"><div class="kanban-bar-fill" style="width: 0%;"></div></div>
+            <div class="client-header-actions">
+                <a href="#" class="btn btn-primary">View Master Resume &rarr;</a>
             </div>
         </div>
 
-        <!-- Recent Agent Activity -->
-        <div class="activity-section">
-            <div class="section-header">
-                <h2>Recent Agent Activity</h2>
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('pipeline')">Pipeline</button>
+            <button class="tab-btn" onclick="switchTab('resumes')">Resumes</button>
+            <button class="tab-btn" onclick="switchTab('contacts')">Contacts</button>
+            <button class="tab-btn" onclick="switchTab('outreach')">Outreach</button>
+            <button class="tab-btn" onclick="switchTab('activity')">Activity</button>
+        </div>
+
+        <!-- ===================== TAB 1: PIPELINE ===================== -->
+        <div id="tab-pipeline" class="tab-content active">
+            <div class="table-wrap overflow-x">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Applied</th>
+                            <th>Resume</th>
+                            <th>Contact</th>
+                            <th>Outreach<span class="tooltip-icon" data-tooltip="Cold emails and LinkedIn DMs sent on Austin's behalf">?</span></th>
+                            <th>LinkedIn<span class="tooltip-icon" data-tooltip="Connection status on LinkedIn -- connected contacts can receive InMail">?</span></th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Row 1: Oracle -->
+                        <tr class="clickable-row" onclick="toggleDetail('detail-1')">
+                            <td>
+                                <span class="mobile-label">Company</span>
+                                <div class="company-cell">
+                                    <div class="company-logo" style="background: linear-gradient(135deg, #EF4444, #DC2626);">O</div>
+                                    <span class="company-name">Oracle</span>
+                                </div>
+                            </td>
+                            <td><span class="mobile-label">Role</span>Senior AI Engineer</td>
+                            <td><span class="mobile-label">Status</span><span class="status-badge rejected">Rejected</span></td>
+                            <td><span class="mobile-label">Applied</span>Jan 23</td>
+                            <td><span class="mobile-label">Resume</span><span class="cell-dim">Master</span></td>
+                            <td><span class="mobile-label">Contact</span><span class="cell-dim">--</span></td>
+                            <td><span class="mobile-label">Outreach</span><span class="cell-fail">No Contact &#10007;</span></td>
+                            <td><span class="mobile-label">LinkedIn</span><span class="cell-fail">Not Connected &#10007;</span></td>
+                            <td><span class="mobile-label">Notes</span><span class="notes-cell">Position filled before review</span></td>
+                        </tr>
+                        <tr class="detail-row" id="detail-1">
+                            <td colspan="9">
+                                <div class="detail-content">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Full Role</span>
+                                        <span class="detail-value">Senior AI Engineer</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Location</span>
+                                        <span class="detail-value">Austin, TX (Hybrid)</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Salary Range</span>
+                                        <span class="detail-value">$140K -- $170K</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Rejection Reason</span>
+                                        <span class="detail-value">Position filled before application was reviewed</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Resume Used</span>
+                                        <span class="detail-value">Master Resume</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Source</span>
+                                        <span class="detail-value">LinkedIn Job Board</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 2: FullStack -->
+                        <tr class="clickable-row" onclick="toggleDetail('detail-2')">
+                            <td>
+                                <span class="mobile-label">Company</span>
+                                <div class="company-cell">
+                                    <div class="company-logo" style="background: linear-gradient(135deg, #6366F1, #4F46E5);">F</div>
+                                    <span class="company-name">FullStack</span>
+                                </div>
+                            </td>
+                            <td><span class="mobile-label">Role</span>AI Engineer</td>
+                            <td><span class="mobile-label">Status</span><span class="status-badge applied">Applied</span></td>
+                            <td><span class="mobile-label">Applied</span>Jan 23</td>
+                            <td><span class="mobile-label">Resume</span><span class="cell-dim">Master</span></td>
+                            <td><span class="mobile-label">Contact</span><span class="cell-dim">--</span></td>
+                            <td><span class="mobile-label">Outreach</span><span class="cell-pending">Pending &#9203;</span></td>
+                            <td><span class="mobile-label">LinkedIn</span><span class="cell-pending">Requested &#9203;</span></td>
+                            <td><span class="mobile-label">Notes</span><span class="notes-cell">Resume scored 82% match</span></td>
+                        </tr>
+                        <tr class="detail-row" id="detail-2">
+                            <td colspan="9">
+                                <div class="detail-content">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Full Role</span>
+                                        <span class="detail-value">AI Engineer</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Match Score</span>
+                                        <span class="detail-value">82%</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Status Detail</span>
+                                        <span class="detail-value">No response after 28 days -- follow-up needed</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 3: State Farm -->
+                        <tr class="clickable-row" onclick="toggleDetail('detail-3')">
+                            <td>
+                                <span class="mobile-label">Company</span>
+                                <div class="company-cell">
+                                    <div class="company-logo" style="background: linear-gradient(135deg, #EF4444, #B91C1C);">S</div>
+                                    <span class="company-name">State Farm</span>
+                                </div>
+                            </td>
+                            <td><span class="mobile-label">Role</span>AI Experience Engineer</td>
+                            <td><span class="mobile-label">Status</span><span class="status-badge interviewing">Interviewing</span></td>
+                            <td><span class="mobile-label">Applied</span>Feb 3</td>
+                            <td><span class="mobile-label">Resume</span><span class="tooltip-inline cell-ok" data-tooltip="Resume was automatically tailored for this specific role using the Resume Pipeline">Tailored &#10003;</span></td>
+                            <td><span class="mobile-label">Contact</span>Jordan Lee (Recruiter)</td>
+                            <td><span class="mobile-label">Outreach</span><span class="cell-ok">Sent &#10003;</span></td>
+                            <td><span class="mobile-label">LinkedIn</span><span class="cell-ok">Connected &#10003;</span></td>
+                            <td><span class="mobile-label">Notes</span><span class="notes-cell">HireVue completed, awaiting feedback</span></td>
+                        </tr>
+                        <tr class="detail-row" id="detail-3">
+                            <td colspan="9">
+                                <div class="detail-content">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Full Role</span>
+                                        <span class="detail-value">AI Experience Engineer</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Tailored Resume</span>
+                                        <span class="detail-value">91% match score</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Interview Stage</span>
+                                        <span class="detail-value">HireVue video interview completed Feb 18</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Contact</span>
+                                        <span class="detail-value">Jordan Lee -- Recruiter -- Connected on LinkedIn</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Location</span>
+                                        <span class="detail-value">Bloomington, IL (Remote eligible)</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Next Step</span>
+                                        <span class="detail-value">Awaiting hiring manager feedback</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 4: EY -->
+                        <tr class="clickable-row" onclick="toggleDetail('detail-4')">
+                            <td>
+                                <span class="mobile-label">Company</span>
+                                <div class="company-cell">
+                                    <div class="company-logo" style="background: linear-gradient(135deg, #EAB308, #CA8A04);">E</div>
+                                    <span class="company-name">EY</span>
+                                </div>
+                            </td>
+                            <td><span class="mobile-label">Role</span>Senior App Developer</td>
+                            <td><span class="mobile-label">Status</span><span class="status-badge screening">Screening</span></td>
+                            <td><span class="mobile-label">Applied</span>Feb 19</td>
+                            <td><span class="mobile-label">Resume</span><span class="tooltip-inline cell-ok" data-tooltip="Resume was automatically tailored for this specific role using the Resume Pipeline">Tailored &#10003;</span></td>
+                            <td><span class="mobile-label">Contact</span>Juan D'Amelio (HR)</td>
+                            <td><span class="mobile-label">Outreach</span><span class="cell-ok">Sent &#10003;</span></td>
+                            <td><span class="mobile-label">LinkedIn</span><span class="cell-pending">Requested &#9203;</span></td>
+                            <td><span class="mobile-label">Notes</span><span class="notes-cell">Phone screen scheduled</span></td>
+                        </tr>
+                        <tr class="detail-row" id="detail-4">
+                            <td colspan="9">
+                                <div class="detail-content">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Full Role</span>
+                                        <span class="detail-value">Senior Application Developer -- AI/ML</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Tailored Resume</span>
+                                        <span class="detail-value">84% match score</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Next Step</span>
+                                        <span class="detail-value">Phone screen with Juan D'Amelio</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 5: Prosum -->
+                        <tr class="clickable-row" onclick="toggleDetail('detail-5')">
+                            <td>
+                                <span class="mobile-label">Company</span>
+                                <div class="company-cell">
+                                    <div class="company-logo" style="background: linear-gradient(135deg, #10B981, #059669);">P</div>
+                                    <span class="company-name">Prosum</span>
+                                </div>
+                            </td>
+                            <td><span class="mobile-label">Role</span>AI/ML Engineer</td>
+                            <td><span class="mobile-label">Status</span><span class="status-badge screening">Screening</span></td>
+                            <td><span class="mobile-label">Applied</span>Feb 19</td>
+                            <td><span class="mobile-label">Resume</span><span class="tooltip-inline cell-ok" data-tooltip="Resume was automatically tailored for this specific role using the Resume Pipeline">Tailored &#10003;</span></td>
+                            <td><span class="mobile-label">Contact</span>Amy Reed (Recruiter)</td>
+                            <td><span class="mobile-label">Outreach</span><span class="cell-ok">Sent &#10003;</span></td>
+                            <td><span class="mobile-label">LinkedIn</span><span class="cell-ok">Connected &#10003;</span></td>
+                            <td><span class="mobile-label">Notes</span><span class="notes-cell">Phone screen 02/19</span></td>
+                        </tr>
+                        <tr class="detail-row" id="detail-5">
+                            <td colspan="9">
+                                <div class="detail-content">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Full Role</span>
+                                        <span class="detail-value">AI/ML Engineer</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Tailored Resume</span>
+                                        <span class="detail-value">88% match score</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Phone Screen</span>
+                                        <span class="detail-value">Completed Feb 19 with Amy Reed</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 6: Deloitte -->
+                        <tr class="clickable-row" onclick="toggleDetail('detail-6')">
+                            <td>
+                                <span class="mobile-label">Company</span>
+                                <div class="company-cell">
+                                    <div class="company-logo" style="background: linear-gradient(135deg, #0F172A, #334155);">D</div>
+                                    <span class="company-name">Deloitte</span>
+                                </div>
+                            </td>
+                            <td><span class="mobile-label">Role</span>ML Engineer</td>
+                            <td><span class="mobile-label">Status</span><span class="status-badge applied">Applied</span></td>
+                            <td><span class="mobile-label">Applied</span>Feb 10</td>
+                            <td><span class="mobile-label">Resume</span><span class="tooltip-inline cell-ok" data-tooltip="Resume was automatically tailored for this specific role using the Resume Pipeline">Tailored &#10003;</span></td>
+                            <td><span class="mobile-label">Contact</span>Christy Lepley (Manager)</td>
+                            <td><span class="mobile-label">Outreach</span><span class="cell-pending">Pending &#9203;</span></td>
+                            <td><span class="mobile-label">LinkedIn</span><span class="cell-fail">Not Connected &#10007;</span></td>
+                            <td><span class="mobile-label">Notes</span><span class="notes-cell">High priority target</span></td>
+                        </tr>
+                        <tr class="detail-row" id="detail-6">
+                            <td colspan="9">
+                                <div class="detail-content">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Full Role</span>
+                                        <span class="detail-value">Machine Learning Engineer -- Consulting</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Tailored Resume</span>
+                                        <span class="detail-value">79% match score</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Priority</span>
+                                        <span class="detail-value">High -- strong brand, competitive comp</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 7: Anthropic -->
+                        <tr class="clickable-row" onclick="toggleDetail('detail-7')">
+                            <td>
+                                <span class="mobile-label">Company</span>
+                                <div class="company-cell">
+                                    <div class="company-logo" style="background: linear-gradient(135deg, #D97706, #B45309);">A</div>
+                                    <span class="company-name">Anthropic</span>
+                                </div>
+                            </td>
+                            <td><span class="mobile-label">Role</span>AI Researcher</td>
+                            <td><span class="mobile-label">Status</span><span class="status-badge applied">Applied</span></td>
+                            <td><span class="mobile-label">Applied</span>Feb 12</td>
+                            <td><span class="mobile-label">Resume</span><span class="cell-dim">Master</span></td>
+                            <td><span class="mobile-label">Contact</span><span class="cell-no-contact">No contact found</span></td>
+                            <td><span class="mobile-label">Outreach</span><span class="cell-fail">No Contact &#10007;</span></td>
+                            <td><span class="mobile-label">LinkedIn</span><span class="cell-fail">Not Connected &#10007;</span></td>
+                            <td><span class="mobile-label">Notes</span><span class="notes-cell">No public contact found</span></td>
+                        </tr>
+                        <tr class="detail-row" id="detail-7">
+                            <td colspan="9">
+                                <div class="detail-content">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Full Role</span>
+                                        <span class="detail-value">AI Researcher -- Safety & Alignment</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Contact Status</span>
+                                        <span class="detail-value">Agent searched LinkedIn, company page -- no recruiter found</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Next Step</span>
+                                        <span class="detail-value">Monitor for recruiter contact info</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 8: Condoit -->
+                        <tr class="clickable-row" onclick="toggleDetail('detail-8')">
+                            <td>
+                                <span class="mobile-label">Company</span>
+                                <div class="company-cell">
+                                    <div class="company-logo" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);">C</div>
+                                    <span class="company-name">Condoit</span>
+                                </div>
+                            </td>
+                            <td><span class="mobile-label">Role</span>Full-Stack Engineer</td>
+                            <td><span class="mobile-label">Status</span><span class="status-badge screening">Screening</span></td>
+                            <td><span class="mobile-label">Applied</span>Feb 15</td>
+                            <td><span class="mobile-label">Resume</span><span class="tooltip-inline cell-ok" data-tooltip="Resume was automatically tailored for this specific role using the Resume Pipeline">Tailored &#10003;</span></td>
+                            <td><span class="mobile-label">Contact</span>Nathan Noblitt (Recruiter)</td>
+                            <td><span class="mobile-label">Outreach</span><span class="cell-ok">Sent &#10003;</span></td>
+                            <td><span class="mobile-label">LinkedIn</span><span class="cell-ok">Connected &#10003;</span></td>
+                            <td><span class="mobile-label">Notes</span><span class="notes-cell">Active -- strong fit</span></td>
+                        </tr>
+                        <tr class="detail-row" id="detail-8">
+                            <td colspan="9">
+                                <div class="detail-content">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Full Role</span>
+                                        <span class="detail-value">Full-Stack Engineer -- AI Products</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Tailored Resume</span>
+                                        <span class="detail-value">87% match score</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Fit Assessment</span>
+                                        <span class="detail-value">Strong fit -- tech stack alignment on React, TypeScript, Python</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 9: AllState -->
+                        <tr class="clickable-row" onclick="toggleDetail('detail-9')">
+                            <td>
+                                <span class="mobile-label">Company</span>
+                                <div class="company-cell">
+                                    <div class="company-logo" style="background: linear-gradient(135deg, #3B82F6, #2563EB);">A</div>
+                                    <span class="company-name">AllState</span>
+                                </div>
+                            </td>
+                            <td><span class="mobile-label">Role</span>AI Engineer</td>
+                            <td><span class="mobile-label">Status</span><span class="status-badge applied">Applied</span></td>
+                            <td><span class="mobile-label">Applied</span>Feb 5</td>
+                            <td><span class="mobile-label">Resume</span><span class="cell-dim">Master</span></td>
+                            <td><span class="mobile-label">Contact</span>Andrea Bedford (Manager)</td>
+                            <td><span class="mobile-label">Outreach</span><span class="cell-pending">Pending &#9203;</span></td>
+                            <td><span class="mobile-label">LinkedIn</span><span class="cell-pending">Requested &#9203;</span></td>
+                            <td><span class="mobile-label">Notes</span><span class="notes-cell">Awaiting response</span></td>
+                        </tr>
+                        <tr class="detail-row" id="detail-9">
+                            <td colspan="9">
+                                <div class="detail-content">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Full Role</span>
+                                        <span class="detail-value">AI Engineer -- Claims Automation</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Contact</span>
+                                        <span class="detail-value">Andrea Bedford -- Engineering Manager</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Status</span>
+                                        <span class="detail-value">LinkedIn request sent, awaiting acceptance</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 10: OpenAI -->
+                        <tr class="clickable-row" onclick="toggleDetail('detail-10')">
+                            <td>
+                                <span class="mobile-label">Company</span>
+                                <div class="company-cell">
+                                    <div class="company-logo" style="background: linear-gradient(135deg, #0F172A, #334155);">O</div>
+                                    <span class="company-name">OpenAI</span>
+                                </div>
+                            </td>
+                            <td><span class="mobile-label">Role</span>Solutions Engineer</td>
+                            <td><span class="mobile-label">Status</span><span class="status-badge researching">Researching</span></td>
+                            <td><span class="mobile-label">Applied</span><span class="cell-dim">--</span></td>
+                            <td><span class="mobile-label">Resume</span><span class="cell-dim">--</span></td>
+                            <td><span class="mobile-label">Contact</span><span class="cell-dim">--</span></td>
+                            <td><span class="mobile-label">Outreach</span><span class="cell-dim">--</span></td>
+                            <td><span class="mobile-label">LinkedIn</span><span class="cell-dim">--</span></td>
+                            <td><span class="mobile-label">Notes</span><span class="notes-cell">Identified, not yet applied</span></td>
+                        </tr>
+                        <tr class="detail-row" id="detail-10">
+                            <td colspan="9">
+                                <div class="detail-content">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Full Role</span>
+                                        <span class="detail-value">Solutions Engineer -- API & Integrations</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Status</span>
+                                        <span class="detail-value">Agent identified role, pending review before applying</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Location</span>
+                                        <span class="detail-value">San Francisco, CA (On-site)</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-icon search">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+
+        <!-- ===================== TAB 2: RESUMES ===================== -->
+        <div id="tab-resumes" class="tab-content">
+
+            <div class="resume-section-title">Master Resume</div>
+            <div class="master-resume-card">
+                <div>
+                    <div class="master-resume-info">
+                        <h3>Austin Johnson -- Master Resume</h3>
+                        <div class="master-resume-meta">Last updated: Feb 1, 2026</div>
                     </div>
-                    <div class="timeline-content">
-                        <div class="timeline-text">Found new role: <strong>Senior ML Engineer at Cohere</strong><span class="timeline-badge fit">94% fit</span></div>
-                        <div class="timeline-time">2 hours ago</div>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-icon email">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    </div>
-                    <div class="timeline-content">
-                        <div class="timeline-text">Drafted outreach to <strong>Anthropic</strong> recruiting team -- awaiting Mira's approval</div>
-                        <div class="timeline-time">3 hours ago</div>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-icon sent">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                    </div>
-                    <div class="timeline-content">
-                        <div class="timeline-text">Sent follow-up to <strong>Stripe</strong> (Dana Kim) -- no response after 5 days</div>
-                        <div class="timeline-time">1 day ago</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">LLMs</span>
+                        <span class="skill-tag">RAG</span>
+                        <span class="skill-tag">Agentic Systems</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">TypeScript</span>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-icon applied">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <div class="master-resume-actions">
+                    <a href="#" class="btn">View PDF</a>
+                    <a href="#" class="btn btn-primary">Download</a>
+                </div>
+            </div>
+
+            <div class="resume-section-title">Tailored Resumes</div>
+            <div class="tailored-grid">
+                <!-- State Farm -->
+                <div class="tailored-card">
+                    <div class="tailored-card-header">
+                        <span class="tailored-company">State Farm</span>
+                        <span class="match-score">91% match</span>
                     </div>
-                    <div class="timeline-content">
-                        <div class="timeline-text">Application submitted: <strong>Meta AI Research Engineer</strong></div>
-                        <div class="timeline-time">1 day ago</div>
+                    <div class="tailored-role">AI Experience Engineer</div>
+                    <div class="tailored-meta">
+                        <span>Generated Feb 2, 2026</span>
+                        <span class="status-badge interviewing">Applied with this</span>
+                    </div>
+                    <div class="tailored-actions">
+                        <span class="ai-label">Generated by Resume Pipeline</span>
+                        <a href="#" class="btn btn-sm">View PDF</a>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-icon interview">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+
+                <!-- EY -->
+                <div class="tailored-card">
+                    <div class="tailored-card-header">
+                        <span class="tailored-company">EY</span>
+                        <span class="match-score">84% match</span>
                     </div>
-                    <div class="timeline-content">
-                        <div class="timeline-text">Interview scheduled: <strong>Google DeepMind</strong> -- Monday Feb 24, 2:00 PM</div>
-                        <div class="timeline-time">2 days ago</div>
+                    <div class="tailored-role">Senior App Developer</div>
+                    <div class="tailored-meta">
+                        <span>Generated Feb 18, 2026</span>
+                        <span class="status-badge applied">Applied with this</span>
+                    </div>
+                    <div class="tailored-actions">
+                        <span class="ai-label">Generated by Resume Pipeline</span>
+                        <a href="#" class="btn btn-sm">View PDF</a>
+                    </div>
+                </div>
+
+                <!-- Prosum -->
+                <div class="tailored-card">
+                    <div class="tailored-card-header">
+                        <span class="tailored-company">Prosum</span>
+                        <span class="match-score">88% match</span>
+                    </div>
+                    <div class="tailored-role">AI/ML Engineer</div>
+                    <div class="tailored-meta">
+                        <span>Generated Feb 18, 2026</span>
+                        <span class="status-badge applied">Applied with this</span>
+                    </div>
+                    <div class="tailored-actions">
+                        <span class="ai-label">Generated by Resume Pipeline</span>
+                        <a href="#" class="btn btn-sm">View PDF</a>
+                    </div>
+                </div>
+
+                <!-- Condoit -->
+                <div class="tailored-card">
+                    <div class="tailored-card-header">
+                        <span class="tailored-company">Condoit</span>
+                        <span class="match-score">87% match</span>
+                    </div>
+                    <div class="tailored-role">Full-Stack Engineer</div>
+                    <div class="tailored-meta">
+                        <span>Generated Feb 14, 2026</span>
+                        <span class="status-badge applied">Applied with this</span>
+                    </div>
+                    <div class="tailored-actions">
+                        <span class="ai-label">Generated by Resume Pipeline</span>
+                        <a href="#" class="btn btn-sm">View PDF</a>
+                    </div>
+                </div>
+
+                <!-- Deloitte -->
+                <div class="tailored-card">
+                    <div class="tailored-card-header">
+                        <span class="tailored-company">Deloitte</span>
+                        <span class="match-score medium">79% match</span>
+                    </div>
+                    <div class="tailored-role">ML Engineer</div>
+                    <div class="tailored-meta">
+                        <span>Generated Feb 9, 2026</span>
+                        <span class="status-badge applied">Applied with this</span>
+                    </div>
+                    <div class="tailored-actions">
+                        <span class="ai-label">Generated by Resume Pipeline</span>
+                        <a href="#" class="btn btn-sm">View PDF</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- New Jobs Found -->
-        <div class="section-header">
-            <h2>New Jobs Found For You</h2>
+        <!-- ===================== TAB 3: CONTACTS ===================== -->
+        <div id="tab-contacts" class="tab-content">
+            <div class="contact-grid">
+
+                <!-- Nathan Noblitt -->
+                <div class="contact-card">
+                    <div class="contact-card-header">
+                        <div class="contact-avatar" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);">NN</div>
+                        <div>
+                            <div class="contact-name">Nathan Noblitt</div>
+                            <div class="contact-company">Motion Recruitment -- Recruiter</div>
+                        </div>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-row">
+                            <span class="icon-sm">@</span>
+                            <span>n***@motionrecruitment.com</span>
+                        </div>
+                        <div class="contact-row">
+                            <span class="icon-sm">P</span>
+                            <span>+1-602-***-2102</span>
+                        </div>
+                    </div>
+                    <div class="contact-status-row">
+                        <span class="status-badge contacted">Contacted &#10003;</span>
+                        <span class="status-badge active">Connected</span>
+                    </div>
+                    <div class="contact-last">Last interaction: Feb 15, 2026</div>
+                </div>
+
+                <!-- Jordan Lee -->
+                <div class="contact-card">
+                    <div class="contact-card-header">
+                        <div class="contact-avatar" style="background: linear-gradient(135deg, #EF4444, #B91C1C);">JL</div>
+                        <div>
+                            <div class="contact-name">Jordan Lee</div>
+                            <div class="contact-company">State Farm -- Recruiter</div>
+                        </div>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-row">
+                            <span class="icon-sm">@</span>
+                            <span>j***@statefarm.com</span>
+                        </div>
+                        <div class="contact-row">
+                            <span class="icon-sm">P</span>
+                            <span>+1-309-***-4518</span>
+                        </div>
+                    </div>
+                    <div class="contact-status-row">
+                        <span class="status-badge contacted">Contacted &#10003;</span>
+                        <span class="status-badge active">Connected</span>
+                    </div>
+                    <div class="contact-last">Last interaction: Feb 3, 2026</div>
+                </div>
+
+                <!-- Juan D'Amelio -->
+                <div class="contact-card">
+                    <div class="contact-card-header">
+                        <div class="contact-avatar" style="background: linear-gradient(135deg, #EAB308, #CA8A04);">JD</div>
+                        <div>
+                            <div class="contact-name">Juan D'Amelio</div>
+                            <div class="contact-company">EY -- HR Manager</div>
+                        </div>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-row">
+                            <span class="icon-sm">@</span>
+                            <span>j***@ey.com</span>
+                        </div>
+                        <div class="contact-row">
+                            <span class="icon-sm">P</span>
+                            <span>+1-214-***-7733</span>
+                        </div>
+                    </div>
+                    <div class="contact-status-row">
+                        <span class="status-badge contacted">Contacted &#10003;</span>
+                        <span class="status-badge pending">Requested</span>
+                    </div>
+                    <div class="contact-last">Last interaction: Feb 19, 2026</div>
+                </div>
+
+                <!-- Amy Reed -->
+                <div class="contact-card">
+                    <div class="contact-card-header">
+                        <div class="contact-avatar" style="background: linear-gradient(135deg, #10B981, #059669);">AR</div>
+                        <div>
+                            <div class="contact-name">Amy Reed</div>
+                            <div class="contact-company">Prosum -- Recruiter</div>
+                        </div>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-row">
+                            <span class="icon-sm">@</span>
+                            <span>a***@prosum.com</span>
+                        </div>
+                        <div class="contact-row">
+                            <span class="icon-sm">P</span>
+                            <span>+1-480-***-9001</span>
+                        </div>
+                    </div>
+                    <div class="contact-status-row">
+                        <span class="status-badge contacted">Contacted &#10003;</span>
+                        <span class="status-badge active">Connected</span>
+                    </div>
+                    <div class="contact-last">Last interaction: Feb 19, 2026</div>
+                </div>
+
+                <!-- Christy Lepley -->
+                <div class="contact-card">
+                    <div class="contact-card-header">
+                        <div class="contact-avatar" style="background: linear-gradient(135deg, #0F172A, #334155);">CL</div>
+                        <div>
+                            <div class="contact-name">Christy Lepley</div>
+                            <div class="contact-company">Deloitte -- Senior Manager</div>
+                        </div>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-row">
+                            <span class="icon-sm">@</span>
+                            <span>c***@deloitte.com</span>
+                        </div>
+                        <div class="contact-row">
+                            <span class="icon-sm">P</span>
+                            <span>+1-312-***-6650</span>
+                        </div>
+                    </div>
+                    <div class="contact-status-row">
+                        <span class="status-badge pending">Pending</span>
+                        <span class="status-badge no-response">Not Connected</span>
+                    </div>
+                    <div class="contact-last">No interaction yet</div>
+                </div>
+
+                <!-- Andrea Bedford -->
+                <div class="contact-card">
+                    <div class="contact-card-header">
+                        <div class="contact-avatar" style="background: linear-gradient(135deg, #3B82F6, #2563EB);">AB</div>
+                        <div>
+                            <div class="contact-name">Andrea Bedford</div>
+                            <div class="contact-company">AllState -- Engineering Manager</div>
+                        </div>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-row">
+                            <span class="icon-sm">@</span>
+                            <span>a***@allstate.com</span>
+                        </div>
+                        <div class="contact-row">
+                            <span class="icon-sm">P</span>
+                            <span>+1-847-***-3190</span>
+                        </div>
+                    </div>
+                    <div class="contact-status-row">
+                        <span class="status-badge pending">Pending</span>
+                        <span class="status-badge pending">Requested</span>
+                    </div>
+                    <div class="contact-last">No interaction yet</div>
+                </div>
+
+            </div>
         </div>
-        <div class="job-grid">
-            <!-- Job Card 1: Cohere -->
-            <div class="job-card">
-                <div class="job-card-header">
-                    <div class="job-company-logo" style="background: linear-gradient(135deg, #6366F1, #4F46E5);">C</div>
-                    <span class="job-fit-badge">94% fit</span>
+
+        <!-- ===================== TAB 4: OUTREACH ===================== -->
+        <div id="tab-outreach" class="tab-content">
+
+            <!-- Pending Actions -->
+            <div class="pending-actions">
+                <h3>Pending Actions</h3>
+                <div class="pending-item">
+                    <span class="pending-dot red"></span>
+                    <span><strong>Deloitte</strong> follow-up overdue -- sent Feb 10, 10 days ago with no response</span>
                 </div>
-                <span class="new-badge">New today</span>
-                <div class="job-company-name">Cohere</div>
-                <div class="job-title">Senior ML Engineer</div>
-                <div class="job-meta">
-                    <span class="job-meta-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        Remote
-                    </span>
-                    <span class="job-meta-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-                        Full-time
-                    </span>
+                <div class="pending-item">
+                    <span class="pending-dot yellow"></span>
+                    <span><strong>FullStack</strong> follow-up due -- sent Jan 23, no response received</span>
                 </div>
-                <div class="job-actions">
-                    <button class="btn btn-sm">View Details</button>
-                    <button class="btn btn-primary btn-sm">Tell agent to apply</button>
+                <div class="pending-item">
+                    <span class="pending-dot green"></span>
+                    <span><strong>EY</strong> -- awaiting response, sent Feb 19 -- on track</span>
                 </div>
             </div>
 
-            <!-- Job Card 2: OpenAI -->
-            <div class="job-card">
-                <div class="job-card-header">
-                    <div class="job-company-logo" style="background: linear-gradient(135deg, #0F172A, #334155);">O</div>
-                    <span class="job-fit-badge">89% fit</span>
-                </div>
-                <span class="new-badge">New today</span>
-                <div class="job-company-name">OpenAI</div>
-                <div class="job-title">Research Engineer</div>
-                <div class="job-meta">
-                    <span class="job-meta-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        San Francisco
-                    </span>
-                    <span class="job-meta-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-                        Full-time
-                    </span>
-                </div>
-                <div class="job-actions">
-                    <button class="btn btn-sm">View Details</button>
-                    <button class="btn btn-primary btn-sm">Tell agent to apply</button>
-                </div>
-            </div>
+            <!-- Outreach Timeline -->
+            <div class="outreach-timeline">
 
-            <!-- Job Card 3: Mistral -->
-            <div class="job-card">
-                <div class="job-card-header">
-                    <div class="job-company-logo" style="background: linear-gradient(135deg, #F59E0B, #D97706);">M</div>
-                    <span class="job-fit-badge">86% fit</span>
+                <div class="outreach-item">
+                    <span class="outreach-date">Feb 19</span>
+                    <span class="outreach-type">&#128231;</span>
+                    <span class="outreach-direction">&rarr;</span>
+                    <div class="outreach-body">
+                        <div class="outreach-summary">Email sent to <strong>Juan D'Amelio</strong> at EY re: Senior App Developer role</div>
+                    </div>
+                    <span class="status-badge no-response">No Response</span>
                 </div>
-                <span class="new-badge">New today</span>
-                <div class="job-company-name">Mistral</div>
-                <div class="job-title">ML Infrastructure</div>
-                <div class="job-meta">
-                    <span class="job-meta-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        Remote
-                    </span>
-                    <span class="job-meta-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-                        Full-time
-                    </span>
+
+                <div class="outreach-item">
+                    <span class="outreach-date">Feb 19</span>
+                    <span class="outreach-type">&#128231;</span>
+                    <span class="outreach-direction">&rarr;</span>
+                    <div class="outreach-body">
+                        <div class="outreach-summary">Email sent to <strong>Amy Reed</strong> at Prosum re: AI/ML Engineer role</div>
+                    </div>
+                    <span class="status-badge replied">Replied &#10003;</span>
                 </div>
-                <div class="job-actions">
-                    <button class="btn btn-sm">View Details</button>
-                    <button class="btn btn-primary btn-sm">Tell agent to apply</button>
+
+                <div class="outreach-item">
+                    <span class="outreach-date">Feb 19</span>
+                    <span class="outreach-type">&#128222;</span>
+                    <span class="outreach-direction">&larr;</span>
+                    <div class="outreach-body">
+                        <div class="outreach-summary">Phone screen with <strong>Amy Reed</strong> at Prosum -- AI/ML Engineer position</div>
+                    </div>
+                    <span class="status-badge completed">Completed</span>
                 </div>
+
+                <div class="outreach-item">
+                    <span class="outreach-date">Feb 15</span>
+                    <span class="outreach-type">&#128231;</span>
+                    <span class="outreach-direction">&rarr;</span>
+                    <div class="outreach-body">
+                        <div class="outreach-summary">Email sent to <strong>Nathan Noblitt</strong> at Condoit re: Full-Stack Engineer role</div>
+                    </div>
+                    <span class="status-badge replied">Replied &#10003;</span>
+                </div>
+
+                <div class="outreach-item">
+                    <span class="outreach-date">Feb 10</span>
+                    <span class="outreach-type">&#128188;</span>
+                    <span class="outreach-direction">&rarr;</span>
+                    <div class="outreach-body">
+                        <div class="outreach-summary">LinkedIn connection request sent to <strong>Christy Lepley</strong> at Deloitte</div>
+                    </div>
+                    <span class="status-badge pending">Pending &#9203;</span>
+                </div>
+
+                <div class="outreach-item">
+                    <span class="outreach-date">Feb 5</span>
+                    <span class="outreach-type">&#128188;</span>
+                    <span class="outreach-direction">&rarr;</span>
+                    <div class="outreach-body">
+                        <div class="outreach-summary">LinkedIn connection request sent to <strong>Andrea Bedford</strong> at AllState</div>
+                    </div>
+                    <span class="status-badge accepted">Accepted &#10003;</span>
+                </div>
+
+                <div class="outreach-item">
+                    <span class="outreach-date">Feb 3</span>
+                    <span class="outreach-type">&#128231;</span>
+                    <span class="outreach-direction">&rarr;</span>
+                    <div class="outreach-body">
+                        <div class="outreach-summary">Cold email sent to <strong>Jordan Lee</strong> at State Farm re: AI Experience Engineer role</div>
+                    </div>
+                    <span class="status-badge replied">Replied &#10003;</span>
+                </div>
+
+                <div class="outreach-item">
+                    <span class="outreach-date">Feb 3</span>
+                    <span class="outreach-type">&#128222;</span>
+                    <span class="outreach-direction">&larr;</span>
+                    <div class="outreach-body">
+                        <div class="outreach-summary">Phone screen with <strong>Jordan Lee</strong> at State Farm -- AI Experience Engineer position</div>
+                    </div>
+                    <span class="status-badge completed">Completed</span>
+                </div>
+
+                <div class="outreach-item">
+                    <span class="outreach-date">Jan 23</span>
+                    <span class="outreach-type">&#128231;</span>
+                    <span class="outreach-direction">&rarr;</span>
+                    <div class="outreach-body">
+                        <div class="outreach-summary">Email sent to <strong>FullStack</strong> talent team -- AI Engineer application follow-up</div>
+                    </div>
+                    <span class="status-badge no-response">No Response</span>
+                </div>
+
             </div>
         </div>
 
-    </div>
+        <!-- ===================== TAB 5: ACTIVITY ===================== -->
+        <div id="tab-activity" class="tab-content">
+
+            <!-- Weekly Stats Chart -->
+            <div class="chart-section">
+                <h3>Weekly Activity</h3>
+                <div class="bar-chart">
+
+                    <!-- Week of Jan 18 -->
+                    <div class="chart-row">
+                        <div class="chart-row-label">Week of Jan 18</div>
+                        <div class="chart-bars">
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">Added</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill added" style="width: 96%;"></div></div>
+                                <span class="chart-bar-value">24</span>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">Applied</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill applied" style="width: 0%;"></div></div>
+                                <span class="chart-bar-value">0</span>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">LinkedIn</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill linkedin" style="width: 0%;"></div></div>
+                                <span class="chart-bar-value">0</span>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">Emails</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill emails" style="width: 0%;"></div></div>
+                                <span class="chart-bar-value">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Week of Jan 25 -->
+                    <div class="chart-row">
+                        <div class="chart-row-label">Week of Jan 25</div>
+                        <div class="chart-bars">
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">Added</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill added" style="width: 60%;"></div></div>
+                                <span class="chart-bar-value">15</span>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">Applied</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill applied" style="width: 36%;"></div></div>
+                                <span class="chart-bar-value">9</span>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">LinkedIn</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill linkedin" style="width: 40%;"></div></div>
+                                <span class="chart-bar-value">10</span>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">Emails</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill emails" style="width: 32%;"></div></div>
+                                <span class="chart-bar-value">8</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Week of Feb 1 -->
+                    <div class="chart-row">
+                        <div class="chart-row-label">Week of Feb 1</div>
+                        <div class="chart-bars">
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">Added</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill added" style="width: 100%;"></div></div>
+                                <span class="chart-bar-value">25</span>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">Applied</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill applied" style="width: 88%;"></div></div>
+                                <span class="chart-bar-value">22</span>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">LinkedIn</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill linkedin" style="width: 88%;"></div></div>
+                                <span class="chart-bar-value">22</span>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">Emails</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill emails" style="width: 56%;"></div></div>
+                                <span class="chart-bar-value">14</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Week of Feb 8 -->
+                    <div class="chart-row">
+                        <div class="chart-row-label">Week of Feb 8</div>
+                        <div class="chart-bars">
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">Added</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill added" style="width: 72%;"></div></div>
+                                <span class="chart-bar-value">18</span>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">Applied</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill applied" style="width: 48%;"></div></div>
+                                <span class="chart-bar-value">12</span>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">LinkedIn</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill linkedin" style="width: 60%;"></div></div>
+                                <span class="chart-bar-value">15</span>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">Emails</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill emails" style="width: 44%;"></div></div>
+                                <span class="chart-bar-value">11</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Week of Feb 15 -->
+                    <div class="chart-row">
+                        <div class="chart-row-label">Week of Feb 15</div>
+                        <div class="chart-bars">
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">Added</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill added" style="width: 48%;"></div></div>
+                                <span class="chart-bar-value">12</span>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">Applied</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill applied" style="width: 32%;"></div></div>
+                                <span class="chart-bar-value">8</span>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">LinkedIn</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill linkedin" style="width: 40%;"></div></div>
+                                <span class="chart-bar-value">10</span>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <span class="chart-bar-label">Emails</span>
+                                <div class="chart-bar-track"><div class="chart-bar-fill emails" style="width: 36%;"></div></div>
+                                <span class="chart-bar-value">9</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="chart-legend">
+                    <div class="legend-item"><span class="legend-dot added"></span> Jobs Added</div>
+                    <div class="legend-item"><span class="legend-dot applied"></span> Applied</div>
+                    <div class="legend-item"><span class="legend-dot linkedin"></span> LinkedIn</div>
+                    <div class="legend-item"><span class="legend-dot emails"></span> Emails</div>
+                </div>
+            </div>
+
+            <!-- Activity Log -->
+            <div class="activity-log">
+                <div class="activity-log-header">Recent Agent Actions</div>
+
+                <div class="log-item">
+                    <span class="log-date">Feb 20</span>
+                    <span class="log-icon">&#128196;</span>
+                    <span>Agent generated tailored resume for Prosum (88% match)</span>
+                </div>
+
+                <div class="log-item">
+                    <span class="log-date">Feb 19</span>
+                    <span class="log-icon">&#128231;</span>
+                    <span>Agent sent cold email to EY contact</span>
+                </div>
+
+                <div class="log-item">
+                    <span class="log-date">Feb 18</span>
+                    <span class="log-icon">&#128269;</span>
+                    <span>Agent identified 3 new matching roles</span>
+                </div>
+
+                <div class="log-item">
+                    <span class="log-date">Feb 15</span>
+                    <span class="log-icon">&#128279;</span>
+                    <span>Agent linked Nathan Noblitt to Condoit job</span>
+                </div>
+
+                <div class="log-item">
+                    <span class="log-date">Feb 10</span>
+                    <span class="log-icon">&#128188;</span>
+                    <span>Agent sent LinkedIn request to Christy Lepley</span>
+                </div>
+
+                <div class="log-item">
+                    <span class="log-date">Feb 5</span>
+                    <span class="log-icon">&#128188;</span>
+                    <span>Agent sent LinkedIn request to Andrea Bedford</span>
+                </div>
+
+                <div class="log-item">
+                    <span class="log-date">Feb 3</span>
+                    <span class="log-icon">&#128231;</span>
+                    <span>Agent drafted and sent cold email to State Farm</span>
+                </div>
+
+                <div class="log-item">
+                    <span class="log-date">Feb 2</span>
+                    <span class="log-icon">&#128196;</span>
+                    <span>Agent generated tailored resume for State Farm (91% match)</span>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(function(el) {
+                el.classList.remove('active');
+            });
+            // Deactivate all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(function(el) {
+                el.classList.remove('active');
+            });
+            // Show selected tab
+            document.getElementById('tab-' + tabName).classList.add('active');
+            // Activate the clicked button
+            event.currentTarget.classList.add('active');
+        }
+
+        // Toggle detail row expansion
+        function toggleDetail(id) {
+            var row = document.getElementById(id);
+            if (row) {
+                row.classList.toggle('open');
+            }
+        }
+    </script>
 
 </body>
 </html>
