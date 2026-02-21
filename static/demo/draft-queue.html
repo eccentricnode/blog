@@ -479,6 +479,84 @@
             font-size: 14px;
         }
 
+        /* Cold email badge */
+        .cold-email-badge {
+            display: inline-block;
+            background: var(--slate-100);
+            color: var(--slate-600);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 5px;
+            margin-left: 12px;
+            vertical-align: middle;
+        }
+
+        /* Tooltip component */
+        .tooltip-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--slate-200);
+            color: var(--slate-500);
+            font-size: 10px;
+            font-weight: 700;
+            cursor: help;
+            position: relative;
+            vertical-align: middle;
+            margin-left: 4px;
+            line-height: 1;
+        }
+
+        .tooltip-icon::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1.5;
+            padding: 8px 12px;
+            border-radius: 6px;
+            white-space: normal;
+            max-width: 260px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.15s ease, visibility 0.15s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .tooltip-icon::before {
+            content: '';
+            position: absolute;
+            bottom: calc(100% + 2px);
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #1e293b;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.15s ease, visibility 0.15s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .tooltip-icon:hover::after,
+        .tooltip-icon:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
+
         /* Hamburger toggle */
         .hamburger {
             display: none;
@@ -602,7 +680,7 @@
                 </span>
                 Dashboard
             </a>
-            <a href="#">
+            <a href="client-view.html">
                 <span class="nav-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 </span>
@@ -629,9 +707,9 @@
             </a>
         </nav>
         <div class="sidebar-user">
-            <div class="user-avatar">SM</div>
+            <div class="user-avatar">MM</div>
             <div class="user-info">
-                <div class="user-name">Sarah Mitchell</div>
+                <div class="user-name">Mira Malak</div>
                 <div class="user-role">Senior Recruiter</div>
             </div>
         </div>
@@ -640,7 +718,7 @@
     <!-- Main Content -->
     <main class="main">
         <div class="main-header">
-            <h1>Draft Queue</h1>
+            <h1>Draft Queue <span class="tooltip-icon" data-tooltip="AI-written cold emails pending your approval before sending">?</span> <span class="cold-email-badge">Cold Email Outreach System</span></h1>
             <p class="subtitle">7 drafts awaiting your review</p>
         </div>
 
@@ -663,16 +741,17 @@
                     </span>
                     <span class="draft-company">Anthropic</span>
                     <span class="draft-contact">&middot; Recruiting Team Lead</span>
+                    <span class="tooltip-icon" data-tooltip="Sourced from job board + LinkedIn -- verified before outreach">?</span>
                 </div>
                 <div class="draft-meta-right">
                     <span class="type-badge">Initial Outreach</span>
-                    <span class="fit-badge high">94% match</span>
+                    <span class="fit-badge high">94% match <span class="tooltip-icon" data-tooltip="AI-calculated match between the candidate's profile and the job requirements">?</span></span>
                 </div>
             </div>
 
             <div class="draft-subject">Experienced ML Engineer -- Claude Safety & Capabilities team</div>
             <div class="draft-preview">
-                Hi Sarah, I'm reaching out on behalf of Marcus Webb, an ML engineer with 7 years building production model pipelines at companies including Scale AI and DeepMind. His experience in reinforcement learning from human feedback and safety-focused model evaluation maps directly to the open role on your Claude Safety & Capabilities team. I'd love to set up a brief conversation to discuss his background...
+                Hi there, I'm reaching out on behalf of Marcus Webb, an ML engineer with 7 years building production model pipelines at companies including Scale AI and DeepMind. His experience in reinforcement learning from human feedback and safety-focused model evaluation maps directly to the open role on your Claude Safety & Capabilities team. I'd love to set up a brief conversation to discuss his background...
             </div>
 
             <div class="draft-details">
@@ -694,6 +773,7 @@
                     <button class="btn btn-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                         Approve & Send
+                        <span class="tooltip-icon" data-tooltip="Sends this cold email immediately from the candidate's connected inbox">?</span>
                     </button>
                     <button class="btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -719,10 +799,11 @@
                     </span>
                     <span class="draft-company">Stripe</span>
                     <span class="draft-contact">&middot; Dana Kim (Engineering Recruiter)</span>
+                    <span class="tooltip-icon" data-tooltip="Sourced from job board + LinkedIn -- verified before outreach">?</span>
                 </div>
                 <div class="draft-meta-right">
                     <span class="type-badge follow-up">Follow-up #1</span>
-                    <span class="fit-badge medium">87% match</span>
+                    <span class="fit-badge medium">87% match <span class="tooltip-icon" data-tooltip="AI-calculated match between the candidate's profile and the job requirements">?</span></span>
                 </div>
             </div>
 
@@ -754,6 +835,7 @@
                     <button class="btn btn-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                         Approve & Send
+                        <span class="tooltip-icon" data-tooltip="Sends this cold email immediately from the candidate's connected inbox">?</span>
                     </button>
                     <button class="btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -779,10 +861,11 @@
                     </span>
                     <span class="draft-company">Linear</span>
                     <span class="draft-contact">&middot; Head of Product</span>
+                    <span class="tooltip-icon" data-tooltip="Sourced from job board + LinkedIn -- verified before outreach">?</span>
                 </div>
                 <div class="draft-meta-right">
                     <span class="type-badge">Initial Outreach</span>
-                    <span class="fit-badge high">91% match</span>
+                    <span class="fit-badge high">91% match <span class="tooltip-icon" data-tooltip="AI-calculated match between the candidate's profile and the job requirements">?</span></span>
                 </div>
             </div>
 
@@ -810,6 +893,7 @@
                     <button class="btn btn-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                         Approve & Send
+                        <span class="tooltip-icon" data-tooltip="Sends this cold email immediately from the candidate's connected inbox">?</span>
                     </button>
                     <button class="btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>

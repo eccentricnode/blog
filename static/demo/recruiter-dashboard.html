@@ -323,6 +323,85 @@
 
         tbody tr:hover {
             background: var(--slate-50);
+            cursor: pointer;
+        }
+
+        .row-arrow {
+            color: var(--slate-400);
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.15s ease;
+        }
+
+        tbody tr:hover .row-arrow {
+            color: var(--blue-600);
+        }
+
+        /* Tooltip component */
+        .tooltip-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--slate-200);
+            color: var(--slate-500);
+            font-size: 10px;
+            font-weight: 700;
+            cursor: help;
+            position: relative;
+            vertical-align: middle;
+            margin-left: 4px;
+            line-height: 1;
+        }
+
+        .tooltip-icon::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1.5;
+            padding: 8px 12px;
+            border-radius: 6px;
+            white-space: nowrap;
+            max-width: 260px;
+            white-space: normal;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.15s ease, visibility 0.15s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .tooltip-icon::before {
+            content: '';
+            position: absolute;
+            bottom: calc(100% + 2px);
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #1e293b;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.15s ease, visibility 0.15s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .tooltip-icon:hover::after,
+        .tooltip-icon:hover::before {
+            opacity: 1;
+            visibility: visible;
         }
 
         .client-name {
@@ -565,7 +644,7 @@
                 </span>
                 Dashboard
             </a>
-            <a href="#">
+            <a href="client-view.html">
                 <span class="nav-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 </span>
@@ -592,9 +671,9 @@
             </a>
         </nav>
         <div class="sidebar-user">
-            <div class="user-avatar">SM</div>
+            <div class="user-avatar">MM</div>
             <div class="user-info">
-                <div class="user-name">Sarah Mitchell</div>
+                <div class="user-name">Mira Malak</div>
                 <div class="user-role">Senior Recruiter</div>
             </div>
         </div>
@@ -603,7 +682,7 @@
     <!-- Main Content -->
     <main class="main">
         <div class="main-header">
-            <h1>Good morning, Sarah. Your agents worked through the night.</h1>
+            <h1>Good morning, Mira. Your agents worked through the night.</h1>
             <p class="subtitle">Thursday, February 20, 2026</p>
         </div>
 
@@ -653,10 +732,11 @@
                         <th>Jobs in Pipeline</th>
                         <th>Last Activity</th>
                         <th>Status</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr onclick="window.location.href='client-view.html'">
                         <td>
                             <div class="client-name-cell">
                                 <div class="client-avatar" style="background: linear-gradient(135deg, #3B82F6, #2563EB);">MW</div>
@@ -667,8 +747,9 @@
                         <td><span class="mobile-label">Jobs in Pipeline</span><span class="jobs-count">8 jobs</span></td>
                         <td><span class="mobile-label">Last Activity</span><span class="last-activity">2 hours ago</span></td>
                         <td><span class="mobile-label">Status</span><span class="status-badge active"><span class="status-dot green"></span> Active</span></td>
+                        <td><span class="row-arrow">View &rarr;</span></td>
                     </tr>
-                    <tr>
+                    <tr onclick="window.location.href='client-view.html'">
                         <td>
                             <div class="client-name-cell">
                                 <div class="client-avatar" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);">PS</div>
@@ -679,8 +760,9 @@
                         <td><span class="mobile-label">Jobs in Pipeline</span><span class="jobs-count">12 jobs</span></td>
                         <td><span class="mobile-label">Last Activity</span><span class="last-activity">4 hours ago</span></td>
                         <td><span class="mobile-label">Status</span><span class="status-badge active"><span class="status-dot green"></span> Active</span></td>
+                        <td><span class="row-arrow">View &rarr;</span></td>
                     </tr>
-                    <tr>
+                    <tr onclick="window.location.href='client-view.html'">
                         <td>
                             <div class="client-name-cell">
                                 <div class="client-avatar" style="background: linear-gradient(135deg, #F59E0B, #D97706);">JL</div>
@@ -691,8 +773,9 @@
                         <td><span class="mobile-label">Jobs in Pipeline</span><span class="jobs-count">5 jobs</span></td>
                         <td><span class="mobile-label">Last Activity</span><span class="last-activity">1 day ago</span></td>
                         <td><span class="mobile-label">Status</span><span class="status-badge pending"><span class="status-dot yellow"></span> Draft Pending</span></td>
+                        <td><span class="row-arrow">View &rarr;</span></td>
                     </tr>
-                    <tr>
+                    <tr onclick="window.location.href='client-view.html'">
                         <td>
                             <div class="client-name-cell">
                                 <div class="client-avatar" style="background: linear-gradient(135deg, #10B981, #059669);">AT</div>
@@ -703,8 +786,9 @@
                         <td><span class="mobile-label">Jobs in Pipeline</span><span class="jobs-count">9 jobs</span></td>
                         <td><span class="mobile-label">Last Activity</span><span class="last-activity">3 hours ago</span></td>
                         <td><span class="mobile-label">Status</span><span class="status-badge active"><span class="status-dot green"></span> Active</span></td>
+                        <td><span class="row-arrow">View &rarr;</span></td>
                     </tr>
-                    <tr>
+                    <tr onclick="window.location.href='client-view.html'">
                         <td>
                             <div class="client-name-cell">
                                 <div class="client-avatar" style="background: linear-gradient(135deg, #EC4899, #DB2777);">CP</div>
@@ -715,6 +799,7 @@
                         <td><span class="mobile-label">Jobs in Pipeline</span><span class="jobs-count">6 jobs</span></td>
                         <td><span class="mobile-label">Last Activity</span><span class="last-activity">6 hours ago</span></td>
                         <td><span class="mobile-label">Status</span><span class="status-badge active"><span class="status-dot green"></span> Active</span></td>
+                        <td><span class="row-arrow">View &rarr;</span></td>
                     </tr>
                 </tbody>
             </table>
