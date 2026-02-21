@@ -409,6 +409,28 @@
             color: var(--slate-900);
         }
 
+        tr.demo-locked {
+            opacity: 0.45;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        tr.demo-locked .row-arrow {
+            display: none;
+        }
+
+        .demo-badge {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            color: var(--slate-400);
+            background: var(--slate-100);
+            border: 1px solid var(--slate-200);
+            border-radius: 4px;
+            padding: 2px 6px;
+            text-transform: uppercase;
+        }
+
         .client-name-cell {
             display: flex;
             align-items: center;
@@ -736,20 +758,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr onclick="window.location.href='client-view.html'">
+                    <tr onclick="window.location.href='client-view.html'" style="cursor:pointer;">
                         <td>
                             <div class="client-name-cell">
-                                <div class="client-avatar" style="background: linear-gradient(135deg, #3B82F6, #2563EB);">MW</div>
-                                <span class="client-name">Marcus Webb</span>
+                                <div class="client-avatar" style="background: linear-gradient(135deg, #3B82F6, #2563EB);">AJ</div>
+                                <span class="client-name">Austin Johnson</span>
                             </div>
                         </td>
-                        <td><span class="mobile-label">Role Seeking</span>Senior ML Engineer</td>
-                        <td><span class="mobile-label">Jobs in Pipeline</span><span class="jobs-count">8 jobs</span></td>
+                        <td><span class="mobile-label">Role Seeking</span>AI / Full-Stack Engineer</td>
+                        <td><span class="mobile-label">Jobs in Pipeline</span><span class="jobs-count">23 jobs</span></td>
                         <td><span class="mobile-label">Last Activity</span><span class="last-activity">2 hours ago</span></td>
                         <td><span class="mobile-label">Status</span><span class="status-badge active"><span class="status-dot green"></span> Active</span></td>
                         <td><span class="row-arrow">View &rarr;</span></td>
                     </tr>
-                    <tr onclick="window.location.href='client-view.html'">
+                    <tr class="demo-locked">
                         <td>
                             <div class="client-name-cell">
                                 <div class="client-avatar" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);">PS</div>
@@ -760,9 +782,9 @@
                         <td><span class="mobile-label">Jobs in Pipeline</span><span class="jobs-count">12 jobs</span></td>
                         <td><span class="mobile-label">Last Activity</span><span class="last-activity">4 hours ago</span></td>
                         <td><span class="mobile-label">Status</span><span class="status-badge active"><span class="status-dot green"></span> Active</span></td>
-                        <td><span class="row-arrow">View &rarr;</span></td>
+                        <td><span class="demo-badge">Demo</span></td>
                     </tr>
-                    <tr onclick="window.location.href='client-view.html'">
+                    <tr class="demo-locked">
                         <td>
                             <div class="client-name-cell">
                                 <div class="client-avatar" style="background: linear-gradient(135deg, #F59E0B, #D97706);">JL</div>
@@ -773,9 +795,9 @@
                         <td><span class="mobile-label">Jobs in Pipeline</span><span class="jobs-count">5 jobs</span></td>
                         <td><span class="mobile-label">Last Activity</span><span class="last-activity">1 day ago</span></td>
                         <td><span class="mobile-label">Status</span><span class="status-badge pending"><span class="status-dot yellow"></span> Draft Pending</span></td>
-                        <td><span class="row-arrow">View &rarr;</span></td>
+                        <td><span class="demo-badge">Demo</span></td>
                     </tr>
-                    <tr onclick="window.location.href='client-view.html'">
+                    <tr class="demo-locked">
                         <td>
                             <div class="client-name-cell">
                                 <div class="client-avatar" style="background: linear-gradient(135deg, #10B981, #059669);">AT</div>
@@ -786,9 +808,9 @@
                         <td><span class="mobile-label">Jobs in Pipeline</span><span class="jobs-count">9 jobs</span></td>
                         <td><span class="mobile-label">Last Activity</span><span class="last-activity">3 hours ago</span></td>
                         <td><span class="mobile-label">Status</span><span class="status-badge active"><span class="status-dot green"></span> Active</span></td>
-                        <td><span class="row-arrow">View &rarr;</span></td>
+                        <td><span class="demo-badge">Demo</span></td>
                     </tr>
-                    <tr onclick="window.location.href='client-view.html'">
+                    <tr class="demo-locked">
                         <td>
                             <div class="client-name-cell">
                                 <div class="client-avatar" style="background: linear-gradient(135deg, #EC4899, #DB2777);">CP</div>
@@ -799,7 +821,7 @@
                         <td><span class="mobile-label">Jobs in Pipeline</span><span class="jobs-count">6 jobs</span></td>
                         <td><span class="mobile-label">Last Activity</span><span class="last-activity">6 hours ago</span></td>
                         <td><span class="mobile-label">Status</span><span class="status-badge active"><span class="status-dot green"></span> Active</span></td>
-                        <td><span class="row-arrow">View &rarr;</span></td>
+                        <td><span class="demo-badge">Demo</span></td>
                     </tr>
                 </tbody>
             </table>
