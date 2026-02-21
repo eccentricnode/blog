@@ -1423,6 +1423,258 @@
             .client-header-actions { flex-direction: column; width: 100%; }
             .client-header-actions .btn { width: 100%; justify-content: center; }
         }
+
+        /* ========== KANBAN BOARD ========== */
+        .kanban-metrics {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .kanban-metrics::-webkit-scrollbar { display: none; }
+        .kanban-metric-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .kanban-metric-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            background: rgba(255,255,255,0.08);
+            padding: 6px 16px;
+            border-radius: 8px;
+            white-space: nowrap;
+        }
+        .kanban-metric-value.highlight {
+            background: #f59e0b;
+            color: #fff;
+        }
+        .kanban-metric-rate {
+            font-size: 11px;
+            color: #94a3b8;
+            white-space: nowrap;
+        }
+        .kanban-metric-arrow {
+            color: #475569;
+            font-size: 18px;
+            padding: 0 12px;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+        .kanban-board {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding-bottom: 16px;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 transparent;
+        }
+        .kanban-board::-webkit-scrollbar { height: 6px; }
+        .kanban-board::-webkit-scrollbar-track { background: transparent; }
+        .kanban-board::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        .kanban-col {
+            min-width: 260px;
+            max-width: 260px;
+            scroll-snap-align: start;
+            flex-shrink: 0;
+        }
+        .kanban-col-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background: var(--slate-50);
+        }
+        .kanban-col-accent {
+            width: 4px;
+            height: 24px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .kanban-col-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate-700);
+        }
+        .kanban-col-count {
+            margin-left: auto;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: var(--slate-200);
+            color: var(--slate-600);
+        }
+        .kanban-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .kanban-card {
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            padding: 14px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .kanban-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: #3b82f6;
+        }
+        .kanban-card-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .kanban-card-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .kanban-card-company {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate-800);
+            line-height: 1.2;
+        }
+        .kanban-card-role {
+            font-size: 12px;
+            color: var(--slate-500);
+            line-height: 1.2;
+        }
+        .kanban-card-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+        .kanban-tag {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .kanban-tag-resume {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+        .kanban-tag-cover {
+            background: #f0fdf4;
+            color: #16a34a;
+        }
+        .kanban-tag-offer {
+            background: #fef9c3;
+            color: #a16207;
+            font-weight: 600;
+        }
+        .kanban-card-contact {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            padding: 6px 0;
+            border-top: 1px solid #f1f5f9;
+        }
+        .kanban-contact-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .kanban-contact-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .kanban-contact-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--slate-700);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .kanban-contact-title {
+            font-size: 11px;
+            color: var(--slate-400);
+        }
+        .kanban-contact-link {
+            color: var(--blue-600);
+            text-decoration: none;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .kanban-card-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 6px;
+            border-top: 1px solid #f1f5f9;
+        }
+        .kanban-outreach {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+        .kanban-outreach-sent {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        .kanban-outreach-pending {
+            background: #fef9c3;
+            color: #a16207;
+        }
+        .kanban-outreach-none {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+        .kanban-card-date {
+            font-size: 11px;
+            color: var(--slate-400);
+        }
+        .kanban-card-reason {
+            font-size: 11px;
+            color: var(--slate-400);
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        /* Kanban accent colors */
+        .accent-slate { background: #94a3b8; }
+        .accent-blue { background: #3b82f6; }
+        .accent-purple { background: #9333ea; }
+        .accent-amber { background: #f59e0b; }
+        .accent-green { background: #22c55e; }
+        .accent-red { background: #ef4444; }
     </style>
 </head>
 <body>
@@ -1516,417 +1768,376 @@
 
         <!-- ===================== TAB 1: PIPELINE ===================== -->
         <div id="tab-pipeline" class="tab-content active">
-            <div class="table-wrap overflow-x">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Company</th>
-                            <th>Role</th>
-                            <th>Status</th>
-                            <th>Applied</th>
-                            <th>Resume</th>
-                            <th>Contact</th>
-                            <th>Outreach<span class="tooltip-icon" data-tooltip="Cold emails and LinkedIn DMs sent on Austin's behalf">?</span></th>
-                            <th>LinkedIn<span class="tooltip-icon" data-tooltip="Connection status on LinkedIn -- connected contacts can receive InMail">?</span></th>
-                            <th>Notes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Row 1: Oracle -->
-                        <tr class="clickable-row" onclick="toggleDetail('detail-1')">
-                            <td>
-                                <span class="mobile-label">Company</span>
-                                <div class="company-cell">
-                                    <div class="company-logo" style="background: linear-gradient(135deg, #EF4444, #DC2626);">O</div>
-                                    <span class="company-name">Oracle</span>
-                                </div>
-                            </td>
-                            <td><span class="mobile-label">Role</span>Senior AI Engineer</td>
-                            <td><span class="mobile-label">Status</span><span class="status-badge rejected">Rejected</span></td>
-                            <td><span class="mobile-label">Applied</span>Jan 23</td>
-                            <td><span class="mobile-label">Resume</span><span class="cell-dim">Master</span></td>
-                            <td><span class="mobile-label">Contact</span><span class="cell-dim">--</span></td>
-                            <td><span class="mobile-label">Outreach</span><span class="cell-fail">No Contact &#10007;</span></td>
-                            <td><span class="mobile-label">LinkedIn</span><span class="cell-fail">Not Connected &#10007;</span></td>
-                            <td><span class="mobile-label">Notes</span><span class="notes-cell">Position filled before review</span></td>
-                        </tr>
-                        <tr class="detail-row" id="detail-1">
-                            <td colspan="9">
-                                <div class="detail-content">
-                                    <div class="detail-item">
-                                        <span class="detail-label">Full Role</span>
-                                        <span class="detail-value">Senior AI Engineer</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Location</span>
-                                        <span class="detail-value">Austin, TX (Hybrid)</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Salary Range</span>
-                                        <span class="detail-value">$140K -- $170K</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Rejection Reason</span>
-                                        <span class="detail-value">Position filled before application was reviewed</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Resume Used</span>
-                                        <span class="detail-value">Master Resume</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Source</span>
-                                        <span class="detail-value">LinkedIn Job Board</span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
 
-                        <!-- Row 2: FullStack -->
-                        <tr class="clickable-row" onclick="toggleDetail('detail-2')">
-                            <td>
-                                <span class="mobile-label">Company</span>
-                                <div class="company-cell">
-                                    <div class="company-logo" style="background: linear-gradient(135deg, #6366F1, #4F46E5);">F</div>
-                                    <span class="company-name">FullStack</span>
-                                </div>
-                            </td>
-                            <td><span class="mobile-label">Role</span>AI Engineer</td>
-                            <td><span class="mobile-label">Status</span><span class="status-badge applied">Applied</span></td>
-                            <td><span class="mobile-label">Applied</span>Jan 23</td>
-                            <td><span class="mobile-label">Resume</span><span class="cell-dim">Master</span></td>
-                            <td><span class="mobile-label">Contact</span><span class="cell-dim">--</span></td>
-                            <td><span class="mobile-label">Outreach</span><span class="cell-pending">Pending &#9203;</span></td>
-                            <td><span class="mobile-label">LinkedIn</span><span class="cell-pending">Requested &#9203;</span></td>
-                            <td><span class="mobile-label">Notes</span><span class="notes-cell">Resume scored 82% match</span></td>
-                        </tr>
-                        <tr class="detail-row" id="detail-2">
-                            <td colspan="9">
-                                <div class="detail-content">
-                                    <div class="detail-item">
-                                        <span class="detail-label">Full Role</span>
-                                        <span class="detail-value">AI Engineer</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Match Score</span>
-                                        <span class="detail-value">82%</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Status Detail</span>
-                                        <span class="detail-value">No response after 28 days -- follow-up needed</span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+            <!-- Conversion Metrics Strip -->
+            <div class="kanban-metrics">
+                <div class="kanban-metric-item">
+                    <span class="kanban-metric-value">23 Tracked</span>
+                </div>
+                <span class="kanban-metric-arrow">&#8594;</span>
+                <div class="kanban-metric-item">
+                    <span class="kanban-metric-value">14 Applied</span>
+                    <span class="kanban-metric-rate">61% applied</span>
+                </div>
+                <span class="kanban-metric-arrow">&#8594;</span>
+                <div class="kanban-metric-item">
+                    <span class="kanban-metric-value">3 Interviews</span>
+                    <span class="kanban-metric-rate">13% &#8594; interview</span>
+                </div>
+                <span class="kanban-metric-arrow">&#8594;</span>
+                <div class="kanban-metric-item">
+                    <span class="kanban-metric-value highlight">1 Offer</span>
+                    <span class="kanban-metric-rate">33% &#8594; offer</span>
+                </div>
+            </div>
 
-                        <!-- Row 3: State Farm -->
-                        <tr class="clickable-row" onclick="toggleDetail('detail-3')">
-                            <td>
-                                <span class="mobile-label">Company</span>
-                                <div class="company-cell">
-                                    <div class="company-logo" style="background: linear-gradient(135deg, #EF4444, #B91C1C);">S</div>
-                                    <span class="company-name">State Farm</span>
-                                </div>
-                            </td>
-                            <td><span class="mobile-label">Role</span>AI Experience Engineer</td>
-                            <td><span class="mobile-label">Status</span><span class="status-badge interviewing">Interviewing</span></td>
-                            <td><span class="mobile-label">Applied</span>Feb 3</td>
-                            <td><span class="mobile-label">Resume</span><span class="tooltip-inline cell-ok" data-tooltip="Resume was automatically tailored for this specific role using the Resume Pipeline">Tailored &#10003;</span></td>
-                            <td><span class="mobile-label">Contact</span>Jordan Lee (Recruiter)</td>
-                            <td><span class="mobile-label">Outreach</span><span class="cell-ok">Sent &#10003;</span></td>
-                            <td><span class="mobile-label">LinkedIn</span><span class="cell-ok">Connected &#10003;</span></td>
-                            <td><span class="mobile-label">Notes</span><span class="notes-cell">HireVue completed, awaiting feedback</span></td>
-                        </tr>
-                        <tr class="detail-row" id="detail-3">
-                            <td colspan="9">
-                                <div class="detail-content">
-                                    <div class="detail-item">
-                                        <span class="detail-label">Full Role</span>
-                                        <span class="detail-value">AI Experience Engineer</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Tailored Resume</span>
-                                        <span class="detail-value">91% match score</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Interview Stage</span>
-                                        <span class="detail-value">HireVue video interview completed Feb 18</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Contact</span>
-                                        <span class="detail-value">Jordan Lee -- Recruiter -- Connected on LinkedIn</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Location</span>
-                                        <span class="detail-value">Bloomington, IL (Remote eligible)</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Next Step</span>
-                                        <span class="detail-value">Awaiting hiring manager feedback</span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+            <!-- Kanban Board -->
+            <div class="kanban-board">
 
-                        <!-- Row 4: EY -->
-                        <tr class="clickable-row" onclick="toggleDetail('detail-4')">
-                            <td>
-                                <span class="mobile-label">Company</span>
-                                <div class="company-cell">
-                                    <div class="company-logo" style="background: linear-gradient(135deg, #EAB308, #CA8A04);">E</div>
-                                    <span class="company-name">EY</span>
+                <!-- Column: Discovered -->
+                <div class="kanban-col">
+                    <div class="kanban-col-header">
+                        <div class="kanban-col-accent accent-slate"></div>
+                        <span class="kanban-col-title">Discovered</span>
+                        <span class="kanban-col-count">1</span>
+                    </div>
+                    <div class="kanban-cards">
+                        <!-- OpenAI -->
+                        <div class="kanban-card">
+                            <div class="kanban-card-top">
+                                <div class="kanban-card-logo" style="background: linear-gradient(135deg, #0F172A, #334155);">O</div>
+                                <div>
+                                    <div class="kanban-card-company">OpenAI</div>
+                                    <div class="kanban-card-role">Solutions Engineer</div>
                                 </div>
-                            </td>
-                            <td><span class="mobile-label">Role</span>Senior App Developer</td>
-                            <td><span class="mobile-label">Status</span><span class="status-badge screening">Screening</span></td>
-                            <td><span class="mobile-label">Applied</span>Feb 19</td>
-                            <td><span class="mobile-label">Resume</span><span class="tooltip-inline cell-ok" data-tooltip="Resume was automatically tailored for this specific role using the Resume Pipeline">Tailored &#10003;</span></td>
-                            <td><span class="mobile-label">Contact</span>Juan D'Amelio (HR)</td>
-                            <td><span class="mobile-label">Outreach</span><span class="cell-ok">Sent &#10003;</span></td>
-                            <td><span class="mobile-label">LinkedIn</span><span class="cell-pending">Requested &#9203;</span></td>
-                            <td><span class="mobile-label">Notes</span><span class="notes-cell">Phone screen scheduled</span></td>
-                        </tr>
-                        <tr class="detail-row" id="detail-4">
-                            <td colspan="9">
-                                <div class="detail-content">
-                                    <div class="detail-item">
-                                        <span class="detail-label">Full Role</span>
-                                        <span class="detail-value">Senior Application Developer -- AI/ML</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Tailored Resume</span>
-                                        <span class="detail-value">84% match score</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Next Step</span>
-                                        <span class="detail-value">Phone screen with Juan D'Amelio</span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                            </div>
+                            <div class="kanban-card-bottom">
+                                <span class="kanban-outreach kanban-outreach-none">No Contact &#10007;</span>
+                                <span class="kanban-card-date"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                        <!-- Row 5: Prosum -->
-                        <tr class="clickable-row" onclick="toggleDetail('detail-5')">
-                            <td>
-                                <span class="mobile-label">Company</span>
-                                <div class="company-cell">
-                                    <div class="company-logo" style="background: linear-gradient(135deg, #10B981, #059669);">P</div>
-                                    <span class="company-name">Prosum</span>
+                <!-- Column: Applied -->
+                <div class="kanban-col">
+                    <div class="kanban-col-header">
+                        <div class="kanban-col-accent accent-blue"></div>
+                        <span class="kanban-col-title">Applied</span>
+                        <span class="kanban-col-count">4</span>
+                    </div>
+                    <div class="kanban-cards">
+                        <!-- Oracle -->
+                        <div class="kanban-card">
+                            <div class="kanban-card-top">
+                                <div class="kanban-card-logo" style="background: linear-gradient(135deg, #EF4444, #DC2626);">O</div>
+                                <div>
+                                    <div class="kanban-card-company">Oracle</div>
+                                    <div class="kanban-card-role">Senior AI Engineer</div>
                                 </div>
-                            </td>
-                            <td><span class="mobile-label">Role</span>AI/ML Engineer</td>
-                            <td><span class="mobile-label">Status</span><span class="status-badge screening">Screening</span></td>
-                            <td><span class="mobile-label">Applied</span>Feb 19</td>
-                            <td><span class="mobile-label">Resume</span><span class="tooltip-inline cell-ok" data-tooltip="Resume was automatically tailored for this specific role using the Resume Pipeline">Tailored &#10003;</span></td>
-                            <td><span class="mobile-label">Contact</span>Amy Reed (Recruiter)</td>
-                            <td><span class="mobile-label">Outreach</span><span class="cell-ok">Sent &#10003;</span></td>
-                            <td><span class="mobile-label">LinkedIn</span><span class="cell-ok">Connected &#10003;</span></td>
-                            <td><span class="mobile-label">Notes</span><span class="notes-cell">Phone screen 02/19</span></td>
-                        </tr>
-                        <tr class="detail-row" id="detail-5">
-                            <td colspan="9">
-                                <div class="detail-content">
-                                    <div class="detail-item">
-                                        <span class="detail-label">Full Role</span>
-                                        <span class="detail-value">AI/ML Engineer</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Tailored Resume</span>
-                                        <span class="detail-value">88% match score</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Phone Screen</span>
-                                        <span class="detail-value">Completed Feb 19 with Amy Reed</span>
-                                    </div>
+                            </div>
+                            <div class="kanban-card-tags">
+                                <span class="kanban-tag kanban-tag-resume">&#128196; Master</span>
+                            </div>
+                            <div class="kanban-card-bottom">
+                                <span class="kanban-outreach kanban-outreach-none">No Contact &#10007;</span>
+                                <span class="kanban-card-date">Jan 23</span>
+                            </div>
+                        </div>
+                        <!-- FullStack -->
+                        <div class="kanban-card">
+                            <div class="kanban-card-top">
+                                <div class="kanban-card-logo" style="background: linear-gradient(135deg, #6366F1, #4F46E5);">F</div>
+                                <div>
+                                    <div class="kanban-card-company">FullStack</div>
+                                    <div class="kanban-card-role">AI Engineer</div>
                                 </div>
-                            </td>
-                        </tr>
+                            </div>
+                            <div class="kanban-card-tags">
+                                <span class="kanban-tag kanban-tag-resume">&#128196; Tailored 82%</span>
+                            </div>
+                            <div class="kanban-card-bottom">
+                                <span class="kanban-outreach kanban-outreach-pending">Pending &#9203;</span>
+                                <span class="kanban-card-date">Jan 23</span>
+                            </div>
+                        </div>
+                        <!-- Deloitte -->
+                        <div class="kanban-card">
+                            <div class="kanban-card-top">
+                                <div class="kanban-card-logo" style="background: linear-gradient(135deg, #0F172A, #334155);">D</div>
+                                <div>
+                                    <div class="kanban-card-company">Deloitte</div>
+                                    <div class="kanban-card-role">ML Engineer</div>
+                                </div>
+                            </div>
+                            <div class="kanban-card-tags">
+                                <span class="kanban-tag kanban-tag-resume">&#128196; Tailored 79%</span>
+                            </div>
+                            <div class="kanban-card-contact">
+                                <div class="kanban-contact-avatar">CL</div>
+                                <div class="kanban-contact-info">
+                                    <div class="kanban-contact-name">Christy Lepley</div>
+                                    <div class="kanban-contact-title">Manager</div>
+                                </div>
+                                <a href="#" class="kanban-contact-link">&#128279;</a>
+                            </div>
+                            <div class="kanban-card-bottom">
+                                <span class="kanban-outreach kanban-outreach-pending">Pending &#9203;</span>
+                                <span class="kanban-card-date">Feb 10</span>
+                            </div>
+                        </div>
+                        <!-- Anthropic -->
+                        <div class="kanban-card">
+                            <div class="kanban-card-top">
+                                <div class="kanban-card-logo" style="background: linear-gradient(135deg, #D97706, #B45309);">A</div>
+                                <div>
+                                    <div class="kanban-card-company">Anthropic</div>
+                                    <div class="kanban-card-role">AI Researcher</div>
+                                </div>
+                            </div>
+                            <div class="kanban-card-tags">
+                                <span class="kanban-tag kanban-tag-resume">&#128196; Master</span>
+                            </div>
+                            <div class="kanban-card-bottom">
+                                <span class="kanban-outreach kanban-outreach-none">No Contact &#10007;</span>
+                                <span class="kanban-card-date">Feb 12</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                        <!-- Row 6: Deloitte -->
-                        <tr class="clickable-row" onclick="toggleDetail('detail-6')">
-                            <td>
-                                <span class="mobile-label">Company</span>
-                                <div class="company-cell">
-                                    <div class="company-logo" style="background: linear-gradient(135deg, #0F172A, #334155);">D</div>
-                                    <span class="company-name">Deloitte</span>
+                <!-- Column: Screening -->
+                <div class="kanban-col">
+                    <div class="kanban-col-header">
+                        <div class="kanban-col-accent accent-purple"></div>
+                        <span class="kanban-col-title">Screening</span>
+                        <span class="kanban-col-count">3</span>
+                    </div>
+                    <div class="kanban-cards">
+                        <!-- EY -->
+                        <div class="kanban-card">
+                            <div class="kanban-card-top">
+                                <div class="kanban-card-logo" style="background: linear-gradient(135deg, #EAB308, #CA8A04);">E</div>
+                                <div>
+                                    <div class="kanban-card-company">EY</div>
+                                    <div class="kanban-card-role">Senior App Developer</div>
                                 </div>
-                            </td>
-                            <td><span class="mobile-label">Role</span>ML Engineer</td>
-                            <td><span class="mobile-label">Status</span><span class="status-badge applied">Applied</span></td>
-                            <td><span class="mobile-label">Applied</span>Feb 10</td>
-                            <td><span class="mobile-label">Resume</span><span class="tooltip-inline cell-ok" data-tooltip="Resume was automatically tailored for this specific role using the Resume Pipeline">Tailored &#10003;</span></td>
-                            <td><span class="mobile-label">Contact</span>Christy Lepley (Manager)</td>
-                            <td><span class="mobile-label">Outreach</span><span class="cell-pending">Pending &#9203;</span></td>
-                            <td><span class="mobile-label">LinkedIn</span><span class="cell-fail">Not Connected &#10007;</span></td>
-                            <td><span class="mobile-label">Notes</span><span class="notes-cell">High priority target</span></td>
-                        </tr>
-                        <tr class="detail-row" id="detail-6">
-                            <td colspan="9">
-                                <div class="detail-content">
-                                    <div class="detail-item">
-                                        <span class="detail-label">Full Role</span>
-                                        <span class="detail-value">Machine Learning Engineer -- Consulting</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Tailored Resume</span>
-                                        <span class="detail-value">79% match score</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Priority</span>
-                                        <span class="detail-value">High -- strong brand, competitive comp</span>
-                                    </div>
+                            </div>
+                            <div class="kanban-card-tags">
+                                <span class="kanban-tag kanban-tag-resume">&#128196; Tailored 84%</span>
+                            </div>
+                            <div class="kanban-card-contact">
+                                <div class="kanban-contact-avatar">JD</div>
+                                <div class="kanban-contact-info">
+                                    <div class="kanban-contact-name">Juan D'Amelio</div>
+                                    <div class="kanban-contact-title">HR</div>
                                 </div>
-                            </td>
-                        </tr>
+                                <a href="#" class="kanban-contact-link">&#128279;</a>
+                            </div>
+                            <div class="kanban-card-bottom">
+                                <span class="kanban-outreach kanban-outreach-sent">Sent &#10003;</span>
+                                <span class="kanban-card-date">Feb 19</span>
+                            </div>
+                        </div>
+                        <!-- Prosum -->
+                        <div class="kanban-card">
+                            <div class="kanban-card-top">
+                                <div class="kanban-card-logo" style="background: linear-gradient(135deg, #10B981, #059669);">P</div>
+                                <div>
+                                    <div class="kanban-card-company">Prosum</div>
+                                    <div class="kanban-card-role">AI/ML Engineer</div>
+                                </div>
+                            </div>
+                            <div class="kanban-card-tags">
+                                <span class="kanban-tag kanban-tag-resume">&#128196; Tailored 88%</span>
+                            </div>
+                            <div class="kanban-card-contact">
+                                <div class="kanban-contact-avatar">AR</div>
+                                <div class="kanban-contact-info">
+                                    <div class="kanban-contact-name">Amy Reed</div>
+                                    <div class="kanban-contact-title">Recruiter</div>
+                                </div>
+                                <a href="#" class="kanban-contact-link">&#128279;</a>
+                            </div>
+                            <div class="kanban-card-bottom">
+                                <span class="kanban-outreach kanban-outreach-sent">Sent &#10003;</span>
+                                <span class="kanban-card-date">Feb 19</span>
+                            </div>
+                        </div>
+                        <!-- Condoit -->
+                        <div class="kanban-card">
+                            <div class="kanban-card-top">
+                                <div class="kanban-card-logo" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);">C</div>
+                                <div>
+                                    <div class="kanban-card-company">Condoit</div>
+                                    <div class="kanban-card-role">Full-Stack Engineer</div>
+                                </div>
+                            </div>
+                            <div class="kanban-card-tags">
+                                <span class="kanban-tag kanban-tag-resume">&#128196; Tailored 87%</span>
+                            </div>
+                            <div class="kanban-card-contact">
+                                <div class="kanban-contact-avatar">NN</div>
+                                <div class="kanban-contact-info">
+                                    <div class="kanban-contact-name">Nathan Noblitt</div>
+                                    <div class="kanban-contact-title">Recruiter</div>
+                                </div>
+                                <a href="#" class="kanban-contact-link">&#128279;</a>
+                            </div>
+                            <div class="kanban-card-bottom">
+                                <span class="kanban-outreach kanban-outreach-sent">Sent &#10003;</span>
+                                <span class="kanban-card-date">Feb 15</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                        <!-- Row 7: Anthropic -->
-                        <tr class="clickable-row" onclick="toggleDetail('detail-7')">
-                            <td>
-                                <span class="mobile-label">Company</span>
-                                <div class="company-cell">
-                                    <div class="company-logo" style="background: linear-gradient(135deg, #D97706, #B45309);">A</div>
-                                    <span class="company-name">Anthropic</span>
+                <!-- Column: Interviewing -->
+                <div class="kanban-col">
+                    <div class="kanban-col-header">
+                        <div class="kanban-col-accent accent-amber"></div>
+                        <span class="kanban-col-title">Interviewing</span>
+                        <span class="kanban-col-count">2</span>
+                    </div>
+                    <div class="kanban-cards">
+                        <!-- State Farm -->
+                        <div class="kanban-card">
+                            <div class="kanban-card-top">
+                                <div class="kanban-card-logo" style="background: linear-gradient(135deg, #EF4444, #B91C1C);">S</div>
+                                <div>
+                                    <div class="kanban-card-company">State Farm</div>
+                                    <div class="kanban-card-role">AI Experience Engineer</div>
                                 </div>
-                            </td>
-                            <td><span class="mobile-label">Role</span>AI Researcher</td>
-                            <td><span class="mobile-label">Status</span><span class="status-badge applied">Applied</span></td>
-                            <td><span class="mobile-label">Applied</span>Feb 12</td>
-                            <td><span class="mobile-label">Resume</span><span class="cell-dim">Master</span></td>
-                            <td><span class="mobile-label">Contact</span><span class="cell-no-contact">No contact found</span></td>
-                            <td><span class="mobile-label">Outreach</span><span class="cell-fail">No Contact &#10007;</span></td>
-                            <td><span class="mobile-label">LinkedIn</span><span class="cell-fail">Not Connected &#10007;</span></td>
-                            <td><span class="mobile-label">Notes</span><span class="notes-cell">No public contact found</span></td>
-                        </tr>
-                        <tr class="detail-row" id="detail-7">
-                            <td colspan="9">
-                                <div class="detail-content">
-                                    <div class="detail-item">
-                                        <span class="detail-label">Full Role</span>
-                                        <span class="detail-value">AI Researcher -- Safety & Alignment</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Contact Status</span>
-                                        <span class="detail-value">Agent searched LinkedIn, company page -- no recruiter found</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Next Step</span>
-                                        <span class="detail-value">Monitor for recruiter contact info</span>
-                                    </div>
+                            </div>
+                            <div class="kanban-card-tags">
+                                <span class="kanban-tag kanban-tag-resume">&#128196; Tailored 91%</span>
+                            </div>
+                            <div class="kanban-card-contact">
+                                <div class="kanban-contact-avatar">JL</div>
+                                <div class="kanban-contact-info">
+                                    <div class="kanban-contact-name">Jordan Lee</div>
+                                    <div class="kanban-contact-title">Recruiter</div>
                                 </div>
-                            </td>
-                        </tr>
+                                <a href="#" class="kanban-contact-link">&#128279;</a>
+                            </div>
+                            <div class="kanban-card-bottom">
+                                <span class="kanban-outreach kanban-outreach-sent">Sent &#10003;</span>
+                                <span class="kanban-card-date">Feb 3</span>
+                            </div>
+                        </div>
+                        <!-- AllState -->
+                        <div class="kanban-card">
+                            <div class="kanban-card-top">
+                                <div class="kanban-card-logo" style="background: linear-gradient(135deg, #3B82F6, #2563EB);">A</div>
+                                <div>
+                                    <div class="kanban-card-company">AllState</div>
+                                    <div class="kanban-card-role">AI Engineer</div>
+                                </div>
+                            </div>
+                            <div class="kanban-card-tags">
+                                <span class="kanban-tag kanban-tag-resume">&#128196; Tailored 79%</span>
+                            </div>
+                            <div class="kanban-card-contact">
+                                <div class="kanban-contact-avatar">AB</div>
+                                <div class="kanban-contact-info">
+                                    <div class="kanban-contact-name">Andrea Bedford</div>
+                                    <div class="kanban-contact-title">Manager</div>
+                                </div>
+                                <a href="#" class="kanban-contact-link">&#128279;</a>
+                            </div>
+                            <div class="kanban-card-bottom">
+                                <span class="kanban-outreach kanban-outreach-sent">Sent &#10003;</span>
+                                <span class="kanban-card-date">Feb 5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                        <!-- Row 8: Condoit -->
-                        <tr class="clickable-row" onclick="toggleDetail('detail-8')">
-                            <td>
-                                <span class="mobile-label">Company</span>
-                                <div class="company-cell">
-                                    <div class="company-logo" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);">C</div>
-                                    <span class="company-name">Condoit</span>
+                <!-- Column: Offer -->
+                <div class="kanban-col">
+                    <div class="kanban-col-header">
+                        <div class="kanban-col-accent accent-green"></div>
+                        <span class="kanban-col-title">Offer</span>
+                        <span class="kanban-col-count">1</span>
+                    </div>
+                    <div class="kanban-cards">
+                        <!-- TechCorp -->
+                        <div class="kanban-card">
+                            <div class="kanban-card-top">
+                                <div class="kanban-card-logo" style="background: linear-gradient(135deg, #22C55E, #16A34A);">T</div>
+                                <div>
+                                    <div class="kanban-card-company">TechCorp</div>
+                                    <div class="kanban-card-role">Full-Stack Engineer</div>
                                 </div>
-                            </td>
-                            <td><span class="mobile-label">Role</span>Full-Stack Engineer</td>
-                            <td><span class="mobile-label">Status</span><span class="status-badge screening">Screening</span></td>
-                            <td><span class="mobile-label">Applied</span>Feb 15</td>
-                            <td><span class="mobile-label">Resume</span><span class="tooltip-inline cell-ok" data-tooltip="Resume was automatically tailored for this specific role using the Resume Pipeline">Tailored &#10003;</span></td>
-                            <td><span class="mobile-label">Contact</span>Nathan Noblitt (Recruiter)</td>
-                            <td><span class="mobile-label">Outreach</span><span class="cell-ok">Sent &#10003;</span></td>
-                            <td><span class="mobile-label">LinkedIn</span><span class="cell-ok">Connected &#10003;</span></td>
-                            <td><span class="mobile-label">Notes</span><span class="notes-cell">Active -- strong fit</span></td>
-                        </tr>
-                        <tr class="detail-row" id="detail-8">
-                            <td colspan="9">
-                                <div class="detail-content">
-                                    <div class="detail-item">
-                                        <span class="detail-label">Full Role</span>
-                                        <span class="detail-value">Full-Stack Engineer -- AI Products</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Tailored Resume</span>
-                                        <span class="detail-value">87% match score</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Fit Assessment</span>
-                                        <span class="detail-value">Strong fit -- tech stack alignment on React, TypeScript, Python</span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                            </div>
+                            <div class="kanban-card-tags">
+                                <span class="kanban-tag kanban-tag-offer">$155K Offer</span>
+                                <span class="kanban-tag kanban-tag-resume">&#128196; Tailored 87%</span>
+                            </div>
+                            <div class="kanban-card-bottom">
+                                <span class="kanban-outreach kanban-outreach-sent">Sent &#10003;</span>
+                                <span class="kanban-card-date">Feb 18</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                        <!-- Row 9: AllState -->
-                        <tr class="clickable-row" onclick="toggleDetail('detail-9')">
-                            <td>
-                                <span class="mobile-label">Company</span>
-                                <div class="company-cell">
-                                    <div class="company-logo" style="background: linear-gradient(135deg, #3B82F6, #2563EB);">A</div>
-                                    <span class="company-name">AllState</span>
+                <!-- Column: Closed -->
+                <div class="kanban-col">
+                    <div class="kanban-col-header">
+                        <div class="kanban-col-accent accent-red"></div>
+                        <span class="kanban-col-title">Closed</span>
+                        <span class="kanban-col-count">3</span>
+                    </div>
+                    <div class="kanban-cards">
+                        <!-- Harnam -->
+                        <div class="kanban-card" style="opacity: 0.7;">
+                            <div class="kanban-card-top">
+                                <div class="kanban-card-logo" style="background: linear-gradient(135deg, #94A3B8, #64748B);">H</div>
+                                <div>
+                                    <div class="kanban-card-company">Harnam</div>
+                                    <div class="kanban-card-role">Senior Engineer</div>
                                 </div>
-                            </td>
-                            <td><span class="mobile-label">Role</span>AI Engineer</td>
-                            <td><span class="mobile-label">Status</span><span class="status-badge applied">Applied</span></td>
-                            <td><span class="mobile-label">Applied</span>Feb 5</td>
-                            <td><span class="mobile-label">Resume</span><span class="cell-dim">Master</span></td>
-                            <td><span class="mobile-label">Contact</span>Andrea Bedford (Manager)</td>
-                            <td><span class="mobile-label">Outreach</span><span class="cell-pending">Pending &#9203;</span></td>
-                            <td><span class="mobile-label">LinkedIn</span><span class="cell-pending">Requested &#9203;</span></td>
-                            <td><span class="mobile-label">Notes</span><span class="notes-cell">Awaiting response</span></td>
-                        </tr>
-                        <tr class="detail-row" id="detail-9">
-                            <td colspan="9">
-                                <div class="detail-content">
-                                    <div class="detail-item">
-                                        <span class="detail-label">Full Role</span>
-                                        <span class="detail-value">AI Engineer -- Claims Automation</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Contact</span>
-                                        <span class="detail-value">Andrea Bedford -- Engineering Manager</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Status</span>
-                                        <span class="detail-value">LinkedIn request sent, awaiting acceptance</span>
-                                    </div>
+                            </div>
+                            <div class="kanban-card-reason">Rejected</div>
+                            <div class="kanban-card-bottom">
+                                <span class="kanban-outreach kanban-outreach-none">Closed</span>
+                                <span class="kanban-card-date">Jan 30</span>
+                            </div>
+                        </div>
+                        <!-- Zoom -->
+                        <div class="kanban-card" style="opacity: 0.7;">
+                            <div class="kanban-card-top">
+                                <div class="kanban-card-logo" style="background: linear-gradient(135deg, #2563EB, #1D4ED8);">Z</div>
+                                <div>
+                                    <div class="kanban-card-company">Zoom</div>
+                                    <div class="kanban-card-role">ML Engineer</div>
                                 </div>
-                            </td>
-                        </tr>
+                            </div>
+                            <div class="kanban-card-reason">Ghosted</div>
+                            <div class="kanban-card-bottom">
+                                <span class="kanban-outreach kanban-outreach-none">Closed</span>
+                                <span class="kanban-card-date">Feb 1</span>
+                            </div>
+                        </div>
+                        <!-- GitLab -->
+                        <div class="kanban-card" style="opacity: 0.7;">
+                            <div class="kanban-card-top">
+                                <div class="kanban-card-logo" style="background: linear-gradient(135deg, #F97316, #EA580C);">G</div>
+                                <div>
+                                    <div class="kanban-card-company">GitLab</div>
+                                    <div class="kanban-card-role">Platform Engineer</div>
+                                </div>
+                            </div>
+                            <div class="kanban-card-reason">No Response</div>
+                            <div class="kanban-card-bottom">
+                                <span class="kanban-outreach kanban-outreach-none">Closed</span>
+                                <span class="kanban-card-date">Feb 8</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                        <!-- Row 10: OpenAI -->
-                        <tr class="clickable-row" onclick="toggleDetail('detail-10')">
-                            <td>
-                                <span class="mobile-label">Company</span>
-                                <div class="company-cell">
-                                    <div class="company-logo" style="background: linear-gradient(135deg, #0F172A, #334155);">O</div>
-                                    <span class="company-name">OpenAI</span>
-                                </div>
-                            </td>
-                            <td><span class="mobile-label">Role</span>Solutions Engineer</td>
-                            <td><span class="mobile-label">Status</span><span class="status-badge researching">Researching</span></td>
-                            <td><span class="mobile-label">Applied</span><span class="cell-dim">--</span></td>
-                            <td><span class="mobile-label">Resume</span><span class="cell-dim">--</span></td>
-                            <td><span class="mobile-label">Contact</span><span class="cell-dim">--</span></td>
-                            <td><span class="mobile-label">Outreach</span><span class="cell-dim">--</span></td>
-                            <td><span class="mobile-label">LinkedIn</span><span class="cell-dim">--</span></td>
-                            <td><span class="mobile-label">Notes</span><span class="notes-cell">Identified, not yet applied</span></td>
-                        </tr>
-                        <tr class="detail-row" id="detail-10">
-                            <td colspan="9">
-                                <div class="detail-content">
-                                    <div class="detail-item">
-                                        <span class="detail-label">Full Role</span>
-                                        <span class="detail-value">Solutions Engineer -- API & Integrations</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Status</span>
-                                        <span class="detail-value">Agent identified role, pending review before applying</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Location</span>
-                                        <span class="detail-value">San Francisco, CA (On-site)</span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
 
