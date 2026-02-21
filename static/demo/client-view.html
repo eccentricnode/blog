@@ -1342,8 +1342,10 @@
             .main { margin-left: 0; padding: 68px 16px 24px; }
 
             .client-header {
-                padding: 20px;
+                padding: 16px;
                 flex-direction: column;
+                overflow: hidden;
+                width: 100%;
             }
 
             .client-avatar-lg {
@@ -1352,10 +1354,16 @@
                 font-size: 18px;
             }
 
+            .client-info { width: 100%; min-width: 0; }
             .client-info h1 { font-size: 18px; }
-            .client-meta-row { font-size: 12px; gap: 8px; }
-            .stat-pills { gap: 6px; flex-wrap: wrap; width: 100%; }
-            .stat-pill { font-size: 12px; padding: 4px 10px; }
+            .client-meta-row { font-size: 12px; gap: 8px; flex-wrap: wrap; }
+            .stat-pills {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+                width: 100%;
+            }
+            .stat-pill { font-size: 12px; padding: 4px 10px; min-width: 0; justify-content: center; }
 
             .tab-nav {
                 gap: 0;
@@ -1411,9 +1419,9 @@
 
         /* Extra small: < 480px */
         @media (max-width: 480px) {
-            .client-header { overflow: hidden; }
-            .stat-pills { flex-direction: row; flex-wrap: wrap; gap: 6px; overflow: hidden; }
-            .stat-pill { justify-content: center; flex: 1 1 calc(50% - 8px); min-width: 0; max-width: calc(50% - 4px); box-sizing: border-box; }
+            .main { padding: 60px 12px 24px; }
+            .client-header-actions { flex-direction: column; width: 100%; }
+            .client-header-actions .btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
