@@ -1411,8 +1411,9 @@
 
         /* Extra small: < 480px */
         @media (max-width: 480px) {
-            .stat-pills { flex-direction: row; flex-wrap: wrap; gap: 6px; }
-            .stat-pill { justify-content: center; flex: 1 1 calc(50% - 6px); min-width: 0; }
+            .client-header { overflow: hidden; }
+            .stat-pills { flex-direction: row; flex-wrap: wrap; gap: 6px; overflow: hidden; }
+            .stat-pill { justify-content: center; flex: 1 1 calc(50% - 8px); min-width: 0; max-width: calc(50% - 4px); box-sizing: border-box; }
         }
     </style>
 </head>
