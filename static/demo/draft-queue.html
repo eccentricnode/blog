@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecruitAgent - Draft Queue</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --blue-600: #2563EB;
+            --blue-700: #1D4ED8;
+            --blue-50: #EFF6FF;
+            --blue-100: #DBEAFE;
+            --slate-50: #F8FAFC;
+            --slate-100: #F1F5F9;
+            --slate-200: #E2E8F0;
+            --slate-300: #CBD5E1;
+            --slate-400: #94A3B8;
+            --slate-500: #64748B;
+            --slate-600: #475569;
+            --slate-700: #334155;
+            --slate-800: #1E293B;
+            --slate-900: #0F172A;
+            --green-500: #22C55E;
+            --green-50: #F0FDF4;
+            --green-100: #DCFCE7;
+            --green-700: #15803D;
+            --orange-500: #F97316;
+            --orange-50: #FFF7ED;
+            --orange-100: #FFEDD5;
+            --orange-700: #C2410C;
+            --red-50: #FEF2F2;
+            --red-600: #DC2626;
+            --red-700: #B91C1C;
+            --white: #FFFFFF;
+            --sidebar-bg: #0F172A;
+            --sidebar-hover: #1E293B;
+            --sidebar-active: #1E293B;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--slate-50);
+            color: var(--slate-900);
+            display: flex;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: var(--sidebar-bg);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            padding: 24px 24px 32px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-logo .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--blue-600);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .sidebar-logo .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 0 12px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            color: var(--slate-400);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.15s ease;
+            margin-bottom: 2px;
+        }
+
+        .sidebar-nav a:hover {
+            background: var(--sidebar-hover);
+            color: var(--slate-200);
+        }
+
+        .sidebar-nav a.active {
+            background: var(--sidebar-active);
+            color: var(--white);
+        }
+
+        .sidebar-nav a .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+        }
+
+        .sidebar-nav a.active .nav-icon { opacity: 1; }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--orange-500);
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 10px;
+        }
+
+        .sidebar-user {
+            padding: 16px 20px;
+            border-top: 1px solid var(--slate-700);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-user .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .sidebar-user .user-info { overflow: hidden; }
+        .sidebar-user .user-name { font-size: 13px; font-weight: 600; color: var(--slate-200); }
+        .sidebar-user .user-role { font-size: 12px; color: var(--slate-500); }
+
+        /* Main content */
+        .main {
+            margin-left: 260px;
+            flex: 1;
+            padding: 32px 40px;
+            max-width: 1000px;
+        }
+
+        .main-header {
+            margin-bottom: 24px;
+        }
+
+        .main-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--slate-900);
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .main-header .subtitle {
+            font-size: 14px;
+            color: var(--slate-500);
+        }
+
+        /* Filter bar */
+        .filter-bar {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 10px;
+            padding: 4px;
+            width: fit-content;
+        }
+
+        .filter-btn {
+            padding: 7px 16px;
+            border: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--slate-500);
+            border-radius: 7px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .filter-btn:hover {
+            color: var(--slate-700);
+            background: var(--slate-50);
+        }
+
+        .filter-btn.active {
+            background: var(--slate-900);
+            color: var(--white);
+        }
+
+        /* Draft cards */
+        .draft-card {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: all 0.15s ease;
+        }
+
+        .draft-card:hover {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .draft-card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .draft-routing {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .draft-client-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 11px;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .draft-client-name {
+            font-weight: 600;
+            color: var(--slate-900);
+        }
+
+        .draft-arrow {
+            color: var(--slate-300);
+        }
+
+        .draft-company {
+            font-weight: 600;
+            color: var(--slate-700);
+        }
+
+        .draft-contact {
+            color: var(--slate-500);
+            font-size: 13px;
+        }
+
+        .draft-meta-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fit-badge {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .fit-badge.high {
+            background: var(--green-50);
+            color: var(--green-700);
+            border: 1px solid var(--green-100);
+        }
+
+        .fit-badge.medium {
+            background: var(--blue-50);
+            color: var(--blue-600);
+            border: 1px solid var(--blue-100);
+        }
+
+        .type-badge {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 5px;
+            background: var(--slate-100);
+            color: var(--slate-600);
+        }
+
+        .type-badge.follow-up {
+            background: var(--orange-50);
+            color: var(--orange-700);
+        }
+
+        .draft-subject {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 8px;
+            letter-spacing: -0.2px;
+        }
+
+        .draft-preview {
+            font-size: 14px;
+            color: var(--slate-600);
+            line-height: 1.6;
+            margin-bottom: 16px;
+            border-left: 3px solid var(--slate-200);
+            padding-left: 16px;
+        }
+
+        .draft-details {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .draft-detail {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--slate-500);
+        }
+
+        .draft-detail strong {
+            font-weight: 600;
+            color: var(--slate-600);
+        }
+
+        .agent-note {
+            background: var(--blue-50);
+            border: 1px solid var(--blue-100);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 13px;
+            color: var(--slate-700);
+            line-height: 1.5;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .agent-note-icon {
+            flex-shrink: 0;
+            color: var(--blue-600);
+            margin-top: 1px;
+        }
+
+        .draft-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .draft-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: 1px solid var(--slate-200);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: var(--white);
+            color: var(--slate-700);
+        }
+
+        .btn:hover {
+            background: var(--slate-50);
+            border-color: var(--slate-300);
+        }
+
+        .btn-primary {
+            background: var(--blue-600);
+            color: var(--white);
+            border-color: var(--blue-600);
+        }
+
+        .btn-primary:hover {
+            background: var(--blue-700);
+            border-color: var(--blue-700);
+        }
+
+        .btn-ghost {
+            border: none;
+            color: var(--slate-400);
+        }
+
+        .btn-ghost:hover {
+            color: var(--red-600);
+            background: var(--red-50);
+        }
+
+        .draft-timestamp {
+            font-size: 12px;
+            color: var(--slate-400);
+        }
+
+        /* Batch action bar */
+        .batch-bar {
+            position: fixed;
+            bottom: 0;
+            left: 260px;
+            right: 0;
+            background: var(--white);
+            border-top: 1px solid var(--slate-200);
+            padding: 14px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+            z-index: 50;
+        }
+
+        .batch-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .batch-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--blue-600);
+            cursor: pointer;
+        }
+
+        .batch-label {
+            font-size: 14px;
+            color: var(--slate-600);
+            font-weight: 500;
+        }
+
+        .batch-bar .btn-primary {
+            padding: 10px 24px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar (identical to dashboard) -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">R</div>
+            <span class="logo-text">RecruitAgent</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="recruiter-dashboard.html">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                </span>
+                Dashboard
+            </a>
+            <a href="#">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </span>
+                Clients
+            </a>
+            <a href="draft-queue.html" class="active">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </span>
+                Draft Queue
+                <span class="nav-badge">7</span>
+            </a>
+            <a href="#">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </span>
+                Activity
+            </a>
+            <a href="#">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                </span>
+                Settings
+            </a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="user-avatar">SM</div>
+            <div class="user-info">
+                <div class="user-name">Sarah Mitchell</div>
+                <div class="user-role">Senior Recruiter</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="main-header">
+            <h1>Draft Queue</h1>
+            <p class="subtitle">7 drafts awaiting your review</p>
+        </div>
+
+        <!-- Filter bar -->
+        <div class="filter-bar">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">Initial Outreach</button>
+            <button class="filter-btn">Follow-ups</button>
+            <button class="filter-btn">High Fit (&gt;90%)</button>
+        </div>
+
+        <!-- Draft Card 1 -->
+        <div class="draft-card">
+            <div class="draft-card-top">
+                <div class="draft-routing">
+                    <div class="draft-client-avatar" style="background: linear-gradient(135deg, #3B82F6, #2563EB);">MW</div>
+                    <span class="draft-client-name">Marcus Webb</span>
+                    <span class="draft-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </span>
+                    <span class="draft-company">Anthropic</span>
+                    <span class="draft-contact">&middot; Recruiting Team Lead</span>
+                </div>
+                <div class="draft-meta-right">
+                    <span class="type-badge">Initial Outreach</span>
+                    <span class="fit-badge high">94% match</span>
+                </div>
+            </div>
+
+            <div class="draft-subject">Experienced ML Engineer -- Claude Safety & Capabilities team</div>
+            <div class="draft-preview">
+                Hi Sarah, I'm reaching out on behalf of Marcus Webb, an ML engineer with 7 years building production model pipelines at companies including Scale AI and DeepMind. His experience in reinforcement learning from human feedback and safety-focused model evaluation maps directly to the open role on your Claude Safety & Capabilities team. I'd love to set up a brief conversation to discuss his background...
+            </div>
+
+            <div class="draft-details">
+                <div class="draft-detail">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Contact found via: <strong>Hunter.io</strong> (confidence: 91%)
+                </div>
+            </div>
+
+            <div class="agent-note">
+                <span class="agent-note-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14h-2v-2h2zm0-4h-2V7h2z"/></svg>
+                </span>
+                <span><strong>Agent note:</strong> Strong fit -- Marcus's NLP work at Scale AI maps directly to this role's requirements. His RLHF paper from 2024 was cited in Anthropic's latest research.</span>
+            </div>
+
+            <div class="draft-actions">
+                <div class="draft-buttons">
+                    <button class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        Approve & Send
+                    </button>
+                    <button class="btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        Edit
+                    </button>
+                    <button class="btn btn-ghost">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        Skip
+                    </button>
+                </div>
+                <span class="draft-timestamp">Ready 23 min ago</span>
+            </div>
+        </div>
+
+        <!-- Draft Card 2 -->
+        <div class="draft-card">
+            <div class="draft-card-top">
+                <div class="draft-routing">
+                    <div class="draft-client-avatar" style="background: linear-gradient(135deg, #F59E0B, #D97706);">JL</div>
+                    <span class="draft-client-name">Jordan Lee</span>
+                    <span class="draft-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </span>
+                    <span class="draft-company">Stripe</span>
+                    <span class="draft-contact">&middot; Dana Kim (Engineering Recruiter)</span>
+                </div>
+                <div class="draft-meta-right">
+                    <span class="type-badge follow-up">Follow-up #1</span>
+                    <span class="fit-badge medium">87% match</span>
+                </div>
+            </div>
+
+            <div class="draft-subject">Following up -- Full Stack Engineer role</div>
+            <div class="draft-preview">
+                Hi Dana, I wanted to follow up on my previous message about Jordan Lee's application for the Full Stack Engineer role on the Stripe Connect team. Jordan recently shipped a payment orchestration layer at her current company that processes $2M+ in daily transactions -- very relevant to the challenges your team is tackling. Would you have 15 minutes this week to chat?
+            </div>
+
+            <div class="draft-details">
+                <div class="draft-detail">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Contact found via: <strong>LinkedIn</strong> (verified)
+                </div>
+                <div class="draft-detail">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Original sent: <strong>5 days ago</strong>
+                </div>
+            </div>
+
+            <div class="agent-note">
+                <span class="agent-note-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14h-2v-2h2zm0-4h-2V7h2z"/></svg>
+                </span>
+                <span><strong>Agent note:</strong> No response in 5 days. Follow-up #1 of 2. Dana was active on LinkedIn yesterday, so the original email was likely seen.</span>
+            </div>
+
+            <div class="draft-actions">
+                <div class="draft-buttons">
+                    <button class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        Approve & Send
+                    </button>
+                    <button class="btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        Edit
+                    </button>
+                    <button class="btn btn-ghost">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        Skip
+                    </button>
+                </div>
+                <span class="draft-timestamp">Ready 1 hour ago</span>
+            </div>
+        </div>
+
+        <!-- Draft Card 3 -->
+        <div class="draft-card">
+            <div class="draft-card-top">
+                <div class="draft-routing">
+                    <div class="draft-client-avatar" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);">PS</div>
+                    <span class="draft-client-name">Priya Sharma</span>
+                    <span class="draft-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </span>
+                    <span class="draft-company">Linear</span>
+                    <span class="draft-contact">&middot; Head of Product</span>
+                </div>
+                <div class="draft-meta-right">
+                    <span class="type-badge">Initial Outreach</span>
+                    <span class="fit-badge high">91% match</span>
+                </div>
+            </div>
+
+            <div class="draft-subject">Product Manager with B2B SaaS background -- Linear PM role</div>
+            <div class="draft-preview">
+                Hi there, Priya Sharma has 6 years building product at enterprise SaaS companies including Notion and Figma, where she led the collaboration features team from 0 to 2M+ weekly active users. Her deep experience in developer tooling and product-led growth aligns exceptionally well with Linear's product philosophy and the open PM role on your growth team...
+            </div>
+
+            <div class="draft-details">
+                <div class="draft-detail">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Contact found via: <strong>Apollo.io</strong> (confidence: 88%)
+                </div>
+            </div>
+
+            <div class="agent-note">
+                <span class="agent-note-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14h-2v-2h2zm0-4h-2V7h2z"/></svg>
+                </span>
+                <span><strong>Agent note:</strong> Linear is in a growth phase post Series C. Priya's PLG experience at Figma is a rare match -- recommend prioritizing this outreach.</span>
+            </div>
+
+            <div class="draft-actions">
+                <div class="draft-buttons">
+                    <button class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        Approve & Send
+                    </button>
+                    <button class="btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        Edit
+                    </button>
+                    <button class="btn btn-ghost">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        Skip
+                    </button>
+                </div>
+                <span class="draft-timestamp">Ready 45 min ago</span>
+            </div>
+        </div>
+
+        <!-- Spacer for batch bar -->
+        <div style="height: 80px;"></div>
+    </main>
+
+    <!-- Batch action bar -->
+    <div class="batch-bar">
+        <div class="batch-left">
+            <input type="checkbox" class="batch-checkbox" id="selectAll">
+            <label for="selectAll" class="batch-label">Select all</label>
+        </div>
+        <button class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Approve Selected (3)
+        </button>
+    </div>
+
+</body>
+</html>

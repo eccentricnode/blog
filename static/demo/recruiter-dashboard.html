@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecruitAgent - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --blue-600: #2563EB;
+            --blue-700: #1D4ED8;
+            --blue-50: #EFF6FF;
+            --blue-100: #DBEAFE;
+            --slate-50: #F8FAFC;
+            --slate-100: #F1F5F9;
+            --slate-200: #E2E8F0;
+            --slate-300: #CBD5E1;
+            --slate-400: #94A3B8;
+            --slate-500: #64748B;
+            --slate-600: #475569;
+            --slate-700: #334155;
+            --slate-800: #1E293B;
+            --slate-900: #0F172A;
+            --green-500: #22C55E;
+            --green-50: #F0FDF4;
+            --green-100: #DCFCE7;
+            --green-700: #15803D;
+            --orange-500: #F97316;
+            --orange-50: #FFF7ED;
+            --orange-100: #FFEDD5;
+            --orange-700: #C2410C;
+            --yellow-500: #EAB308;
+            --white: #FFFFFF;
+            --sidebar-bg: #0F172A;
+            --sidebar-hover: #1E293B;
+            --sidebar-active: #1E293B;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--slate-50);
+            color: var(--slate-900);
+            display: flex;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: var(--sidebar-bg);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            padding: 24px 24px 32px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-logo .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--blue-600);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .sidebar-logo .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 0 12px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            color: var(--slate-400);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.15s ease;
+            margin-bottom: 2px;
+        }
+
+        .sidebar-nav a:hover {
+            background: var(--sidebar-hover);
+            color: var(--slate-200);
+        }
+
+        .sidebar-nav a.active {
+            background: var(--sidebar-active);
+            color: var(--white);
+        }
+
+        .sidebar-nav a .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+        }
+
+        .sidebar-nav a.active .nav-icon {
+            opacity: 1;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--orange-500);
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 10px;
+        }
+
+        .sidebar-user {
+            padding: 16px 20px;
+            border-top: 1px solid var(--slate-700);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-user .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .sidebar-user .user-info {
+            overflow: hidden;
+        }
+
+        .sidebar-user .user-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate-200);
+        }
+
+        .sidebar-user .user-role {
+            font-size: 12px;
+            color: var(--slate-500);
+        }
+
+        /* Main content */
+        .main {
+            margin-left: 260px;
+            flex: 1;
+            padding: 32px 40px;
+            max-width: 1200px;
+        }
+
+        .main-header {
+            margin-bottom: 32px;
+        }
+
+        .main-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--slate-900);
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .main-header .subtitle {
+            font-size: 14px;
+            color: var(--slate-500);
+        }
+
+        /* Stat cards */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 20px 24px;
+            transition: box-shadow 0.15s ease;
+        }
+
+        .stat-card:hover {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .stat-card .stat-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--slate-500);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-card .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--slate-900);
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        .stat-badge.orange {
+            background: var(--orange-50);
+            color: var(--orange-700);
+            border: 1px solid var(--orange-100);
+        }
+
+        /* Section headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .section-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--slate-900);
+            letter-spacing: -0.2px;
+        }
+
+        .section-header a {
+            font-size: 13px;
+            color: var(--blue-600);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .section-header a:hover {
+            text-decoration: underline;
+        }
+
+        /* Table */
+        .table-wrap {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 36px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--slate-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--slate-200);
+            background: var(--slate-50);
+        }
+
+        tbody td {
+            padding: 14px 20px;
+            font-size: 14px;
+            color: var(--slate-700);
+            border-bottom: 1px solid var(--slate-100);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr {
+            transition: background 0.1s ease;
+        }
+
+        tbody tr:hover {
+            background: var(--slate-50);
+        }
+
+        .client-name {
+            font-weight: 600;
+            color: var(--slate-900);
+        }
+
+        .client-name-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .client-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .jobs-count {
+            font-weight: 600;
+            color: var(--blue-600);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .status-badge.active {
+            background: var(--green-50);
+            color: var(--green-700);
+        }
+
+        .status-badge.pending {
+            background: var(--orange-50);
+            color: var(--orange-700);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+
+        .status-dot.green { background: var(--green-500); }
+        .status-dot.yellow { background: var(--yellow-500); }
+
+        .last-activity {
+            color: var(--slate-400);
+            font-size: 13px;
+        }
+
+        /* Draft queue preview */
+        .draft-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .draft-mini-card {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+
+        .draft-mini-card:hover {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+            border-color: var(--blue-600);
+        }
+
+        .draft-mini-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .draft-mini-client {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--slate-900);
+        }
+
+        .draft-mini-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: var(--green-50);
+            color: var(--green-700);
+            border: 1px solid var(--green-100);
+        }
+
+        .draft-mini-target {
+            font-size: 13px;
+            color: var(--slate-500);
+            margin-bottom: 4px;
+        }
+
+        .draft-mini-subject {
+            font-size: 13px;
+            color: var(--slate-700);
+            font-weight: 500;
+        }
+
+        .draft-mini-time {
+            font-size: 12px;
+            color: var(--slate-400);
+            margin-top: 12px;
+        }
+
+        /* SVG icons inline */
+        .icon { width: 20px; height: 20px; }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">R</div>
+            <span class="logo-text">RecruitAgent</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="recruiter-dashboard.html" class="active">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                </span>
+                Dashboard
+            </a>
+            <a href="#">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </span>
+                Clients
+            </a>
+            <a href="draft-queue.html">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </span>
+                Draft Queue
+                <span class="nav-badge">7</span>
+            </a>
+            <a href="#">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </span>
+                Activity
+            </a>
+            <a href="#">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                </span>
+                Settings
+            </a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="user-avatar">SM</div>
+            <div class="user-info">
+                <div class="user-name">Sarah Mitchell</div>
+                <div class="user-role">Senior Recruiter</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="main-header">
+            <h1>Good morning, Sarah. Your agents worked through the night.</h1>
+            <p class="subtitle">Thursday, February 20, 2026</p>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-label">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    Active Clients
+                </div>
+                <div class="stat-value">12</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    Drafts Awaiting Approval
+                </div>
+                <div class="stat-value">7 <span class="stat-badge orange">Action needed</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    Interviews This Week
+                </div>
+                <div class="stat-value">4</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    Outreach Sent (7 days)
+                </div>
+                <div class="stat-value">34</div>
+            </div>
+        </div>
+
+        <!-- Client Pipeline -->
+        <div class="section-header">
+            <h2>Client Pipeline</h2>
+            <a href="#">View all clients</a>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Client Name</th>
+                        <th>Role Seeking</th>
+                        <th>Jobs in Pipeline</th>
+                        <th>Last Activity</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="client-name-cell">
+                                <div class="client-avatar" style="background: linear-gradient(135deg, #3B82F6, #2563EB);">MW</div>
+                                <span class="client-name">Marcus Webb</span>
+                            </div>
+                        </td>
+                        <td>Senior ML Engineer</td>
+                        <td><span class="jobs-count">8 jobs</span></td>
+                        <td><span class="last-activity">2 hours ago</span></td>
+                        <td><span class="status-badge active"><span class="status-dot green"></span> Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="client-name-cell">
+                                <div class="client-avatar" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);">PS</div>
+                                <span class="client-name">Priya Sharma</span>
+                            </div>
+                        </td>
+                        <td>Product Manager</td>
+                        <td><span class="jobs-count">12 jobs</span></td>
+                        <td><span class="last-activity">4 hours ago</span></td>
+                        <td><span class="status-badge active"><span class="status-dot green"></span> Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="client-name-cell">
+                                <div class="client-avatar" style="background: linear-gradient(135deg, #F59E0B, #D97706);">JL</div>
+                                <span class="client-name">Jordan Lee</span>
+                            </div>
+                        </td>
+                        <td>Full Stack Engineer</td>
+                        <td><span class="jobs-count">5 jobs</span></td>
+                        <td><span class="last-activity">1 day ago</span></td>
+                        <td><span class="status-badge pending"><span class="status-dot yellow"></span> Draft Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="client-name-cell">
+                                <div class="client-avatar" style="background: linear-gradient(135deg, #10B981, #059669);">AT</div>
+                                <span class="client-name">Alex Torres</span>
+                            </div>
+                        </td>
+                        <td>Data Scientist</td>
+                        <td><span class="jobs-count">9 jobs</span></td>
+                        <td><span class="last-activity">3 hours ago</span></td>
+                        <td><span class="status-badge active"><span class="status-dot green"></span> Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="client-name-cell">
+                                <div class="client-avatar" style="background: linear-gradient(135deg, #EC4899, #DB2777);">CP</div>
+                                <span class="client-name">Casey Park</span>
+                            </div>
+                        </td>
+                        <td>DevOps Engineer</td>
+                        <td><span class="jobs-count">6 jobs</span></td>
+                        <td><span class="last-activity">6 hours ago</span></td>
+                        <td><span class="status-badge active"><span class="status-dot green"></span> Active</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Draft Queue Preview -->
+        <div class="section-header">
+            <h2>Draft Queue Preview</h2>
+            <a href="draft-queue.html">View All 7 &rarr;</a>
+        </div>
+        <div class="draft-preview-grid">
+            <div class="draft-mini-card">
+                <div class="draft-mini-header">
+                    <span class="draft-mini-client">Marcus Webb</span>
+                    <span class="draft-mini-badge">Ready to send</span>
+                </div>
+                <div class="draft-mini-target">Anthropic &middot; Recruiting Team Lead</div>
+                <div class="draft-mini-subject">Experienced ML Engineer -- Claude Safety &amp; Capabilities</div>
+                <div class="draft-mini-time">Ready 23 min ago</div>
+            </div>
+            <div class="draft-mini-card">
+                <div class="draft-mini-header">
+                    <span class="draft-mini-client">Jordan Lee</span>
+                    <span class="draft-mini-badge">Ready to send</span>
+                </div>
+                <div class="draft-mini-target">Stripe &middot; Dana Kim (Eng. Recruiter)</div>
+                <div class="draft-mini-subject">Following up -- Full Stack Engineer role</div>
+                <div class="draft-mini-time">Ready 1 hour ago</div>
+            </div>
+            <div class="draft-mini-card">
+                <div class="draft-mini-header">
+                    <span class="draft-mini-client">Priya Sharma</span>
+                    <span class="draft-mini-badge">Ready to send</span>
+                </div>
+                <div class="draft-mini-target">Linear &middot; Head of Product</div>
+                <div class="draft-mini-subject">Product Manager with B2B SaaS background</div>
+                <div class="draft-mini-time">Ready 45 min ago</div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

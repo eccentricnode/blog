@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecruitAgent - My Job Search</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --blue-600: #2563EB;
+            --blue-700: #1D4ED8;
+            --blue-50: #EFF6FF;
+            --blue-100: #DBEAFE;
+            --slate-50: #F8FAFC;
+            --slate-100: #F1F5F9;
+            --slate-200: #E2E8F0;
+            --slate-300: #CBD5E1;
+            --slate-400: #94A3B8;
+            --slate-500: #64748B;
+            --slate-600: #475569;
+            --slate-700: #334155;
+            --slate-800: #1E293B;
+            --slate-900: #0F172A;
+            --green-500: #22C55E;
+            --green-50: #F0FDF4;
+            --green-100: #DCFCE7;
+            --green-600: #16A34A;
+            --green-700: #15803D;
+            --orange-500: #F97316;
+            --orange-50: #FFF7ED;
+            --orange-100: #FFEDD5;
+            --orange-700: #C2410C;
+            --purple-50: #FAF5FF;
+            --purple-100: #F3E8FF;
+            --purple-600: #9333EA;
+            --purple-700: #7E22CE;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--slate-50);
+            color: var(--slate-900);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            background: var(--white);
+            border-bottom: 1px solid var(--slate-200);
+            padding: 0 40px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .top-nav-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .top-nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .top-nav-logo .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--blue-600);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--white);
+        }
+
+        .top-nav-logo .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--slate-900);
+            letter-spacing: -0.3px;
+        }
+
+        .top-nav-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--blue-600);
+            text-decoration: none;
+            padding: 6px 0;
+            border-bottom: 2px solid var(--blue-600);
+        }
+
+        .top-nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .notification-bell {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--slate-500);
+            transition: all 0.15s ease;
+        }
+
+        .notification-bell:hover {
+            background: var(--slate-100);
+            color: var(--slate-700);
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: var(--blue-600);
+            border-radius: 50%;
+            border: 2px solid var(--white);
+        }
+
+        .user-chip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 12px 4px 4px;
+            border-radius: 24px;
+            background: var(--slate-50);
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+
+        .user-chip:hover {
+            background: var(--slate-100);
+        }
+
+        .user-chip .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--white);
+        }
+
+        .user-chip .name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate-700);
+        }
+
+        /* Content */
+        .content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 32px 40px;
+        }
+
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            border-radius: 16px;
+            padding: 28px 32px;
+            color: var(--white);
+            margin-bottom: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-banner::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .welcome-banner h1 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-banner p {
+            font-size: 14px;
+            color: var(--slate-400);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Stat Cards */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 20px 24px;
+            transition: box-shadow 0.15s ease;
+        }
+
+        .stat-card:hover {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .stat-card .stat-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--slate-500);
+            margin-bottom: 8px;
+        }
+
+        .stat-card .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--slate-900);
+            letter-spacing: -1px;
+        }
+
+        /* Section headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .section-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--slate-900);
+            letter-spacing: -0.2px;
+        }
+
+        /* Kanban Pipeline */
+        .kanban {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-bottom: 36px;
+        }
+
+        .kanban-col {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 16px;
+            min-height: 100px;
+        }
+
+        .kanban-col.highlighted {
+            border-color: var(--blue-600);
+            background: var(--blue-50);
+        }
+
+        .kanban-col.highlighted-green {
+            border-color: var(--green-500);
+            background: var(--green-50);
+        }
+
+        .kanban-col-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .kanban-col-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--slate-500);
+        }
+
+        .kanban-col.highlighted .kanban-col-title {
+            color: var(--blue-600);
+        }
+
+        .kanban-col.highlighted-green .kanban-col-title {
+            color: var(--green-600);
+        }
+
+        .kanban-count {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--slate-900);
+            letter-spacing: -0.5px;
+        }
+
+        .kanban-col.highlighted .kanban-count {
+            color: var(--blue-600);
+        }
+
+        .kanban-col.highlighted-green .kanban-count {
+            color: var(--green-600);
+        }
+
+        .kanban-bar {
+            height: 4px;
+            border-radius: 2px;
+            background: var(--slate-100);
+            margin-top: 8px;
+        }
+
+        .kanban-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            background: var(--slate-300);
+        }
+
+        .kanban-col.highlighted .kanban-bar-fill {
+            background: var(--blue-600);
+        }
+
+        .kanban-col.highlighted-green .kanban-bar-fill {
+            background: var(--green-500);
+        }
+
+        /* Activity Timeline */
+        .activity-section {
+            margin-bottom: 36px;
+        }
+
+        .timeline {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--slate-100);
+            transition: background 0.1s ease;
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-item:hover {
+            background: var(--slate-50);
+        }
+
+        .timeline-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 16px;
+        }
+
+        .timeline-icon.search { background: var(--purple-50); color: var(--purple-600); }
+        .timeline-icon.email { background: var(--blue-50); color: var(--blue-600); }
+        .timeline-icon.sent { background: var(--orange-50); color: var(--orange-500); }
+        .timeline-icon.applied { background: var(--green-50); color: var(--green-600); }
+        .timeline-icon.interview { background: var(--green-50); color: var(--green-600); }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-text {
+            font-size: 14px;
+            color: var(--slate-700);
+            line-height: 1.5;
+        }
+
+        .timeline-text strong {
+            font-weight: 600;
+            color: var(--slate-900);
+        }
+
+        .timeline-time {
+            font-size: 12px;
+            color: var(--slate-400);
+            margin-top: 2px;
+        }
+
+        .timeline-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 5px;
+            margin-left: 8px;
+        }
+
+        .timeline-badge.fit {
+            background: var(--green-50);
+            color: var(--green-700);
+            border: 1px solid var(--green-100);
+        }
+
+        /* Job Cards */
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .job-card {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.15s ease;
+        }
+
+        .job-card:hover {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+            border-color: var(--blue-600);
+        }
+
+        .job-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .job-company-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .job-fit-badge {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: var(--green-50);
+            color: var(--green-700);
+            border: 1px solid var(--green-100);
+        }
+
+        .job-company-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 2px;
+        }
+
+        .job-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--slate-900);
+            margin-bottom: 8px;
+            letter-spacing: -0.2px;
+        }
+
+        .job-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .job-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            color: var(--slate-500);
+        }
+
+        .job-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border: 1px solid var(--slate-200);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: var(--white);
+            color: var(--slate-700);
+        }
+
+        .btn:hover {
+            background: var(--slate-50);
+            border-color: var(--slate-300);
+        }
+
+        .btn-primary {
+            background: var(--blue-600);
+            color: var(--white);
+            border-color: var(--blue-600);
+        }
+
+        .btn-primary:hover {
+            background: var(--blue-700);
+            border-color: var(--blue-700);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .new-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: var(--blue-600);
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="top-nav-left">
+            <div class="top-nav-logo">
+                <div class="logo-icon">R</div>
+                <span class="logo-text">RecruitAgent</span>
+            </div>
+            <a href="#" class="top-nav-link">My Job Search</a>
+        </div>
+        <div class="top-nav-right">
+            <div class="notification-bell">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                <span class="notification-dot"></span>
+            </div>
+            <div class="user-chip">
+                <div class="avatar">MW</div>
+                <span class="name">Marcus Webb</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="content">
+
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+            <h1>Your agent found 3 new high-fit roles today.</h1>
+            <p>2 emails are awaiting approval from your recruiter, Sarah Mitchell.</p>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-label">Jobs Discovered</div>
+                <div class="stat-value">32</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Applications Sent</div>
+                <div class="stat-value">11</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Responses Received</div>
+                <div class="stat-value">3</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Interviews Scheduled</div>
+                <div class="stat-value">1</div>
+            </div>
+        </div>
+
+        <!-- Pipeline Kanban -->
+        <div class="section-header">
+            <h2>Your Pipeline</h2>
+        </div>
+        <div class="kanban">
+            <div class="kanban-col">
+                <div class="kanban-col-header">
+                    <span class="kanban-col-title">Discovered</span>
+                </div>
+                <div class="kanban-count">8</div>
+                <div class="kanban-bar"><div class="kanban-bar-fill" style="width: 25%;"></div></div>
+            </div>
+            <div class="kanban-col">
+                <div class="kanban-col-header">
+                    <span class="kanban-col-title">Applied</span>
+                </div>
+                <div class="kanban-count">11</div>
+                <div class="kanban-bar"><div class="kanban-bar-fill" style="width: 34%;"></div></div>
+            </div>
+            <div class="kanban-col highlighted">
+                <div class="kanban-col-header">
+                    <span class="kanban-col-title">Response Received</span>
+                </div>
+                <div class="kanban-count">3</div>
+                <div class="kanban-bar"><div class="kanban-bar-fill" style="width: 9%;"></div></div>
+            </div>
+            <div class="kanban-col highlighted-green">
+                <div class="kanban-col-header">
+                    <span class="kanban-col-title">Interview</span>
+                </div>
+                <div class="kanban-count">1</div>
+                <div class="kanban-bar"><div class="kanban-bar-fill" style="width: 3%;"></div></div>
+            </div>
+            <div class="kanban-col">
+                <div class="kanban-col-header">
+                    <span class="kanban-col-title">Offer</span>
+                </div>
+                <div class="kanban-count">0</div>
+                <div class="kanban-bar"><div class="kanban-bar-fill" style="width: 0%;"></div></div>
+            </div>
+        </div>
+
+        <!-- Recent Agent Activity -->
+        <div class="activity-section">
+            <div class="section-header">
+                <h2>Recent Agent Activity</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-icon search">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-text">Found new role: <strong>Senior ML Engineer at Cohere</strong><span class="timeline-badge fit">94% fit</span></div>
+                        <div class="timeline-time">2 hours ago</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon email">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-text">Drafted outreach to <strong>Anthropic</strong> recruiting team -- awaiting Sarah's approval</div>
+                        <div class="timeline-time">3 hours ago</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon sent">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-text">Sent follow-up to <strong>Stripe</strong> (Dana Kim) -- no response after 5 days</div>
+                        <div class="timeline-time">1 day ago</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon applied">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-text">Application submitted: <strong>Meta AI Research Engineer</strong></div>
+                        <div class="timeline-time">1 day ago</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon interview">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-text">Interview scheduled: <strong>Google DeepMind</strong> -- Monday Feb 24, 2:00 PM</div>
+                        <div class="timeline-time">2 days ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Jobs Found -->
+        <div class="section-header">
+            <h2>New Jobs Found For You</h2>
+        </div>
+        <div class="job-grid">
+            <!-- Job Card 1: Cohere -->
+            <div class="job-card">
+                <div class="job-card-header">
+                    <div class="job-company-logo" style="background: linear-gradient(135deg, #6366F1, #4F46E5);">C</div>
+                    <span class="job-fit-badge">94% fit</span>
+                </div>
+                <span class="new-badge">New today</span>
+                <div class="job-company-name">Cohere</div>
+                <div class="job-title">Senior ML Engineer</div>
+                <div class="job-meta">
+                    <span class="job-meta-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Remote
+                    </span>
+                    <span class="job-meta-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                        Full-time
+                    </span>
+                </div>
+                <div class="job-actions">
+                    <button class="btn btn-sm">View Details</button>
+                    <button class="btn btn-primary btn-sm">Tell agent to apply</button>
+                </div>
+            </div>
+
+            <!-- Job Card 2: OpenAI -->
+            <div class="job-card">
+                <div class="job-card-header">
+                    <div class="job-company-logo" style="background: linear-gradient(135deg, #0F172A, #334155);">O</div>
+                    <span class="job-fit-badge">89% fit</span>
+                </div>
+                <span class="new-badge">New today</span>
+                <div class="job-company-name">OpenAI</div>
+                <div class="job-title">Research Engineer</div>
+                <div class="job-meta">
+                    <span class="job-meta-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        San Francisco
+                    </span>
+                    <span class="job-meta-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                        Full-time
+                    </span>
+                </div>
+                <div class="job-actions">
+                    <button class="btn btn-sm">View Details</button>
+                    <button class="btn btn-primary btn-sm">Tell agent to apply</button>
+                </div>
+            </div>
+
+            <!-- Job Card 3: Mistral -->
+            <div class="job-card">
+                <div class="job-card-header">
+                    <div class="job-company-logo" style="background: linear-gradient(135deg, #F59E0B, #D97706);">M</div>
+                    <span class="job-fit-badge">86% fit</span>
+                </div>
+                <span class="new-badge">New today</span>
+                <div class="job-company-name">Mistral</div>
+                <div class="job-title">ML Infrastructure</div>
+                <div class="job-meta">
+                    <span class="job-meta-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Remote
+                    </span>
+                    <span class="job-meta-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                        Full-time
+                    </span>
+                </div>
+                <div class="job-actions">
+                    <button class="btn btn-sm">View Details</button>
+                    <button class="btn btn-primary btn-sm">Tell agent to apply</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
