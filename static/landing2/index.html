@@ -506,30 +506,77 @@
     }
 
     /* Protocol */
-    .protocol__stack { position: relative; }
-    .protocol__card {
-      min-height: 80vh;
+    .protocol__stack {
+      position: relative;
       display: flex;
-      align-items: center;
-      margin-bottom: var(--space-xl);
-      padding: var(--space-4xl);
+      flex-direction: column;
+      gap: var(--space-xl);
+      max-width: 1000px;
+      margin-inline: auto;
+    }
+    .protocol__card {
+      display: flex;
+      align-items: stretch;
+      padding: var(--space-2xl) var(--space-3xl);
+      position: relative;
+      overflow: hidden;
     }
     .protocol__card-inner {
       width: 100%;
-      max-width: 1200px;
-      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3xl);
     }
     .protocol__info { flex: 1; }
-    .protocol__canvas { flex: 0 0 300px; }
+    .protocol__info .heading-md { margin: var(--space-sm) 0 var(--space-md); }
+    .protocol__info .text-body { line-height: 1.7; }
+    .protocol__info .protocol__details {
+      margin-top: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .protocol__detail {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 0.85rem;
+      color: var(--color-muted);
+    }
+    .protocol__detail::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      flex-shrink: 0;
+    }
+    .protocol__canvas {
+      flex: 0 0 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .protocol__canvas canvas,
     .protocol__waveform {
       width: 100%;
       height: auto;
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-md);
+      background: var(--color-text);
+    }
+    .protocol__step-num {
+      font-family: var(--font-mono);
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: rgba(17, 17, 17, 0.06);
+      position: absolute;
+      top: var(--space-lg);
+      right: var(--space-2xl);
+      line-height: 1;
     }
     @media (max-width: 768px) {
       .protocol__card-inner { flex-direction: column; }
-      .protocol__canvas { flex: none; width: 100%; }
+      .protocol__canvas { flex: none; width: 100%; max-width: 200px; }
     }
 
     /* Pricing */
@@ -765,40 +812,58 @@
 
     <div class="protocol__stack" id="protocol-stack">
       <div class="protocol__card card" data-step="1">
-        <div class="protocol__card-inner flex items-center gap-2xl">
+        <span class="protocol__step-num">01</span>
+        <div class="protocol__card-inner">
           <div class="protocol__info">
-            <span class="text-mono text-accent">01</span>
-            <h3 class="heading-md" style="margin: var(--space-md) 0;">Intake & Alignment</h3>
-            <p class="text-body text-muted">We map your exact career goals and trajectory.</p>
+            <span class="text-mono text-accent">01 — Intake</span>
+            <h3 class="heading-md">Intake & Alignment</h3>
+            <p class="text-body text-muted">We map your exact career goals, salary targets, and ideal trajectory. No generic templates — every strategy is built from your specific situation.</p>
+            <div class="protocol__details">
+              <span class="protocol__detail">60-minute deep-dive strategy session</span>
+              <span class="protocol__detail">Target company list & role criteria</span>
+              <span class="protocol__detail">Compensation benchmarking report</span>
+            </div>
           </div>
           <div class="protocol__canvas">
-            <canvas id="protocol-canvas-1" width="300" height="300"></canvas>
+            <canvas id="protocol-canvas-1" width="200" height="200"></canvas>
           </div>
         </div>
       </div>
 
       <div class="protocol__card card" data-step="2">
-        <div class="protocol__card-inner flex items-center gap-2xl">
+        <span class="protocol__step-num">02</span>
+        <div class="protocol__card-inner">
           <div class="protocol__info">
-            <span class="text-mono text-accent">02</span>
-            <h3 class="heading-md" style="margin: var(--space-md) 0;">Signal Extraction</h3>
-            <p class="text-body text-muted">Filtering noise to isolate high-signal opportunities.</p>
+            <span class="text-mono text-accent">02 — Extract</span>
+            <h3 class="heading-md">Signal Extraction</h3>
+            <p class="text-body text-muted">AI-powered filtering cuts through job board noise to isolate high-signal opportunities that actually match your profile — not just keyword overlap.</p>
+            <div class="protocol__details">
+              <span class="protocol__detail">200+ sources scanned daily</span>
+              <span class="protocol__detail">Hidden market & back-channel roles</span>
+              <span class="protocol__detail">Fit-score ranking with reasoning</span>
+            </div>
           </div>
           <div class="protocol__canvas">
-            <canvas id="protocol-canvas-2" width="300" height="300"></canvas>
+            <canvas id="protocol-canvas-2" width="200" height="200"></canvas>
           </div>
         </div>
       </div>
 
       <div class="protocol__card card" data-step="3">
-        <div class="protocol__card-inner flex items-center gap-2xl">
+        <span class="protocol__step-num">03</span>
+        <div class="protocol__card-inner">
           <div class="protocol__info">
-            <span class="text-mono text-accent">03</span>
-            <h3 class="heading-md" style="margin: var(--space-md) 0;">Targeted Outreach</h3>
-            <p class="text-body text-muted">Precision networking and connection scheduling.</p>
+            <span class="text-mono text-accent">03 — Outreach</span>
+            <h3 class="heading-md">Targeted Outreach</h3>
+            <p class="text-body text-muted">Precision networking and personalized connection sequencing. Every message is crafted to land, not spam. We handle the pipeline so you focus on interviews.</p>
+            <div class="protocol__details">
+              <span class="protocol__detail">Personalized outreach drafts per role</span>
+              <span class="protocol__detail">Automated follow-up scheduling</span>
+              <span class="protocol__detail">Interview prep & debrief support</span>
+            </div>
           </div>
           <div class="protocol__canvas">
-            <svg class="protocol__waveform" viewBox="0 0 300 100" id="protocol-waveform">
+            <svg class="protocol__waveform" viewBox="0 0 200 80" id="protocol-waveform">
               <path d="" stroke="var(--color-accent)" stroke-width="2" fill="none" id="waveform-path"/>
             </svg>
           </div>
@@ -1097,65 +1162,62 @@
         });
       });
 
-      // Protocol Stacking
+      // Protocol — stagger fade-in on scroll (no sticky stacking)
       const protocolCards = gsap.utils.toArray('.protocol__card');
       protocolCards.forEach((card, i) => {
-        if (i < protocolCards.length - 1) {
-          ScrollTrigger.create({
+        gsap.from(card, {
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
             trigger: card,
-            start: 'top top',
-            pin: true,
-            pinSpacing: false,
-            endTrigger: protocolCards[i + 1],
-            end: 'top top',
-          });
-          gsap.to(card, {
-            scale: 0.9,
-            filter: 'blur(20px)',
-            opacity: 0.5,
-            scrollTrigger: {
-              trigger: protocolCards[i + 1],
-              start: 'top bottom',
-              end: 'top top',
-              scrub: true,
-            }
-          });
-        }
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          }
+        });
       });
 
-      // Canvas 1
+      // Canvas 1 — concentric orbits on dark bg
       const c1 = document.getElementById('protocol-canvas-1');
       if (c1) {
         const ctx1 = c1.getContext('2d');
         let angle = 0;
         const accent = getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim();
         function drawCircles() {
-          ctx1.clearRect(0, 0, 300, 300);
+          ctx1.clearRect(0, 0, 200, 200);
           ctx1.strokeStyle = accent;
-          ctx1.lineWidth = 1;
-          for (let r = 30; r < 150; r += 20) {
+          ctx1.globalAlpha = 0.6;
+          ctx1.lineWidth = 1.5;
+          for (let r = 20; r < 90; r += 14) {
             ctx1.beginPath();
-            ctx1.ellipse(150, 150, r, r * 0.6, angle + r * 0.01, 0, Math.PI * 2);
+            ctx1.ellipse(100, 100, r, r * 0.6, angle + r * 0.01, 0, Math.PI * 2);
             ctx1.stroke();
           }
+          // center dot
+          ctx1.globalAlpha = 1;
+          ctx1.fillStyle = accent;
+          ctx1.beginPath();
+          ctx1.arc(100, 100, 4, 0, Math.PI * 2);
+          ctx1.fill();
           angle += 0.005;
           requestAnimationFrame(drawCircles);
         }
         drawCircles();
       }
 
-      // Canvas 2
+      // Canvas 2 — grid scan on dark bg
       const c2 = document.getElementById('protocol-canvas-2');
       if (c2) {
         const ctx2 = c2.getContext('2d');
         let scanY = 0;
         const accent = getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim();
-        const gridSize = 15;
+        const gridSize = 12;
         function drawScan() {
-          ctx2.clearRect(0, 0, 300, 300);
-          ctx2.fillStyle = 'rgba(128, 128, 128, 0.2)';
-          for (let x = gridSize; x < 300; x += gridSize) {
-            for (let y = gridSize; y < 300; y += gridSize) {
+          ctx2.clearRect(0, 0, 200, 200);
+          ctx2.fillStyle = 'rgba(255, 255, 255, 0.15)';
+          for (let x = gridSize; x < 200; x += gridSize) {
+            for (let y = gridSize; y < 200; y += gridSize) {
               ctx2.beginPath();
               ctx2.arc(x, y, 1.5, 0, Math.PI * 2);
               ctx2.fill();
@@ -1164,14 +1226,14 @@
           ctx2.strokeStyle = accent;
           ctx2.lineWidth = 2;
           ctx2.shadowColor = accent;
-          ctx2.shadowBlur = 10;
+          ctx2.shadowBlur = 12;
           ctx2.beginPath();
           ctx2.moveTo(0, scanY);
-          ctx2.lineTo(300, scanY);
+          ctx2.lineTo(200, scanY);
           ctx2.stroke();
           ctx2.shadowBlur = 0;
           ctx2.fillStyle = accent;
-          for (let x = gridSize; x < 300; x += gridSize) {
+          for (let x = gridSize; x < 200; x += gridSize) {
             const nearestY = Math.round(scanY / gridSize) * gridSize;
             if (Math.abs(nearestY - scanY) < gridSize) {
               ctx2.beginPath();
@@ -1179,23 +1241,23 @@
               ctx2.fill();
             }
           }
-          scanY = (scanY + 0.5) % 300;
+          scanY = (scanY + 0.5) % 200;
           requestAnimationFrame(drawScan);
         }
         drawScan();
       }
 
-      // Canvas 3
+      // Canvas 3 — waveform (SVG on dark bg)
       const waveformPath = document.getElementById('waveform-path');
       if (waveformPath) {
         let phase = 0;
         function drawWaveform() {
-          let d = 'M 0 50';
-          for (let x = 0; x <= 300; x += 2) {
-            const y = 50 +
-              Math.sin((x * 0.03) + phase) * 20 +
-              Math.sin((x * 0.07) + phase * 1.5) * 10 +
-              Math.sin((x * 0.01) + phase * 0.5) * 15;
+          let d = 'M 0 40';
+          for (let x = 0; x <= 200; x += 2) {
+            const y = 40 +
+              Math.sin((x * 0.04) + phase) * 16 +
+              Math.sin((x * 0.08) + phase * 1.5) * 8 +
+              Math.sin((x * 0.015) + phase * 0.5) * 12;
             d += ` L ${x} ${y}`;
           }
           waveformPath.setAttribute('d', d);
