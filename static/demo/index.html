@@ -2,11 +2,173 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0;url=recruiter-dashboard.html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>RecruitAgent</title>
+  <title>Reverse Recruiting — Demo Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --bg-card: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.06);
+      --border-hover: rgba(255,255,255,0.14);
+      --text: #fafafa;
+      --text-secondary: rgba(255,255,255,0.5);
+      --text-tertiary: rgba(255,255,255,0.3);
+      --accent: #c8a2ff;
+      --accent-glow: rgba(200,162,255,0.12);
+      --green: #34d399;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .hub {
+      max-width: 640px;
+      width: 100%;
+    }
+    .hub__eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .hub__title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .hub__desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+    .hub__section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-tertiary);
+      margin-bottom: 12px;
+    }
+    .hub__cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .hub__card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+    .hub__card:hover {
+      border-color: var(--border-hover);
+      background: rgba(255,255,255,0.05);
+      transform: translateY(-1px);
+    }
+    .hub__card-info { display: flex; flex-direction: column; gap: 2px; }
+    .hub__card-name { font-weight: 500; font-size: 0.95rem; }
+    .hub__card-desc { font-size: 0.8rem; color: var(--text-secondary); }
+    .hub__card-arrow {
+      color: var(--text-tertiary);
+      font-size: 1.1rem;
+      transition: transform 0.2s, color 0.2s;
+    }
+    .hub__card:hover .hub__card-arrow {
+      transform: translateX(3px);
+      color: var(--accent);
+    }
+    .hub__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-tertiary);
+      margin-top: 8px;
+    }
+    .hub__badge-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 50% { opacity: 0.4; } }
+  </style>
 </head>
 <body>
-  <script>window.location.replace('recruiter-dashboard.html');</script>
+  <div class="hub">
+    <p class="hub__eyebrow">Demo Hub</p>
+    <h1 class="hub__title">Reverse Recruiting</h1>
+    <p class="hub__desc">Product mockups and landing page concepts. Private share-only demos.</p>
+
+    <p class="hub__section-label">Landing Page</p>
+    <div class="hub__cards">
+      <a href="landing.html" class="hub__card">
+        <div class="hub__card-info">
+          <span class="hub__card-name">Marketing Landing Page</span>
+          <span class="hub__card-desc">Dark cinematic landing page with animations and pricing</span>
+        </div>
+        <span class="hub__card-arrow">&rarr;</span>
+      </a>
+    </div>
+
+    <p class="hub__section-label">App Mockups</p>
+    <div class="hub__cards">
+      <a href="recruiter-dashboard.html" class="hub__card">
+        <div class="hub__card-info">
+          <span class="hub__card-name">Recruiter Dashboard</span>
+          <span class="hub__card-desc">Operator view — pipeline, clients, outreach queue</span>
+        </div>
+        <span class="hub__card-arrow">&rarr;</span>
+      </a>
+      <a href="draft-queue.html" class="hub__card">
+        <div class="hub__card-info">
+          <span class="hub__card-name">Draft Queue</span>
+          <span class="hub__card-desc">AI-written outreach approval interface</span>
+        </div>
+        <span class="hub__card-arrow">&rarr;</span>
+      </a>
+      <a href="clients.html" class="hub__card">
+        <div class="hub__card-info">
+          <span class="hub__card-name">Client List</span>
+          <span class="hub__card-desc">Client management and status overview</span>
+        </div>
+        <span class="hub__card-arrow">&rarr;</span>
+      </a>
+      <a href="client-view.html" class="hub__card">
+        <div class="hub__card-info">
+          <span class="hub__card-name">Client View</span>
+          <span class="hub__card-desc">Job seeker dashboard — pipeline, profile, outreach history</span>
+        </div>
+        <span class="hub__card-arrow">&rarr;</span>
+      </a>
+    </div>
+
+    <div class="hub__badge">
+      <span class="hub__badge-dot"></span>
+      Private demo — not indexed
+    </div>
+  </div>
 </body>
 </html>
