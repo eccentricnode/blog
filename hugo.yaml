@@ -5,6 +5,7 @@ theme: ["PaperMod"]
 timeZone: America/Phoenix
 buildFuture: false
 params:
+  author: "Austin Johnson"
 
   ShowReadingTime: true
   ShowPostNavLinks: true
