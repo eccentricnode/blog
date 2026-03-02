@@ -24,9 +24,17 @@ The viral version of this idea is: put AI in a loop, let it run, wake up to a fi
 
 That's like watching someone drive a race car and thinking the secret is "turn the steering wheel."
 
-The loop is the dumbest part. It's literally `while :; do ... ; done`. A first-year CS student could write it.
+Here's what's funny though — the people dismissing the loop as "dumb" are also missing the point. That simple `while :; do ... ; done` is doing something incredibly smart: **it resets the context window every iteration.**
 
-**The engineering is everything the loop operates within.** And nobody is talking about it.
+And there's research to back up why that matters.
+
+Stanford's "Lost in the Middle" paper showed that LLMs have a U-shaped attention curve — they process the beginning and end of their context well, but performance drops significantly for information in the middle. Amazon's research went further: even with *perfect retrieval*, reasoning performance degrades 13-85% as input length increases. Not because the model can't find the information — because sheer volume overwhelms its ability to think clearly. Adobe's NoLiMa benchmark quantified the damage: GPT-4o drops from 99.3% accuracy at 1K tokens to 69.7% at 32K tokens.
+
+The loop isn't dumb. It's context management. Every iteration, the agent starts with a clean slate — fresh context, no accumulated noise, no "lost in the middle" degradation. JetBrains presented research at NeurIPS 2025 showing that simply masking old observations in agent systems boosted solve rates while being 52% cheaper than keeping full context.
+
+Geoffrey Huntley didn't stumble into a bash loop. He understood — intuitively or otherwise — that an agent with a clean context window reasons better than one drowning in 10 iterations of accumulated history.
+
+**The loop is elegant. But the engineering around it is where the real leverage lives.** And nobody is talking about it.
 
 ---
 
