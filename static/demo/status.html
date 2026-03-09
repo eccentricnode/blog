@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Job CRM — Project Status</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --bg-card: rgba(255,255,255,0.03);
+      --bg-card-hover: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.06);
+      --border-hover: rgba(255,255,255,0.14);
+      --text: #fafafa;
+      --text-secondary: rgba(255,255,255,0.5);
+      --text-tertiary: rgba(255,255,255,0.3);
+      --accent: #c8a2ff;
+      --accent-dim: rgba(200,162,255,0.15);
+      --accent-glow: rgba(200,162,255,0.08);
+      --green: #34d399;
+      --green-dim: rgba(52,211,153,0.12);
+      --yellow: #fbbf24;
+      --yellow-dim: rgba(251,191,36,0.12);
+      --blue: #60a5fa;
+      --blue-dim: rgba(96,165,250,0.12);
+      --red: #f87171;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      padding: 48px 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      margin-bottom: 48px;
+    }
+    .header__eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .header__title {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .header__subtitle {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .header__updated {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+      margin-top: 12px;
+    }
+    .header__updated span {
+      color: var(--green);
+    }
+
+    /* Summary stats */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+    .stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+    }
+    .stat__number {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .stat__number--green { color: var(--green); }
+    .stat__number--blue { color: var(--blue); }
+    .stat__number--yellow { color: var(--yellow); }
+    .stat__number--accent { color: var(--accent); }
+    .stat__label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-tertiary);
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 40px;
+    }
+    .section__label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-tertiary);
+      margin-bottom: 16px;
+    }
+
+    /* Milestone cards */
+    .milestone {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s;
+    }
+    .milestone:hover {
+      border-color: var(--border-hover);
+    }
+    .milestone--active {
+      border-color: var(--accent-dim);
+      background: linear-gradient(135deg, var(--accent-glow), transparent);
+    }
+    .milestone__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .milestone__name {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .milestone__badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-weight: 500;
+    }
+    .milestone__badge--active {
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+    .milestone__badge--planned {
+      background: rgba(255,255,255,0.05);
+      color: var(--text-tertiary);
+    }
+    .milestone__meta {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 14px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    .milestone__meta span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+    }
+    .milestone__bar-bg {
+      height: 6px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .milestone__bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.6s ease;
+    }
+    .milestone__bar-fill--green { background: var(--green); }
+    .milestone__bar-fill--accent { background: var(--accent); }
+    .milestone__bar-fill--blue { background: var(--blue); }
+    .milestone__percent {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+      margin-top: 6px;
+      text-align: right;
+    }
+
+    /* Item lists */
+    .items {
+      display: grid;
+      gap: 6px;
+    }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      transition: border-color 0.2s;
+    }
+    .item:hover {
+      border-color: var(--border-hover);
+    }
+    .item__icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      flex-shrink: 0;
+    }
+    .item__icon--done {
+      background: var(--green-dim);
+      color: var(--green);
+    }
+    .item__icon--progress {
+      background: var(--blue-dim);
+      color: var(--blue);
+    }
+    .item__icon--todo {
+      background: var(--yellow-dim);
+      color: var(--yellow);
+    }
+    .item__text {
+      flex: 1;
+      color: var(--text-secondary);
+    }
+    .item--done .item__text {
+      color: var(--text-tertiary);
+      text-decoration: line-through;
+      text-decoration-color: rgba(255,255,255,0.15);
+    }
+    .item__category {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.04);
+      color: var(--text-tertiary);
+      flex-shrink: 0;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 24px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 4px;
+      bottom: 4px;
+      width: 1px;
+      background: var(--border);
+    }
+    .timeline__item {
+      position: relative;
+      padding-bottom: 28px;
+    }
+    .timeline__item:last-child { padding-bottom: 0; }
+    .timeline__dot {
+      position: absolute;
+      left: -24px;
+      top: 4px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--bg);
+    }
+    .timeline__dot--active {
+      border-color: var(--accent);
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent-dim);
+    }
+    .timeline__dot--done {
+      border-color: var(--green);
+      background: var(--green);
+    }
+    .timeline__date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+      margin-bottom: 4px;
+    }
+    .timeline__label {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 64px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .footer__text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-tertiary);
+      letter-spacing: 0.05em;
+    }
+    .footer__link {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .header__title { font-size: 1.5rem; }
+      .milestone__meta { flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="header__eyebrow">Evidence Code Labs</div>
+      <h1 class="header__title">Job CRM — Project Status</h1>
+      <p class="header__subtitle">Reverse recruiting platform. Real-time development status for stakeholders.</p>
+      <div class="header__updated">Last updated: <span>March 9, 2026</span></div>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="stats">
+      <div class="stat">
+        <div class="stat__number stat__number--green">28</div>
+        <div class="stat__label">Completed</div>
+      </div>
+      <div class="stat">
+        <div class="stat__number stat__number--blue">10</div>
+        <div class="stat__label">In Progress</div>
+      </div>
+      <div class="stat">
+        <div class="stat__number stat__number--yellow">9</div>
+        <div class="stat__label">Queued</div>
+      </div>
+      <div class="stat">
+        <div class="stat__number stat__number--accent">79%</div>
+        <div class="stat__label">Phase 1</div>
+      </div>
+    </div>
+
+    <!-- Milestones -->
+    <div class="section">
+      <div class="section__label">Milestones</div>
+
+      <div class="milestone milestone--active">
+        <div class="milestone__header">
+          <div class="milestone__name">Phase 1: Google Sheets Replacement</div>
+          <div class="milestone__badge milestone__badge--active">Active</div>
+        </div>
+        <div class="milestone__meta">
+          <span>Started: Feb 27, 2026</span>
+          <span>Target: Apr 15, 2026</span>
+          <span>23 of 29 complete</span>
+        </div>
+        <div class="milestone__bar-bg">
+          <div class="milestone__bar-fill milestone__bar-fill--green" style="width: 79%"></div>
+        </div>
+        <div class="milestone__percent">79%</div>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone__header">
+          <div class="milestone__name">Phase 2: AI & Automation Layer</div>
+          <div class="milestone__badge milestone__badge--planned">Planned</div>
+        </div>
+        <div class="milestone__meta">
+          <span>Start: Apr 2026</span>
+          <span>Target: Jul 15, 2026</span>
+          <span>0 of 11 complete</span>
+        </div>
+        <div class="milestone__bar-bg">
+          <div class="milestone__bar-fill milestone__bar-fill--accent" style="width: 0%"></div>
+        </div>
+        <div class="milestone__percent">0%</div>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone__header">
+          <div class="milestone__name">Phase 3: Scale & Integration</div>
+          <div class="milestone__badge milestone__badge--planned">Planned</div>
+        </div>
+        <div class="milestone__meta">
+          <span>Start: Jul 2026</span>
+          <span>Target: Oct 15, 2026</span>
+          <span>0 of 9 complete</span>
+        </div>
+        <div class="milestone__bar-bg">
+          <div class="milestone__bar-fill milestone__bar-fill--blue" style="width: 0%"></div>
+        </div>
+        <div class="milestone__percent">0%</div>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone__header">
+          <div class="milestone__name">Phase 4: White-Label & Marketplace</div>
+          <div class="milestone__badge milestone__badge--planned">Planned</div>
+        </div>
+        <div class="milestone__meta">
+          <span>Start: Oct 2026</span>
+          <span>Target: Jan 15, 2027</span>
+          <span>0 of 9 complete</span>
+        </div>
+        <div class="milestone__bar-bg">
+          <div class="milestone__bar-fill milestone__bar-fill--accent" style="width: 0%"></div>
+        </div>
+        <div class="milestone__percent">0%</div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="section">
+      <div class="section__label">Timeline</div>
+      <div class="timeline">
+        <div class="timeline__item">
+          <div class="timeline__dot timeline__dot--done"></div>
+          <div class="timeline__date">Feb 27, 2026</div>
+          <div class="timeline__label">Project kickoff — development begins</div>
+        </div>
+        <div class="timeline__item">
+          <div class="timeline__dot timeline__dot--active"></div>
+          <div class="timeline__date">Mar 9, 2026 — now</div>
+          <div class="timeline__label">Phase 1 sprint — 79% complete</div>
+        </div>
+        <div class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__date">Apr 15, 2026</div>
+          <div class="timeline__label">Phase 1 delivery — Google Sheets replacement live</div>
+        </div>
+        <div class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__date">Jul 15, 2026</div>
+          <div class="timeline__label">Phase 2 — AI resume parsing, smart matching, automation</div>
+        </div>
+        <div class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__date">Oct 15, 2026</div>
+          <div class="timeline__label">Phase 3 — Apollo/Hunter.io, analytics, mobile</div>
+        </div>
+        <div class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__date">Jan 15, 2027</div>
+          <div class="timeline__label">Phase 4 — White-label, marketplace, billing</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Completed work -->
+    <div class="section">
+      <div class="section__label">Completed — Phase 1 (28 items)</div>
+      <div class="items">
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Add superadmin role with elevated permissions</div><div class="item__category">Auth</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">User self-registration flow</div><div class="item__category">Auth</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Password reset flow</div><div class="item__category">Auth</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Session management improvements</div><div class="item__category">Auth</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">CSRF protection middleware</div><div class="item__category">Security</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Rate limiter X-Forwarded-For fix</div><div class="item__category">Security</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Job edit and archive functionality</div><div class="item__category">Jobs</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Bulk job import from CSV/Google Sheets</div><div class="item__category">Jobs</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Kanban board drag-drop fix</div><div class="item__category">Jobs</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Job notes and activity log</div><div class="item__category">Jobs</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Job search and filtering</div><div class="item__category">Jobs</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Auto-archive rejected/withdrawn jobs</div><div class="item__category">Jobs</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Contact-to-job linking workflow</div><div class="item__category">Contacts</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Contact interaction history</div><div class="item__category">Contacts</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Bulk contact import from CSV</div><div class="item__category">Contacts</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Draft queue filtering and sorting</div><div class="item__category">Outreach</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Draft editing before approval</div><div class="item__category">Outreach</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Outreach status lifecycle tracking</div><div class="item__category">Outreach</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Outreach email templates</div><div class="item__category">Outreach</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Client portal dashboard stats</div><div class="item__category">Client</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Alembic database migrations</div><div class="item__category">Infra</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">CI/CD pipeline with GitHub Actions</div><div class="item__category">Infra</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Structured error handling and logging</div><div class="item__category">Infra</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Health check and monitoring endpoint</div><div class="item__category">Infra</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Environment configuration cleanup</div><div class="item__category">Infra</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Test suite setup</div><div class="item__category">Infra</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Flaky test fix (job detail events)</div><div class="item__category">Infra</div></div>
+        <div class="item item--done"><div class="item__icon item__icon--done">&#10003;</div><div class="item__text">Architecture documentation</div><div class="item__category">Docs</div></div>
+      </div>
+    </div>
+
+    <!-- In Progress -->
+    <div class="section">
+      <div class="section__label">In Progress — Current Sprint (10 items)</div>
+      <div class="items">
+        <div class="item"><div class="item__icon item__icon--progress">&#9654;</div><div class="item__text">Kanban cards clickable — navigate to job detail</div><div class="item__category">Critical</div></div>
+        <div class="item"><div class="item__icon item__icon--progress">&#9654;</div><div class="item__text">Fix contacts rendering on job detail</div><div class="item__category">Critical</div></div>
+        <div class="item"><div class="item__icon item__icon--progress">&#9654;</div><div class="item__text">Expand job detail page — surface all data sections</div><div class="item__category">Critical</div></div>
+        <div class="item"><div class="item__icon item__icon--progress">&#9654;</div><div class="item__text">Surface next_action and dates across views</div><div class="item__category">High</div></div>
+        <div class="item"><div class="item__icon item__icon--progress">&#9654;</div><div class="item__text">Client views: Interviews, Target Companies, Outreach</div><div class="item__category">High</div></div>
+        <div class="item"><div class="item__icon item__icon--progress">&#9654;</div><div class="item__text">Client profile — add missing fields</div><div class="item__category">High</div></div>
+        <div class="item"><div class="item__icon item__icon--progress">&#9654;</div><div class="item__text">Fix hardcoded client status</div><div class="item__category">High</div></div>
+        <div class="item"><div class="item__icon item__icon--progress">&#9654;</div><div class="item__text">Job creation form — add missing fields</div><div class="item__category">High</div></div>
+        <div class="item"><div class="item__icon item__icon--progress">&#9654;</div><div class="item__text">Client contacts table — add columns</div><div class="item__category">High</div></div>
+        <div class="item"><div class="item__icon item__icon--progress">&#9654;</div><div class="item__text">Kanban board — include rejected/withdrawn</div><div class="item__category">High</div></div>
+      </div>
+    </div>
+
+    <!-- Up Next -->
+    <div class="section">
+      <div class="section__label">Up Next (9 items)</div>
+      <div class="items">
+        <div class="item"><div class="item__icon item__icon--todo">&#9679;</div><div class="item__text">Outreach creation flow</div><div class="item__category">Outreach</div></div>
+        <div class="item"><div class="item__icon item__icon--todo">&#9679;</div><div class="item__text">Admin client detail — Drafts tab</div><div class="item__category">Admin</div></div>
+        <div class="item"><div class="item__icon item__icon--todo">&#9679;</div><div class="item__text">Resume download/view links</div><div class="item__category">Resumes</div></div>
+        <div class="item"><div class="item__icon item__icon--todo">&#9679;</div><div class="item__text">Surface email confidence and additional emails</div><div class="item__category">Contacts</div></div>
+        <div class="item"><div class="item__icon item__icon--todo">&#9679;</div><div class="item__text">Edit/delete for interviews and target companies</div><div class="item__category">CRUD</div></div>
+        <div class="item"><div class="item__icon item__icon--todo">&#9679;</div><div class="item__text">Fix Mira's admin role permissions</div><div class="item__category">Auth</div></div>
+        <div class="item"><div class="item__icon item__icon--todo">&#9679;</div><div class="item__text">Empty state onboarding guidance</div><div class="item__category">UX</div></div>
+        <div class="item"><div class="item__icon item__icon--todo">&#9679;</div><div class="item__text">Clean up redundant dashboard KPIs</div><div class="item__category">Admin</div></div>
+        <div class="item"><div class="item__icon item__icon--todo">&#9679;</div><div class="item__text">Search/filter on all tables</div><div class="item__category">UX</div></div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer__text">
+        Evidence Code Labs &middot; Job CRM &middot; <a class="footer__link" href="https://github.com/orgs/Evidence-Code-Labs/projects/2">View on GitHub</a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
