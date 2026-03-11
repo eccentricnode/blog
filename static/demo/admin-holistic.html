@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>RecruitAgent - Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --blue-600: #2563EB;
+            --blue-700: #1D4ED8;
+            --blue-50: #EFF6FF;
+            --blue-100: #DBEAFE;
+            --slate-50: #F8FAFC;
+            --slate-100: #F1F5F9;
+            --slate-200: #E2E8F0;
+            --slate-300: #CBD5E1;
+            --slate-400: #94A3B8;
+            --slate-500: #64748B;
+            --slate-600: #475569;
+            --slate-700: #334155;
+            --slate-800: #1E293B;
+            --slate-900: #0F172A;
+            --red-500: #EF4444;
+            --red-50: #FEF2F2;
+            --red-100: #FEE2E2;
+            --red-700: #B91C1C;
+            --green-500: #22C55E;
+            --green-50: #F0FDF4;
+            --green-100: #DCFCE7;
+            --green-600: #16A34A;
+            --green-700: #15803D;
+            --orange-500: #F97316;
+            --orange-50: #FFF7ED;
+            --orange-100: #FFEDD5;
+            --orange-700: #C2410C;
+            --yellow-500: #EAB308;
+            --white: #FFFFFF;
+            --sidebar-bg: #0F172A;
+            --sidebar-hover: #1E293B;
+            --sidebar-active: #1E293B;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--slate-50);
+            color: var(--slate-900);
+            display: flex;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: var(--sidebar-bg);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            padding: 24px 24px 32px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-logo .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--blue-600);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .sidebar-logo .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 0 12px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            color: var(--slate-400);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.15s ease;
+            margin-bottom: 2px;
+        }
+
+        .sidebar-nav a:hover {
+            background: var(--sidebar-hover);
+            color: var(--slate-200);
+        }
+
+        .sidebar-nav a.active {
+            background: var(--sidebar-active);
+            color: var(--white);
+        }
+
+        .sidebar-nav a .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+        }
+
+        .sidebar-nav a.active .nav-icon { opacity: 1; }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--red-500);
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 10px;
+        }
+
+        .sidebar-user {
+            padding: 16px 20px;
+            border-top: 1px solid var(--slate-700);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-user .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .sidebar-user .user-info { overflow: hidden; flex: 1; }
+        .sidebar-user .user-name { font-size: 13px; font-weight: 600; color: var(--slate-200); }
+        .sidebar-user .user-role { font-size: 12px; color: var(--slate-500); }
+        .sidebar-user .logout-link {
+            font-size: 12px;
+            color: var(--slate-500);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+        .sidebar-user .logout-link:hover { color: var(--slate-300); }
+
+        /* Main content */
+        .main {
+            margin-left: 260px;
+            flex: 1;
+            padding: 32px 40px;
+            max-width: 1200px;
+        }
+
+        .main-header {
+            margin-bottom: 32px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .main-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--slate-900);
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .main-header .subtitle {
+            font-size: 14px;
+            color: var(--slate-500);
+        }
+
+        .notification-bell {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--slate-200);
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .notification-bell:hover {
+            border-color: var(--slate-300);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+
+        .notification-bell svg { color: var(--slate-600); }
+
+        .notification-bell .bell-count {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 18px;
+            height: 18px;
+            background: var(--red-500);
+            color: var(--white);
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--slate-50);
+        }
+
+        /* Priority Bands */
+        .priority-band {
+            margin-bottom: 32px;
+        }
+
+        .band-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .band-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .band-dot.red {
+            background: var(--red-500);
+            animation: pulse-red 2s infinite;
+        }
+
+        .band-dot.orange { background: var(--orange-500); }
+        .band-dot.blue { background: var(--blue-600); }
+
+        @keyframes pulse-red {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+            50% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+        }
+
+        .band-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: var(--slate-600);
+        }
+
+        .band-count {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--slate-400);
+        }
+
+        .band-content {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .band-content.red-border { border-left: 4px solid var(--red-500); }
+        .band-content.orange-border { border-left: 4px solid var(--orange-500); }
+        .band-content.blue-border { border-left: 4px solid var(--blue-600); }
+
+        /* Action Cards (Priority 1) */
+        .action-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            background: var(--slate-200);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .action-card {
+            background: var(--white);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+
+        .action-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            z-index: 1;
+        }
+
+        .action-card .card-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .action-card .card-body { flex: 1; min-width: 0; }
+
+        .action-card .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 2px;
+        }
+
+        .action-card .card-subtitle {
+            font-size: 13px;
+            color: var(--slate-500);
+        }
+
+        .action-card .card-time {
+            font-size: 12px;
+            color: var(--slate-400);
+            flex-shrink: 0;
+            margin-right: 8px;
+        }
+
+        .action-card .card-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-family: inherit;
+        }
+
+        .btn-blue {
+            background: var(--blue-600);
+            color: var(--white);
+        }
+        .btn-blue:hover { background: var(--blue-700); }
+
+        .btn-green {
+            background: var(--green-500);
+            color: var(--white);
+        }
+        .btn-green:hover { background: var(--green-600); }
+
+        .btn-outline {
+            background: var(--white);
+            color: var(--slate-600);
+            border: 1px solid var(--slate-200);
+        }
+        .btn-outline:hover {
+            border-color: var(--slate-300);
+            background: var(--slate-50);
+        }
+
+        .card-dismiss {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: none;
+            color: var(--slate-300);
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.15s ease;
+            opacity: 0;
+        }
+
+        .action-card:hover .card-dismiss { opacity: 1; }
+        .card-dismiss:hover { color: var(--slate-500); background: var(--slate-100); }
+
+        /* Card animations */
+        .action-card.fade-out {
+            animation: fadeOut 0.35s ease forwards;
+        }
+
+        .action-card.approve-flash {
+            animation: approveFlash 0.5s ease forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; max-height: 100px; padding-top: 18px; padding-bottom: 18px; }
+            50% { opacity: 0; }
+            100% { opacity: 0; max-height: 0; padding-top: 0; padding-bottom: 0; overflow: hidden; }
+        }
+
+        @keyframes approveFlash {
+            0% { opacity: 1; background: var(--white); max-height: 100px; padding-top: 18px; padding-bottom: 18px; }
+            20% { background: var(--green-50); }
+            50% { opacity: 0; background: var(--green-100); }
+            100% { opacity: 0; max-height: 0; padding-top: 0; padding-bottom: 0; overflow: hidden; }
+        }
+
+        /* Compact Items (Priority 2) */
+        .compact-list {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--slate-200);
+        }
+
+        .compact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--slate-100);
+            transition: background 0.15s ease;
+            cursor: pointer;
+        }
+
+        .compact-item:last-child { border-bottom: none; }
+        .compact-item:hover { background: var(--slate-50); }
+
+        .compact-item .compact-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: var(--orange-50);
+            color: var(--orange-700);
+        }
+
+        .compact-item .compact-text {
+            flex: 1;
+            font-size: 14px;
+            color: var(--slate-700);
+        }
+
+        .compact-item .compact-date {
+            font-size: 12px;
+            color: var(--slate-400);
+            flex-shrink: 0;
+        }
+
+        .view-all-link {
+            display: block;
+            text-align: center;
+            padding: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--blue-600);
+            text-decoration: none;
+            border-top: 1px solid var(--slate-100);
+            transition: background 0.15s ease;
+        }
+
+        .view-all-link:hover { background: var(--blue-50); }
+
+        /* Pipeline Overview (Priority 3) */
+        .stats-strip {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-pill {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 8px;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--slate-600);
+            transition: all 0.15s ease;
+        }
+
+        .stat-pill:hover {
+            border-color: var(--slate-300);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .stat-pill .pill-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--slate-900);
+        }
+
+        .mini-kanban {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .kanban-columns {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+        }
+
+        .kanban-col {
+            text-align: center;
+        }
+
+        .kanban-col-header {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--slate-500);
+            margin-bottom: 8px;
+        }
+
+        .kanban-col-count {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--slate-900);
+            margin-bottom: 8px;
+        }
+
+        .kanban-bar {
+            height: 4px;
+            border-radius: 2px;
+            margin: 0 auto;
+            transition: width 0.3s ease;
+        }
+
+        /* Everything Else (Priority 4) */
+        .collapsible-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 16px 20px;
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+
+        .collapsible-header:hover { background: var(--slate-50); }
+
+        .collapsible-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chevron {
+            transition: transform 0.25s ease;
+            color: var(--slate-400);
+        }
+
+        .chevron.open { transform: rotate(180deg); }
+
+        .collapsible-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, opacity 0.25s ease;
+            opacity: 0;
+        }
+
+        .collapsible-body.open {
+            max-height: 800px;
+            opacity: 1;
+        }
+
+        .collapsible-inner {
+            padding-top: 16px;
+        }
+
+        /* Tabs */
+        .tab-bar {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 16px;
+            background: var(--slate-100);
+            border-radius: 8px;
+            padding: 3px;
+            width: fit-content;
+        }
+
+        .tab-btn {
+            padding: 7px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            background: transparent;
+            color: var(--slate-500);
+            transition: all 0.15s ease;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--white);
+            color: var(--slate-900);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+        }
+
+        .tab-btn:hover:not(.active) { color: var(--slate-700); }
+
+        /* Table */
+        .table-wrap {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        thead th {
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--slate-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--slate-200);
+            background: var(--slate-50);
+        }
+
+        tbody td {
+            padding: 14px 20px;
+            font-size: 14px;
+            color: var(--slate-700);
+            border-bottom: 1px solid var(--slate-100);
+        }
+
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr { transition: background 0.1s ease; }
+        tbody tr:hover { background: var(--slate-50); cursor: pointer; }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .status-badge.active { background: var(--green-50); color: var(--green-700); }
+        .status-badge.pending { background: var(--orange-50); color: var(--orange-700); }
+        .status-badge.interviewing { background: var(--blue-50); color: var(--blue-600); }
+        .status-badge.closed { background: var(--slate-100); color: var(--slate-500); }
+
+        .priority-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        .priority-badge.high { background: var(--red-50); color: var(--red-700); }
+        .priority-badge.medium { background: var(--orange-50); color: var(--orange-700); }
+        .priority-badge.low { background: var(--slate-100); color: var(--slate-500); }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            background: var(--slate-900);
+            color: var(--white);
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            animation: toastIn 0.3s ease forwards;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 400px;
+        }
+
+        .toast.removing {
+            animation: toastOut 0.3s ease forwards;
+        }
+
+        .toast .toast-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .toast .toast-icon.success { background: var(--green-500); }
+        .toast .toast-icon.info { background: var(--blue-600); }
+
+        @keyframes toastIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes toastOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* Hamburger toggle */
+        .hamburger {
+            display: none;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 8px;
+            cursor: pointer;
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 200;
+        }
+        .hamburger span, .hamburger span::before, .hamburger span::after {
+            display: block;
+            width: 18px;
+            height: 2px;
+            background: var(--slate-700);
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .hamburger span::before, .hamburger span::after {
+            content: '';
+            position: absolute;
+            left: 0;
+        }
+        .hamburger span::before { top: -6px; }
+        .hamburger span::after { top: 6px; }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 90;
+        }
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+            .stats-strip { flex-wrap: wrap; }
+            .kanban-columns { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .sidebar { transform: translateX(-100%); transition: transform 0.25s ease; }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-overlay.open { display: block; }
+            .main { margin-left: 0; padding: 68px 16px 24px; }
+            .main-header h1 { font-size: 18px; }
+            .main-header { flex-direction: column; gap: 12px; }
+            .stats-strip { flex-direction: column; }
+            .kanban-columns { grid-template-columns: repeat(3, 1fr); }
+            .action-card { flex-wrap: wrap; }
+            .action-card .card-actions { width: 100%; margin-top: 8px; }
+            .action-card .card-time { order: -1; width: 100%; margin-bottom: 4px; }
+            .tab-bar { width: 100%; }
+            .tab-btn { flex: 1; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hamburger toggle -->
+    <button class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.sidebar-overlay').classList.toggle('open');" aria-label="Toggle menu">
+        <span></span>
+    </button>
+    <div class="sidebar-overlay" onclick="document.querySelector('.sidebar').classList.remove('open');this.classList.remove('open');"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">RA</div>
+            <span class="logo-text">RecruitAgent</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="active">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                </span>
+                Dashboard
+                <span class="nav-badge" id="nav-critical-count">3</span>
+            </a>
+            <a href="clients.html">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </span>
+                Clients
+            </a>
+            <a href="draft-queue.html">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </span>
+                Draft Queue
+            </a>
+            <a href="#">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                Templates
+            </a>
+            <a href="#">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                </span>
+                Settings
+            </a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="user-avatar">MM</div>
+            <div class="user-info">
+                <div class="user-name">Mira Malak</div>
+                <div class="user-role">Admin</div>
+            </div>
+            <a href="#" class="logout-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Header -->
+        <div class="main-header">
+            <div>
+                <h1>Good morning, Mira.</h1>
+                <p class="subtitle">Monday, March 10, 2026</p>
+            </div>
+            <div class="notification-bell">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                <span class="bell-count" id="bell-count">5</span>
+            </div>
+        </div>
+
+        <!-- Priority Band 1: Needs Your Action -->
+        <div class="priority-band" id="band-critical">
+            <div class="band-header">
+                <span class="band-dot red"></span>
+                <span class="band-title">Needs Your Action</span>
+                <span class="band-count" id="critical-count">(3)</span>
+            </div>
+            <div class="band-content red-border">
+                <div class="action-cards" id="critical-cards">
+                    <!-- Cards rendered by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Priority Band 2: Coming Up This Week -->
+        <div class="priority-band">
+            <div class="band-header">
+                <span class="band-dot orange"></span>
+                <span class="band-title">Coming Up This Week</span>
+                <span class="band-count" id="upcoming-count">(4)</span>
+            </div>
+            <div class="band-content orange-border">
+                <div class="compact-list" id="upcoming-list">
+                    <!-- Items rendered by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Priority Band 3: Pipeline Overview -->
+        <div class="priority-band">
+            <div class="band-header">
+                <span class="band-dot blue"></span>
+                <span class="band-title">Pipeline Overview</span>
+            </div>
+            <div class="band-content blue-border">
+                <div style="background: var(--white); border-radius: 12px; border: 1px solid var(--slate-200); padding: 20px;">
+                    <div class="stats-strip" id="pipeline-stats">
+                        <!-- Stats rendered by JS -->
+                    </div>
+                    <div class="mini-kanban">
+                        <div class="kanban-columns" id="kanban-columns">
+                            <!-- Columns rendered by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Priority Band 4: Everything Else -->
+        <div class="priority-band">
+            <div class="collapsible-header" onclick="toggleEverythingElse()">
+                <div class="header-left">
+                    <span class="band-title" style="color: var(--slate-500);">Everything Else</span>
+                </div>
+                <svg class="chevron" id="ee-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="collapsible-body" id="ee-body">
+                <div class="collapsible-inner">
+                    <div class="tab-bar" id="ee-tabs">
+                        <!-- Tabs rendered by JS -->
+                    </div>
+                    <div class="table-wrap" id="ee-table">
+                        <!-- Table rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        // ─── Dummy Data ───────────────────────────────────────────
+
+        const criticalActions = [
+            {
+                id: 'action-1',
+                avatar: 'AJ',
+                avatarColor: 'linear-gradient(135deg, #3B82F6, #2563EB)',
+                title: 'Austin has 3 unapproved jobs',
+                subtitle: 'Pending for 5 days \u2014 approve to start outreach',
+                time: '5d ago',
+                buttons: [
+                    { label: 'Review \u2192', type: 'blue', action: 'review' }
+                ]
+            },
+            {
+                id: 'action-2',
+                avatar: 'SM',
+                avatarColor: 'linear-gradient(135deg, #8B5CF6, #7C3AED)',
+                title: 'Draft email for Sarah \u2192 Stripe',
+                subtitle: 'Subject: Senior SWE Introduction',
+                time: '1d ago',
+                buttons: [
+                    { label: 'Approve', type: 'green', action: 'approve' },
+                    { label: 'Edit', type: 'outline', action: 'edit' }
+                ]
+            },
+            {
+                id: 'action-3',
+                avatar: 'AJ',
+                avatarColor: 'linear-gradient(135deg, #3B82F6, #2563EB)',
+                title: 'Austin interviews at Google tomorrow',
+                subtitle: 'System Design round, 2:00 PM MST',
+                time: 'Scheduled',
+                buttons: [
+                    { label: 'View Details \u2192', type: 'blue', action: 'view' }
+                ]
+            }
+        ];
+
+        const upcomingItems = [
+            {
+                icon: '\u2709',
+                text: 'Sarah \u2014 follow-up with Cloudflare recruiter due Thursday',
+                date: 'Thu, Mar 12'
+            },
+            {
+                icon: '\u26A0',
+                text: 'Marcus has incomplete profile \u2014 3 fields missing',
+                date: 'Action needed'
+            },
+            {
+                icon: '\u23F3',
+                text: '2 outreach emails for Austin awaiting response (sent 4 days ago)',
+                date: 'Sent Mar 6'
+            },
+            {
+                icon: '\u270F',
+                text: 'Draft queue: 5 drafts awaiting first review',
+                date: '5 pending'
+            }
+        ];
+
+        const pipelineStats = [
+            { value: 4, label: 'Active Clients' },
+            { value: 12, label: 'Active Jobs' },
+            { value: 3, label: 'Interviewing' },
+            { value: 23, label: 'Outreach Sent' }
+        ];
+
+        const kanbanData = [
+            { name: 'Discovered', count: 18, color: '#94A3B8', max: 18 },
+            { name: 'Approved', count: 12, color: '#2563EB', max: 18 },
+            { name: 'Applied', count: 8, color: '#8B5CF6', max: 18 },
+            { name: 'Interviewing', count: 3, color: '#F97316', max: 18 },
+            { name: 'Offer', count: 1, color: '#22C55E', max: 18 },
+            { name: 'Accepted', count: 0, color: '#14B8A6', max: 18 }
+        ];
+
+        const tabData = {
+            Jobs: {
+                columns: ['Company', 'Title', 'Client', 'Status', 'Priority', 'Updated'],
+                rows: [
+                    ['Google', 'Senior Software Engineer', 'Austin Johnson', 'interviewing', 'high', '2 hours ago'],
+                    ['Stripe', 'Staff Engineer, Payments', 'Sarah Chen', 'active', 'high', '1 day ago'],
+                    ['Cloudflare', 'Systems Engineer', 'Sarah Chen', 'active', 'medium', '3 days ago'],
+                    ['Netflix', 'Senior Full-Stack Engineer', 'Austin Johnson', 'pending', 'medium', '4 days ago'],
+                    ['Linear', 'Product Engineer', 'Marcus Webb', 'active', 'low', '5 days ago']
+                ]
+            },
+            Contacts: {
+                columns: ['Name', 'Company', 'Role', 'Status', 'Priority', 'Last Contact'],
+                rows: [
+                    ['Dana Kim', 'Stripe', 'Eng. Recruiter', 'active', 'high', '1 day ago'],
+                    ['James Park', 'Google', 'Hiring Manager', 'active', 'high', '2 days ago'],
+                    ['Lisa Wang', 'Cloudflare', 'Talent Partner', 'active', 'medium', '5 days ago'],
+                    ['Tom Rivera', 'Netflix', 'Senior Recruiter', 'pending', 'medium', '1 week ago'],
+                    ['Aria Patel', 'Linear', 'Head of Product', 'active', 'low', '2 weeks ago']
+                ]
+            },
+            Interviews: {
+                columns: ['Client', 'Company', 'Round', 'Date', 'Status', 'Prep Status'],
+                rows: [
+                    ['Austin Johnson', 'Google', 'System Design', 'Mar 11, 2026', 'active', 'high'],
+                    ['Sarah Chen', 'Stripe', 'Technical Screen', 'Mar 13, 2026', 'pending', 'medium'],
+                    ['Austin Johnson', 'Netflix', 'Hiring Manager', 'Mar 17, 2026', 'active', 'low'],
+                    ['Marcus Webb', 'Linear', 'Culture Fit', 'Mar 19, 2026', 'pending', 'medium'],
+                    ['Sarah Chen', 'Cloudflare', 'Final Round', 'Mar 20, 2026', 'active', 'high']
+                ]
+            },
+            Outreach: {
+                columns: ['Recipient', 'Company', 'Subject', 'Client', 'Status', 'Sent'],
+                rows: [
+                    ['Dana Kim', 'Stripe', 'Senior SWE Introduction', 'Sarah Chen', 'pending', 'Draft'],
+                    ['James Park', 'Google', 'Follow-up: System Design', 'Austin Johnson', 'active', '2 days ago'],
+                    ['Lisa Wang', 'Cloudflare', 'Intro: Systems Engineer', 'Sarah Chen', 'active', '4 days ago'],
+                    ['Tom Rivera', 'Netflix', 'Full-Stack Role Interest', 'Austin Johnson', 'pending', '5 days ago'],
+                    ['Aria Patel', 'Linear', 'Product Engineer Match', 'Marcus Webb', 'active', '1 week ago']
+                ]
+            }
+        };
+
+        // ─── Render Functions ────────────────────────────────────
+
+        let criticalCount = criticalActions.length;
+
+        function updateCriticalCount() {
+            document.getElementById('critical-count').textContent = '(' + criticalCount + ')';
+            document.getElementById('nav-critical-count').textContent = criticalCount;
+            if (criticalCount <= 0) {
+                document.getElementById('band-critical').style.display = 'none';
+                document.getElementById('nav-critical-count').style.display = 'none';
+            }
+        }
+
+        function showToast(message, type) {
+            type = type || 'success';
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = '<span class="toast-icon ' + type + '">' + (type === 'success' ? '\u2713' : 'i') + '</span>' + message;
+            container.appendChild(toast);
+            setTimeout(function () {
+                toast.classList.add('removing');
+                setTimeout(function () { toast.remove(); }, 300);
+            }, 3000);
+        }
+
+        function dismissCard(cardEl) {
+            cardEl.classList.add('fade-out');
+            criticalCount--;
+            updateCriticalCount();
+            setTimeout(function () { cardEl.remove(); }, 350);
+        }
+
+        function approveCard(cardEl, message) {
+            cardEl.classList.add('approve-flash');
+            criticalCount--;
+            updateCriticalCount();
+            showToast(message, 'success');
+            setTimeout(function () { cardEl.remove(); }, 500);
+        }
+
+        function renderCriticalCards() {
+            var container = document.getElementById('critical-cards');
+            container.innerHTML = '';
+            criticalActions.forEach(function (item) {
+                var card = document.createElement('div');
+                card.className = 'action-card';
+                card.id = item.id;
+
+                var buttonsHtml = '';
+                item.buttons.forEach(function (btn) {
+                    buttonsHtml += '<button class="btn btn-' + btn.type + '" data-action="' + btn.action + '">' + btn.label + '</button>';
+                });
+
+                card.innerHTML =
+                    '<button class="card-dismiss" title="Dismiss">&times;</button>' +
+                    '<div class="card-avatar" style="background: ' + item.avatarColor + ';">' + item.avatar + '</div>' +
+                    '<div class="card-body">' +
+                        '<div class="card-title">' + item.title + '</div>' +
+                        '<div class="card-subtitle">' + item.subtitle + '</div>' +
+                    '</div>' +
+                    '<span class="card-time">' + item.time + '</span>' +
+                    '<div class="card-actions">' + buttonsHtml + '</div>';
+
+                // Dismiss handler
+                card.querySelector('.card-dismiss').addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    dismissCard(card);
+                });
+
+                // Button handlers
+                card.querySelectorAll('.btn').forEach(function (btnEl) {
+                    btnEl.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        var action = btnEl.getAttribute('data-action');
+                        if (action === 'approve') {
+                            approveCard(card, 'Draft approved \u2014 sending to Sarah\'s contact');
+                        } else if (action === 'review') {
+                            showToast('Opening job review for Austin...', 'info');
+                        } else if (action === 'view') {
+                            showToast('Opening interview details...', 'info');
+                        } else if (action === 'edit') {
+                            showToast('Opening draft editor...', 'info');
+                        }
+                    });
+                });
+
+                container.appendChild(card);
+            });
+        }
+
+        function renderUpcomingItems() {
+            var container = document.getElementById('upcoming-list');
+            container.innerHTML = '';
+            upcomingItems.forEach(function (item) {
+                var el = document.createElement('div');
+                el.className = 'compact-item';
+                el.innerHTML =
+                    '<div class="compact-icon">' + item.icon + '</div>' +
+                    '<span class="compact-text">' + item.text + '</span>' +
+                    '<span class="compact-date">' + item.date + '</span>';
+                container.appendChild(el);
+            });
+            var link = document.createElement('a');
+            link.href = '#';
+            link.className = 'view-all-link';
+            link.textContent = 'View all ' + upcomingItems.length + ' items \u2192';
+            link.addEventListener('click', function (e) { e.preventDefault(); showToast('Viewing all upcoming items...', 'info'); });
+            container.appendChild(link);
+        }
+
+        function renderPipelineStats() {
+            var container = document.getElementById('pipeline-stats');
+            container.innerHTML = '';
+            pipelineStats.forEach(function (stat) {
+                var pill = document.createElement('div');
+                pill.className = 'stat-pill';
+                pill.innerHTML = '<span class="pill-value">' + stat.value + '</span> ' + stat.label;
+                container.appendChild(pill);
+            });
+        }
+
+        function renderKanban() {
+            var container = document.getElementById('kanban-columns');
+            container.innerHTML = '';
+            kanbanData.forEach(function (col) {
+                var width = col.max > 0 ? Math.max(10, (col.count / col.max) * 100) : 10;
+                var el = document.createElement('div');
+                el.className = 'kanban-col';
+                el.innerHTML =
+                    '<div class="kanban-col-header">' + col.name + '</div>' +
+                    '<div class="kanban-col-count">' + col.count + '</div>' +
+                    '<div class="kanban-bar" style="background: ' + col.color + '; width: ' + width + '%; height: 4px;"></div>';
+                container.appendChild(el);
+            });
+        }
+
+        // ─── Everything Else ─────────────────────────────────────
+
+        var eeOpen = false;
+        var currentTab = 'Jobs';
+
+        function toggleEverythingElse() {
+            eeOpen = !eeOpen;
+            var body = document.getElementById('ee-body');
+            var chevron = document.getElementById('ee-chevron');
+            if (eeOpen) {
+                body.classList.add('open');
+                chevron.classList.add('open');
+            } else {
+                body.classList.remove('open');
+                chevron.classList.remove('open');
+            }
+        }
+
+        function renderTabs() {
+            var container = document.getElementById('ee-tabs');
+            container.innerHTML = '';
+            Object.keys(tabData).forEach(function (tabName) {
+                var btn = document.createElement('button');
+                btn.className = 'tab-btn' + (tabName === currentTab ? ' active' : '');
+                btn.textContent = tabName;
+                btn.addEventListener('click', function () {
+                    currentTab = tabName;
+                    renderTabs();
+                    renderTable();
+                });
+                container.appendChild(btn);
+            });
+        }
+
+        function renderTable() {
+            var data = tabData[currentTab];
+            var container = document.getElementById('ee-table');
+            var headerHtml = '<thead><tr>';
+            data.columns.forEach(function (col) {
+                headerHtml += '<th>' + col + '</th>';
+            });
+            headerHtml += '</tr></thead>';
+
+            var bodyHtml = '<tbody>';
+            data.rows.forEach(function (row) {
+                bodyHtml += '<tr>';
+                row.forEach(function (cell, i) {
+                    if (data.columns[i] === 'Status') {
+                        bodyHtml += '<td><span class="status-badge ' + cell + '">' + cell.charAt(0).toUpperCase() + cell.slice(1) + '</span></td>';
+                    } else if (data.columns[i] === 'Priority' || data.columns[i] === 'Prep Status') {
+                        bodyHtml += '<td><span class="priority-badge ' + cell + '">' + cell.charAt(0).toUpperCase() + cell.slice(1) + '</span></td>';
+                    } else {
+                        bodyHtml += '<td>' + cell + '</td>';
+                    }
+                });
+                bodyHtml += '</tr>';
+            });
+            bodyHtml += '</tbody>';
+
+            container.innerHTML = '<table>' + headerHtml + bodyHtml + '</table>';
+        }
+
+        // ─── Init ────────────────────────────────────────────────
+
+        renderCriticalCards();
+        renderUpcomingItems();
+        renderPipelineStats();
+        renderKanban();
+        renderTabs();
+        renderTable();
+    </script>
+
+</body>
+</html>

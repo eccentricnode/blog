@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>RecruitAgent - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { overflow-x: hidden; }
+
+        :root {
+            --blue-600: #2563EB;
+            --blue-700: #1D4ED8;
+            --blue-50: #EFF6FF;
+            --blue-100: #DBEAFE;
+            --slate-50: #F8FAFC;
+            --slate-100: #F1F5F9;
+            --slate-200: #E2E8F0;
+            --slate-300: #CBD5E1;
+            --slate-400: #94A3B8;
+            --slate-500: #64748B;
+            --slate-600: #475569;
+            --slate-700: #334155;
+            --slate-800: #1E293B;
+            --slate-900: #0F172A;
+            --green-500: #22C55E;
+            --green-50: #F0FDF4;
+            --green-100: #DCFCE7;
+            --green-600: #16A34A;
+            --green-700: #15803D;
+            --orange-500: #F97316;
+            --orange-50: #FFF7ED;
+            --orange-100: #FFEDD5;
+            --orange-700: #C2410C;
+            --yellow-500: #EAB308;
+            --yellow-50: #FEFCE8;
+            --red-500: #EF4444;
+            --red-50: #FEF2F2;
+            --red-100: #FEE2E2;
+            --red-700: #B91C1C;
+            --white: #FFFFFF;
+            --sidebar-bg: #0F172A;
+            --sidebar-hover: #1E293B;
+            --sidebar-active: #1E293B;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--slate-50);
+            color: var(--slate-900);
+            display: flex;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: var(--sidebar-bg);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            padding: 24px 24px 32px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-logo .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--blue-600);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .sidebar-logo .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 0 12px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            color: var(--slate-400);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.15s ease;
+            margin-bottom: 2px;
+        }
+
+        .sidebar-nav a:hover {
+            background: var(--sidebar-hover);
+            color: var(--slate-200);
+        }
+
+        .sidebar-nav a.active {
+            background: var(--sidebar-active);
+            color: var(--white);
+        }
+
+        .sidebar-nav a .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+        }
+
+        .sidebar-nav a.active .nav-icon {
+            opacity: 1;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--red-500);
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 10px;
+        }
+
+        .sidebar-user {
+            padding: 16px 20px;
+            border-top: 1px solid var(--slate-700);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-user .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .sidebar-user .user-info {
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .sidebar-user .user-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate-200);
+        }
+
+        .sidebar-user .user-role {
+            font-size: 12px;
+            color: var(--slate-500);
+        }
+
+        .sidebar-user .logout-link {
+            font-size: 12px;
+            color: var(--slate-500);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .sidebar-user .logout-link:hover {
+            color: var(--slate-300);
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 40px 48px;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--slate-900);
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .page-header .subtitle {
+            font-size: 15px;
+            color: var(--slate-500);
+            margin-bottom: 2px;
+        }
+
+        .page-header .date {
+            font-size: 13px;
+            color: var(--slate-400);
+            font-weight: 500;
+        }
+
+        /* ========== MOMENTUM BAR ========== */
+        .momentum-bar {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .momentum-bar .momentum-text {
+            font-size: 14px;
+            color: var(--slate-600);
+            line-height: 1.5;
+        }
+
+        .momentum-bar .momentum-text strong {
+            color: var(--slate-900);
+            font-weight: 600;
+        }
+
+        .momentum-ring {
+            position: relative;
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+        }
+
+        .momentum-ring svg {
+            transform: rotate(-90deg);
+        }
+
+        .momentum-ring .ring-bg {
+            fill: none;
+            stroke: var(--slate-100);
+            stroke-width: 4;
+        }
+
+        .momentum-ring .ring-fill {
+            fill: none;
+            stroke: var(--green-500);
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-dasharray: 125.6;
+            stroke-dashoffset: 125.6;
+            transition: stroke-dashoffset 1.2s ease-out;
+        }
+
+        .momentum-ring .ring-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--green-600);
+        }
+
+        /* ========== PRIORITY BANDS ========== */
+        .priority-band {
+            margin-bottom: 28px;
+        }
+
+        .band-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .band-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .band-dot.red {
+            background: var(--red-500);
+            animation: pulse-red 2s infinite;
+        }
+
+        .band-dot.orange { background: var(--orange-500); }
+        .band-dot.blue { background: var(--blue-600); }
+        .band-dot.slate { background: var(--slate-400); }
+
+        @keyframes pulse-red {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+            50% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+        }
+
+        .band-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--slate-500);
+        }
+
+        .band-count {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--slate-400);
+        }
+
+        /* ========== ACTION CARDS ========== */
+        .action-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .action-card {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-left: 4px solid var(--red-500);
+            border-radius: 12px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            transition: box-shadow 0.15s ease, opacity 0.3s ease, transform 0.3s ease, max-height 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transform: translateY(-1px);
+        }
+
+        .action-card.fade-out {
+            opacity: 0;
+            transform: translateX(20px);
+            max-height: 0;
+            padding: 0 24px;
+            margin-bottom: 0;
+            border-width: 0;
+        }
+
+        .action-card.green-flash {
+            border-left-color: var(--green-500);
+            background: var(--green-50);
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 18px;
+        }
+
+        .card-icon.red-bg { background: var(--red-50); color: var(--red-500); }
+        .card-icon.blue-bg { background: var(--blue-50); color: var(--blue-600); }
+        .card-icon.orange-bg { background: var(--orange-50); color: var(--orange-500); }
+
+        .card-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .card-body h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 4px;
+        }
+
+        .card-body p {
+            font-size: 13px;
+            color: var(--slate-500);
+            line-height: 1.5;
+            margin-bottom: 4px;
+        }
+
+        .card-time {
+            font-size: 12px;
+            color: var(--slate-400);
+            font-weight: 500;
+        }
+
+        .card-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+            align-self: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--blue-600);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--blue-700);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--slate-400);
+            padding: 8px;
+        }
+
+        .btn-ghost:hover {
+            color: var(--slate-600);
+            background: var(--slate-100);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 6px;
+        }
+
+        .btn-outline {
+            background: var(--white);
+            color: var(--slate-600);
+            border: 1px solid var(--slate-200);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--slate-300);
+            background: var(--slate-50);
+        }
+
+        .btn-green {
+            background: var(--green-500);
+            color: var(--white);
+        }
+
+        .btn-green:hover {
+            background: var(--green-600);
+        }
+
+        /* ========== INLINE JOB EXPANSION ========== */
+        .job-expansion {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--slate-100);
+        }
+
+        .job-expansion.open {
+            display: flex;
+        }
+
+        .job-mini-card {
+            background: var(--slate-50);
+            border: 1px solid var(--slate-200);
+            border-radius: 10px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .job-mini-card.approved {
+            opacity: 0;
+            transform: translateX(30px);
+            max-height: 0;
+            padding: 0 18px;
+            margin: 0;
+            border-width: 0;
+            overflow: hidden;
+        }
+
+        .job-mini-card.skipped {
+            opacity: 0;
+            transform: scale(0.95);
+            max-height: 0;
+            padding: 0 18px;
+            margin: 0;
+            border-width: 0;
+            overflow: hidden;
+        }
+
+        .job-mini-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 2px;
+        }
+
+        .job-mini-info .job-meta {
+            font-size: 12px;
+            color: var(--slate-500);
+        }
+
+        .job-mini-info .job-meta span {
+            margin-right: 12px;
+        }
+
+        .job-mini-actions {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        /* ========== COMING UP ITEMS ========== */
+        .coming-up-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .coming-up-item {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-left: 4px solid var(--orange-500);
+            border-radius: 10px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: box-shadow 0.15s ease;
+            cursor: default;
+        }
+
+        .coming-up-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .coming-up-icon {
+            font-size: 16px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--orange-50);
+            border-radius: 8px;
+            flex-shrink: 0;
+            color: var(--orange-500);
+        }
+
+        .coming-up-text {
+            flex: 1;
+            font-size: 13px;
+            color: var(--slate-700);
+            line-height: 1.4;
+        }
+
+        .coming-up-date {
+            font-size: 12px;
+            color: var(--slate-400);
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        /* ========== PIPELINE ========== */
+        .pipeline-section {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-left: 4px solid var(--blue-600);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .stats-strip {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-pill {
+            background: var(--slate-50);
+            border: 1px solid var(--slate-200);
+            border-radius: 8px;
+            padding: 10px 16px;
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .stat-pill:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .stat-pill .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--slate-900);
+        }
+
+        .stat-pill .stat-label {
+            font-size: 12px;
+            color: var(--slate-500);
+            font-weight: 500;
+        }
+
+        .mini-kanban {
+            display: flex;
+            gap: 8px;
+        }
+
+        .kanban-col {
+            flex: 1;
+            text-align: center;
+            padding: 12px 8px;
+            border-radius: 8px;
+            background: var(--slate-50);
+            border: 1px solid var(--slate-100);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .kanban-col:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .kanban-col .col-count {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--slate-900);
+            margin-bottom: 4px;
+        }
+
+        .kanban-col .col-label {
+            font-size: 11px;
+            color: var(--slate-500);
+            font-weight: 500;
+        }
+
+        .kanban-col .col-bar {
+            height: 4px;
+            border-radius: 2px;
+            margin-top: 8px;
+        }
+
+        .kanban-col:nth-child(1) .col-bar { background: var(--slate-300); }
+        .kanban-col:nth-child(2) .col-bar { background: var(--blue-600); }
+        .kanban-col:nth-child(3) .col-bar { background: var(--orange-500); }
+        .kanban-col:nth-child(4) .col-bar { background: var(--green-500); }
+        .kanban-col:nth-child(5) .col-bar { background: var(--yellow-500); }
+        .kanban-col:nth-child(6) .col-bar { background: var(--green-600); }
+
+        /* ========== PROFILE COMPLETION ========== */
+        .profile-card {
+            background: var(--blue-50);
+            border: 1px solid var(--blue-100);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-card .profile-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--blue-100);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--blue-600);
+            flex-shrink: 0;
+        }
+
+        .profile-card .profile-body {
+            flex: 1;
+        }
+
+        .profile-card .profile-body h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--slate-900);
+            margin-bottom: 8px;
+        }
+
+        .profile-progress {
+            height: 6px;
+            background: var(--blue-100);
+            border-radius: 3px;
+            margin-bottom: 6px;
+            overflow: hidden;
+        }
+
+        .profile-progress .progress-fill {
+            height: 100%;
+            background: var(--blue-600);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 1s ease-out 0.3s;
+        }
+
+        .profile-card .profile-meta {
+            font-size: 12px;
+            color: var(--slate-500);
+        }
+
+        /* ========== EVERYTHING ELSE ========== */
+        .everything-else {
+            margin-top: 28px;
+        }
+
+        .collapse-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 14px 0;
+            user-select: none;
+        }
+
+        .collapse-header .chevron {
+            transition: transform 0.2s ease;
+            color: var(--slate-400);
+            font-size: 14px;
+        }
+
+        .collapse-header.open .chevron {
+            transform: rotate(90deg);
+        }
+
+        .collapse-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .collapse-body.open {
+            max-height: 2000px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--slate-200);
+            margin-bottom: 16px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--slate-500);
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: all 0.15s ease;
+            font-family: inherit;
+        }
+
+        .tab:hover {
+            color: var(--slate-700);
+        }
+
+        .tab.active {
+            color: var(--blue-600);
+            border-bottom-color: var(--blue-600);
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ========== TABLE ========== */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 10px 14px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--slate-400);
+            border-bottom: 1px solid var(--slate-200);
+        }
+
+        .data-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--slate-100);
+            color: var(--slate-700);
+        }
+
+        .data-table tr:hover td {
+            background: var(--slate-50);
+        }
+
+        .data-table .company-cell {
+            font-weight: 600;
+            color: var(--slate-900);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-badge.discovered { background: var(--slate-100); color: var(--slate-600); }
+        .status-badge.approved { background: var(--blue-50); color: var(--blue-600); }
+        .status-badge.applied { background: var(--orange-50); color: var(--orange-700); }
+        .status-badge.interviewing { background: var(--green-50); color: var(--green-700); }
+        .status-badge.scheduled { background: var(--blue-50); color: var(--blue-600); }
+        .status-badge.completed { background: var(--green-50); color: var(--green-700); }
+        .status-badge.replied { background: var(--green-50); color: var(--green-700); }
+        .status-badge.opened { background: var(--blue-50); color: var(--blue-600); }
+        .status-badge.sent { background: var(--slate-100); color: var(--slate-600); }
+        .status-badge.phone { background: var(--orange-50); color: var(--orange-700); }
+        .status-badge.technical { background: var(--blue-50); color: var(--blue-600); }
+        .status-badge.take-home { background: var(--slate-100); color: var(--slate-600); }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .priority-badge.high { background: var(--red-50); color: var(--red-700); }
+        .priority-badge.medium { background: var(--yellow-50); color: #92400E; }
+        .priority-badge.low { background: var(--slate-100); color: var(--slate-600); }
+        .priority-badge.ready { background: var(--green-50); color: var(--green-700); }
+        .priority-badge.in-progress { background: var(--orange-50); color: var(--orange-700); }
+        .priority-badge.done { background: var(--slate-100); color: var(--slate-600); }
+
+        .match-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            background: var(--green-50);
+            color: var(--green-700);
+        }
+
+        /* ========== TOAST ========== */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            background: var(--slate-900);
+            color: var(--white);
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 3px solid var(--green-500);
+        }
+
+        .toast.info {
+            border-left: 3px solid var(--blue-600);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .main-content {
+                padding: 32px 24px;
+            }
+            .mini-kanban {
+                flex-wrap: wrap;
+            }
+            .kanban-col {
+                min-width: calc(33% - 8px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 24px 16px;
+            }
+            .momentum-bar {
+                flex-direction: column;
+                text-align: center;
+            }
+            .stats-strip {
+                flex-direction: column;
+            }
+            .action-card {
+                flex-direction: column;
+            }
+            .card-actions {
+                align-self: flex-start;
+            }
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-icon">RA</div>
+        <span class="logo-text">RecruitAgent</span>
+    </div>
+    <nav class="sidebar-nav" id="sidebar-nav"></nav>
+    <div class="sidebar-user">
+        <div class="user-avatar">AJ</div>
+        <div class="user-info">
+            <div class="user-name">Austin Johnson</div>
+            <div class="user-role">Client</div>
+        </div>
+        <a href="#" class="logout-link" onclick="showToast('Logging out...', 'info'); return false;">Logout</a>
+    </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main-content" id="main-content"></main>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+// ========== DUMMY DATA ==========
+const navItems = [
+    { icon: '\u2302', label: 'Dashboard', badge: 2, active: true },
+    { icon: '\uD83D\uDCBC', label: 'My Jobs', badge: 0 },
+    { icon: '\uD83D\uDC65', label: 'Contacts', badge: 0 },
+    { icon: '\uD83D\uDCC5', label: 'Interviews', badge: 0 },
+    { icon: '\uD83D\uDCE8', label: 'Outreach', badge: 0 },
+    { icon: '\uD83D\uDC64', label: 'Profile', badge: 0 }
+];
+
+const actionItems = [
+    {
+        id: 'action-1',
+        icon: '\uD83D\uDCBC',
+        iconClass: 'blue-bg',
+        title: '3 new jobs found \u2014 review and approve',
+        desc: 'Your recruiter found matching positions at Google, Stripe, and Cloudflare',
+        time: '2d ago',
+        btnText: 'Review Jobs \u2192',
+        expandable: true
+    },
+    {
+        id: 'action-2',
+        icon: '\uD83D\uDCC5',
+        iconClass: 'red-bg',
+        title: 'Interview prep: Google System Design',
+        desc: 'Tomorrow at 2:00 PM MST \u2014 23 hours away',
+        time: 'Tomorrow',
+        btnText: 'View Prep Guide \u2192',
+        expandable: false
+    }
+];
+
+const pendingJobs = [
+    { company: 'Google', title: 'Staff Software Engineer', location: 'Mountain View, CA (Hybrid)', salary: '$220K \u2013 $310K', source: 'Recruiter Match' },
+    { company: 'Stripe', title: 'Senior Backend Engineer', location: 'San Francisco, CA (Remote)', salary: '$195K \u2013 $275K', source: 'Job Board' },
+    { company: 'Cloudflare', title: 'Principal Engineer, Platform', location: 'Austin, TX (Remote)', salary: '$200K \u2013 $290K', source: 'Referral' }
+];
+
+const comingUpItems = [
+    { icon: '\uD83D\uDCDD', text: '2 outreach drafts ready for your review \u2014 approve before sending', date: 'Today' },
+    { icon: '\uD83D\uDD04', text: 'Follow-up with Stripe recruiter due Thursday (applied 8 days ago)', date: 'Thu' },
+    { icon: '\uD83D\uDCC4', text: 'Resume v3 tailored for Cloudflare \u2014 review alignment score (87%)', date: 'Wed' }
+];
+
+const pipelineStats = [
+    { value: 8, label: 'Total Jobs' },
+    { value: 5, label: 'Active' },
+    { value: 1, label: 'Interviewing' },
+    { value: 12, label: 'Contacts' }
+];
+
+const kanbanCols = [
+    { label: 'Discovered', count: 3 },
+    { label: 'Approved', count: 2 },
+    { label: 'Applied', count: 2 },
+    { label: 'Interviewing', count: 1 },
+    { label: 'Offer', count: 0 },
+    { label: 'Accepted', count: 0 }
+];
+
+const allJobs = [
+    { company: 'Google', title: 'Staff Software Engineer', status: 'interviewing', priority: 'high', match: '92%', applied: 'Mar 1' },
+    { company: 'Stripe', title: 'Senior Backend Engineer', status: 'applied', priority: 'high', match: '89%', applied: 'Mar 2' },
+    { company: 'Cloudflare', title: 'Principal Engineer, Platform', status: 'discovered', priority: 'medium', match: '87%', applied: '\u2014' },
+    { company: 'Vercel', title: 'Senior Full-Stack Engineer', status: 'approved', priority: 'medium', match: '84%', applied: '\u2014' },
+    { company: 'Datadog', title: 'Staff Engineer, Infra', status: 'applied', priority: 'medium', match: 'Master', applied: 'Mar 5' },
+    { company: 'Linear', title: 'Senior Software Engineer', status: 'discovered', priority: 'low', match: '78%', applied: '\u2014' }
+];
+
+const contacts = [
+    { name: 'David Park', company: 'Google', role: 'Hiring Manager', email: 'dpark@google.com', lastContact: '2d ago' },
+    { name: 'Lisa Chen', company: 'Stripe', role: 'Technical Recruiter', email: 'lchen@stripe.com', lastContact: '5d ago' },
+    { name: 'James Wilson', company: 'Cloudflare', role: 'Staff Engineer (Referral)', email: 'jwilson@cloudflare.com', lastContact: '1w ago' },
+    { name: 'Sarah Thompson', company: 'Google', role: 'Senior Recruiter', email: 'sthompson@google.com', lastContact: '1w ago' },
+    { name: 'Alex Rivera', company: 'Vercel', role: 'Engineering Manager', email: 'arivera@vercel.com', lastContact: '2w ago' },
+    { name: 'Priya Patel', company: 'Datadog', role: 'Recruiter', email: 'ppatel@datadog.com', lastContact: '3d ago' }
+];
+
+const interviews = [
+    { company: 'Google', title: 'System Design Round', date: 'Mar 11, 2:00 PM', type: 'Technical', status: 'scheduled', prep: 'ready' },
+    { company: 'Stripe', title: 'Phone Screen', date: 'Mar 14, 11:00 AM', type: 'Phone', status: 'scheduled', prep: 'in-progress' },
+    { company: 'Google', title: 'Recruiter Screen', date: 'Mar 3', type: 'Phone', status: 'completed', prep: 'done' },
+    { company: 'Datadog', title: 'Technical Assessment', date: 'Feb 28', type: 'Take-home', status: 'completed', prep: 'done' }
+];
+
+const outreachHistory = [
+    { recipient: 'David Park', company: 'Google', subject: 'System Design prep follow-up', status: 'replied', sent: 'Mar 8' },
+    { recipient: 'Lisa Chen', company: 'Stripe', subject: 'Introduction - Senior Backend role', status: 'opened', sent: 'Mar 6' },
+    { recipient: 'James Wilson', company: 'Cloudflare', subject: 'Referral request - Platform team', status: 'sent', sent: 'Mar 5' },
+    { recipient: 'Priya Patel', company: 'Datadog', subject: 'Thank you - assessment follow-up', status: 'replied', sent: 'Mar 1' },
+    { recipient: 'Alex Rivera', company: 'Vercel', subject: 'Engineering culture questions', status: 'sent', sent: 'Feb 25' }
+];
+
+// ========== RENDER FUNCTIONS ==========
+
+function renderSidebar() {
+    const nav = document.getElementById('sidebar-nav');
+    nav.innerHTML = navItems.map(item => {
+        const badgeHtml = item.badge > 0 ? `<span class="nav-badge">${item.badge}</span>` : '';
+        return `<a href="#" class="${item.active ? 'active' : ''}" onclick="return false;">
+            <span class="nav-icon">${item.icon}</span>
+            ${item.label}
+            ${badgeHtml}
+        </a>`;
+    }).join('');
+}
+
+function renderMain() {
+    const main = document.getElementById('main-content');
+    main.innerHTML = `
+        <div class="page-header">
+            <h1>Welcome back, Austin.</h1>
+            <p class="subtitle">Here's where your job search stands today.</p>
+            <p class="date">Monday, March 10, 2026</p>
+        </div>
+
+        ${renderMomentumBar()}
+        ${renderActionBand()}
+        ${renderComingUpBand()}
+        ${renderPipelineBand()}
+        ${renderProfileCard()}
+        ${renderEverythingElse()}
+    `;
+
+    // Animate momentum ring after render
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            const ring = document.querySelector('.ring-fill');
+            if (ring) ring.style.strokeDashoffset = '37.68'; // 70% fill
+            const progressFill = document.querySelector('.progress-fill');
+            if (progressFill) progressFill.style.width = '60%';
+        }, 100);
+    });
+}
+
+function renderMomentumBar() {
+    return `
+        <div class="momentum-bar">
+            <div class="momentum-text">
+                Your search this week: <strong>3 jobs approved</strong>, <strong>1 interview scheduled</strong>, <strong>5 outreach sent</strong>
+            </div>
+            <div class="momentum-ring">
+                <svg width="48" height="48" viewBox="0 0 48 48">
+                    <circle class="ring-bg" cx="24" cy="24" r="20" />
+                    <circle class="ring-fill" cx="24" cy="24" r="20" />
+                </svg>
+                <div class="ring-label">70%</div>
+            </div>
+        </div>
+    `;
+}
+
+function renderActionBand() {
+    const count = actionItems.length;
+    return `
+        <div class="priority-band" id="action-band">
+            <div class="band-header">
+                <span class="band-dot red"></span>
+                <span class="band-title">Needs Your Action</span>
+                <span class="band-count" id="action-count">(${count})</span>
+            </div>
+            <div class="action-cards" id="action-cards">
+                ${actionItems.map(renderActionCard).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function renderActionCard(item) {
+    const jobExpansion = item.expandable ? `
+        <div class="job-expansion" id="expansion-${item.id}">
+            ${pendingJobs.map((job, i) => `
+                <div class="job-mini-card" id="job-${i}">
+                    <div class="job-mini-info">
+                        <h4>${job.company} \u2014 ${job.title}</h4>
+                        <div class="job-meta">
+                            <span>\uD83D\uDCCD ${job.location}</span>
+                            <span>\uD83D\uDCB0 ${job.salary}</span>
+                            <span>\uD83D\uDD17 ${job.source}</span>
+                        </div>
+                    </div>
+                    <div class="job-mini-actions">
+                        <button class="btn btn-sm btn-green" onclick="approveJob(${i}, '${job.company}')">Approve</button>
+                        <button class="btn btn-sm btn-outline" onclick="skipJob(${i}, '${job.company}')">Skip</button>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    ` : '';
+
+    return `
+        <div class="action-card" id="${item.id}">
+            <div class="card-icon ${item.iconClass}">${item.icon}</div>
+            <div class="card-body">
+                <h3>${item.title}</h3>
+                <p>${item.desc}</p>
+                <span class="card-time">${item.time}</span>
+                ${jobExpansion}
+            </div>
+            <div class="card-actions">
+                <button class="btn btn-primary btn-sm" onclick="${item.expandable ? `toggleExpansion('${item.id}')` : `showToast('Opening prep guide...', 'info')`}">${item.btnText}</button>
+                <button class="btn btn-ghost btn-sm" onclick="dismissCard('${item.id}')" title="Dismiss">\u2715</button>
+            </div>
+        </div>
+    `;
+}
+
+function renderComingUpBand() {
+    return `
+        <div class="priority-band">
+            <div class="band-header">
+                <span class="band-dot orange"></span>
+                <span class="band-title">Coming Up</span>
+                <span class="band-count">(${comingUpItems.length})</span>
+            </div>
+            <div class="coming-up-list">
+                ${comingUpItems.map(item => `
+                    <div class="coming-up-item">
+                        <div class="coming-up-icon">${item.icon}</div>
+                        <div class="coming-up-text">${item.text}</div>
+                        <div class="coming-up-date">${item.date}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function renderPipelineBand() {
+    return `
+        <div class="priority-band">
+            <div class="band-header">
+                <span class="band-dot blue"></span>
+                <span class="band-title">Your Pipeline</span>
+            </div>
+            <div class="pipeline-section">
+                <div class="stats-strip">
+                    ${pipelineStats.map(s => `
+                        <div class="stat-pill">
+                            <span class="stat-value">${s.value}</span>
+                            <span class="stat-label">${s.label}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="mini-kanban">
+                    ${kanbanCols.map(col => `
+                        <div class="kanban-col">
+                            <div class="col-count">${col.count}</div>
+                            <div class="col-label">${col.label}</div>
+                            <div class="col-bar"></div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderProfileCard() {
+    return `
+        <div class="profile-card">
+            <div class="profile-icon">\uD83D\uDC64</div>
+            <div class="profile-body">
+                <h3>Complete your profile to improve job matches</h3>
+                <div class="profile-progress">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="profile-meta">60% complete \u2014 3 fields remaining: Goal Statement, LinkedIn URL, Background Summary</div>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="showToast('Opening profile editor...', 'info')">Complete Profile \u2192</button>
+        </div>
+    `;
+}
+
+function renderEverythingElse() {
+    return `
+        <div class="everything-else">
+            <div class="collapse-header" id="collapse-header" onclick="toggleCollapse()">
+                <span class="band-dot slate"></span>
+                <span class="band-title">Everything Else</span>
+                <span class="chevron">\u25B6</span>
+            </div>
+            <div class="collapse-body" id="collapse-body">
+                <div class="tabs" id="ee-tabs">
+                    <button class="tab active" onclick="switchTab('all-jobs', this)">All Jobs</button>
+                    <button class="tab" onclick="switchTab('contacts', this)">Contacts</button>
+                    <button class="tab" onclick="switchTab('interviews', this)">Interviews</button>
+                    <button class="tab" onclick="switchTab('outreach', this)">Outreach History</button>
+                </div>
+                <div class="tab-content active" id="tab-all-jobs">
+                    ${renderJobsTable()}
+                </div>
+                <div class="tab-content" id="tab-contacts">
+                    ${renderContactsTable()}
+                </div>
+                <div class="tab-content" id="tab-interviews">
+                    ${renderInterviewsTable()}
+                </div>
+                <div class="tab-content" id="tab-outreach">
+                    ${renderOutreachTable()}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderJobsTable() {
+    return `
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Resume Match</th>
+                    <th>Applied</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${allJobs.map(job => `
+                    <tr>
+                        <td class="company-cell">${job.company}</td>
+                        <td>${job.title}</td>
+                        <td><span class="status-badge ${job.status}">${job.status.charAt(0).toUpperCase() + job.status.slice(1)}</span></td>
+                        <td><span class="priority-badge ${job.priority}">${job.priority.charAt(0).toUpperCase() + job.priority.slice(1)}</span></td>
+                        <td><span class="match-badge">${job.match === 'Master' ? '\u2605 ' : ''}${job.match}</span></td>
+                        <td style="color: var(--slate-400);">${job.applied}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+}
+
+function renderContactsTable() {
+    return `
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Last Contact</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${contacts.map(c => `
+                    <tr>
+                        <td class="company-cell">${c.name}</td>
+                        <td>${c.company}</td>
+                        <td style="color: var(--slate-500);">${c.role}</td>
+                        <td style="color: var(--slate-400); font-size: 12px;">${c.email}</td>
+                        <td style="color: var(--slate-400);">${c.lastContact}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+}
+
+function renderInterviewsTable() {
+    return `
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Round</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Prep</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${interviews.map(iv => `
+                    <tr>
+                        <td class="company-cell">${iv.company}</td>
+                        <td>${iv.title}</td>
+                        <td style="color: var(--slate-500);">${iv.date}</td>
+                        <td><span class="status-badge ${iv.type.toLowerCase()}">${iv.type}</span></td>
+                        <td><span class="status-badge ${iv.status}">${iv.status.charAt(0).toUpperCase() + iv.status.slice(1)}</span></td>
+                        <td><span class="priority-badge ${iv.prep}">${iv.prep === 'in-progress' ? 'In Progress' : iv.prep.charAt(0).toUpperCase() + iv.prep.slice(1)}</span></td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+}
+
+function renderOutreachTable() {
+    return `
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Recipient</th>
+                    <th>Company</th>
+                    <th>Subject</th>
+                    <th>Status</th>
+                    <th>Sent</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${outreachHistory.map(o => `
+                    <tr>
+                        <td class="company-cell">${o.recipient}</td>
+                        <td>${o.company}</td>
+                        <td style="color: var(--slate-500);">${o.subject}</td>
+                        <td><span class="status-badge ${o.status}">${o.status.charAt(0).toUpperCase() + o.status.slice(1)}</span></td>
+                        <td style="color: var(--slate-400);">${o.sent}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+}
+
+// ========== INTERACTIONS ==========
+
+let actionCount = actionItems.length;
+
+function showToast(message, type) {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type || 'info'}`;
+    toast.innerHTML = `${type === 'success' ? '\u2713' : '\u2139'} ${message}`;
+    container.appendChild(toast);
+
+    requestAnimationFrame(() => {
+        toast.classList.add('show');
+    });
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+function dismissCard(cardId) {
+    const card = document.getElementById(cardId);
+    if (!card) return;
+    card.classList.add('fade-out');
+    actionCount--;
+    updateActionCount();
+    setTimeout(() => card.remove(), 400);
+}
+
+function updateActionCount() {
+    const countEl = document.getElementById('action-count');
+    if (countEl) countEl.textContent = `(${Math.max(0, actionCount)})`;
+}
+
+function toggleExpansion(cardId) {
+    const expansion = document.getElementById('expansion-' + cardId);
+    if (!expansion) return;
+    expansion.classList.toggle('open');
+}
+
+function approveJob(index, company) {
+    const el = document.getElementById('job-' + index);
+    if (!el) return;
+    el.style.borderLeftColor = 'var(--green-500)';
+    el.style.background = 'var(--green-50)';
+    showToast(`Job approved! ${company} added to pipeline.`, 'success');
+    setTimeout(() => el.classList.add('approved'), 200);
+}
+
+function skipJob(index, company) {
+    const el = document.getElementById('job-' + index);
+    if (!el) return;
+    showToast(`${company} skipped.`, 'info');
+    setTimeout(() => el.classList.add('skipped'), 100);
+}
+
+function toggleCollapse() {
+    const header = document.getElementById('collapse-header');
+    const body = document.getElementById('collapse-body');
+    header.classList.toggle('open');
+    body.classList.toggle('open');
+}
+
+function switchTab(tabId, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + tabId).classList.add('active');
+}
+
+// ========== INIT ==========
+renderSidebar();
+renderMain();
+</script>
+
+</body>
+</html>
